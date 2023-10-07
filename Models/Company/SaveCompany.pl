@@ -1,9 +1,5 @@
 :- use_module(library(http/json)).
 
-id(1).
-incrementa_id :- retract(id(X)), Y is X + 1, assert(id(Y)).
-:- dynamic id/1.
-
 lerJSON(FilePath, File) :-
 	open(FilePath, read, F),
 	json_read_dict(F, File).
@@ -38,7 +34,6 @@ companiesToJSON([H|T], [X|Out]) :-
 
 saveCompany(FilePath, Company) :- 
     Company = company(Ident, Name, Age, Cnpj, Actuation, Declaration, Code, Price, TrendIndicator, MinPrice, MaxPrice, StartPrice, Row, Col),
-    id(ID), incrementa_id,
     lerJSON(FilePath, File),
     companiesToJSON(File, ListaCompaniesJSON),
     listarCompanies(Out), length(Out, Length), NewIdent is Length + 1,
