@@ -63,4 +63,3 @@ getPassword(Password) :-
         getPassword(Password);
     true),
     Password = PasswordStr.
-

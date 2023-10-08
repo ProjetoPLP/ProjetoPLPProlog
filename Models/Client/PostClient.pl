@@ -34,8 +34,3 @@ deleteZeroOrNegative([[CompanyID, Qtd]|Rest], Filtered) :-
         Filtered = NewRest
     ),
     deleteZeroOrNegative(Rest, NewRest).
-
-main :- 
-    addAsset(1, 10, -110, Result), 
-    write(Result),
-    halt.
