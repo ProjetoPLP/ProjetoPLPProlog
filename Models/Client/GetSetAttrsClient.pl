@@ -1,8 +1,6 @@
 :- consult('LoginClient.pl').
 :- consult('SaveClient.pl').
 
-% Todos esses métodos retornam false quando não o ID não está cadastrado.
-
 getLoggedUserID(ID) :- 
     getLoggedClient(Client),
     Client = client(ID, _, _, _, _, _, _, _, _, _, _, _).
@@ -27,7 +25,6 @@ getCanDeposit(ID, CanDeposit) :-
     getClient(ID, Client),
     Client = client(_, _, _, _, _, _, _, _, CanDeposit, _, _, _).
 
-
 getRow(ID, Row) :- 
     getClient(ID, Client),
     Client = client(_, _, _, _, _, _, _, _, _, Row, _, _).
@@ -40,8 +37,11 @@ getAllAssets(ID, AllAssets) :-
     getClient(ID, Client),
     Client = client(_, _, _, _, _, _, _, _, _, _, _, AllAssets).
 
-% fazer: getQtdAssetsInCompany(IDClient, IDCompany, Acoes) :- 
-
+getQtdAssetsInCompany(ID, IDCompany, Acoes) :- 
+    getClient(ID, Client),
+    Client = client(_, _, _, _, _, _, _, _, _, _, _, AllAssets),
+    searchAcoes(AllAssets, IDCompany,  Acoes).
+    
 setCash(ID, NewCash, Result) :- 
     getClient(ID, Client),
     Client = client(Ident, Name, Age, Cpf, Email, Password, Cash, Patrimony, CanDeposit, Row, Col, AllAssets),
@@ -108,7 +108,9 @@ addCol(ID, AddCol, Result) :-
     editClientJSON(NewClient),
     Result = true.
 
-main :- 
-    
-    halt.
-
+searchAcoes(AllAssets, IDCompany, Acoes) :-
+    buscarAcoes(AllAssets, IDCompany, Acoes).
+buscarAcoes([], _, 0).
+buscarAcoes([[IDCompany, Acoes]|_], IDCompany, Acoes).
+buscarAcoes([_|Rest], IDCompany, Acoes) :-
+    buscarAcoes(Rest, IDCompany, Acoes).

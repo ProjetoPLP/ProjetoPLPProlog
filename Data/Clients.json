@@ -1,1 +1,1 @@
-[{"ident": 1, "name":"Levi", "age": "22", "cpf": "13387993471", "email": "email@example.com", "password": "12345", "cash": 4,"patrimony": 0,"canDeposit": false, "row": 2,"col": 2,"allAssets": []}]
+[{"ident": 1, "name":"Levi", "age": "22", "cpf": "13387993471", "email": "email@example.com", "password": "12345", "cash": 4,"patrimony": 0,"canDeposit": false, "row": 2,"col": 2,"allAssets": [[10,100]]}]
