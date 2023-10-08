@@ -23,7 +23,3 @@ getNewCompany(Company) :-
 randomCompanyPrice(CompanyPrice) :-
     random_between(10, 30, RandomPrice),
     format(atom(CompanyPrice), '~2f', [RandomPrice]).
-
-main:-
-    cadastrarCompany(1, R),
-    write(R), halt.

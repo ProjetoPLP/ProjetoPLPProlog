@@ -111,15 +111,3 @@ addCol(ID, AddCol):-
     NewCol is Col + AddCol,
     NewCompany = company(Ident, Name, Age, Cnpj, Actuation, Declaration, Code, Price, TrendIndicator, MinPrice, MaxPrice, StartPrice, Row, NewCol),
     editCompanyJSON(NewCompany).
-
-main :- 
-    %setPrice(1, 11111111),
-    %setTrendIndicator(1, 'aaaa'),
-    %setMinPrice(1, 22222222),
-    %setMaxPrice(1, 33333333),
-    %setStartPrice(1, 44444444),
-    %setRow(1, 88888888),
-    %setCol(1, 99999999),
-    %addRow(1, 1),
-    addCol(1, 1),
-    halt.
