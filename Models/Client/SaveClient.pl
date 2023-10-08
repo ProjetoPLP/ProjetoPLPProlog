@@ -61,7 +61,7 @@ removeClientJSON(Id) :-
 
 % ok
 getClient(Int, Clients) :- 
-    listarClientes(Out), 
+    listarClientes(Out),
     getClientsByID(Int, Out, Clients).
 
 % ok
@@ -78,7 +78,7 @@ existClientByEmail(Email, Result) :-
 % ok
 searchClientByEmail(_, [], false).
 searchClientByEmail(Email, [client(_, _, _, _, ClientEmail, _, _, _, _, _, _, _)|Rest], Result) :-
-    ClientEmail = Email,
-    write(Email),
+    string_lower(Email, LowerEmail), string_lower(ClientEmail, LowerClientEmail),
+    LowerEmail = LowerClientEmail,
     Result = true;
     searchClientByEmail(Email, Rest, Result).

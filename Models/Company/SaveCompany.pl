@@ -8,7 +8,8 @@ exibirCompaniesAux([], []).
 exibirCompaniesAux([H|T], [company(H.ident, H.name, H.age, H.cnpj, H.actuation, H.declaration, H.code, H.price, H.trendIndicator, H.minPrice, H.maxPrice, H.startPrice, H.row, H.col)|Rest]) :- 
     exibirCompaniesAux(T, Rest).
 
-listarCompanies(Out) :-
+% ok
+getCompanyJSON(Out) :-
 	lerJSON("../../Data/Companies.json", Companies),
 	exibirCompaniesAux(Companies , Result),
     Out = Result.
@@ -36,23 +37,24 @@ saveCompany(FilePath, Company) :-
     Company = company(Ident, Name, Age, Cnpj, Actuation, Declaration, Code, Price, TrendIndicator, MinPrice, MaxPrice, StartPrice, Row, Col),
     lerJSON(FilePath, File),
     companiesToJSON(File, ListaCompaniesJSON),
-    listarCompanies(Out), length(Out, Length), NewIdent is Length + 1,
+    getCompanyJSON(Out), length(Out, Length), NewIdent is Length + 1,
     companyToJSON(NewIdent,  Name, Age, Cnpj, Actuation, Declaration, Code, Price, TrendIndicator, MinPrice, MaxPrice, StartPrice, Row, Col, CompanyJSON),
     append(ListaCompaniesJSON, [CompanyJSON], Saida),
     open(FilePath, write, Stream), write(Stream, Saida), close(Stream).
 
-removerCompanyJSON([], _, []).
-removerCompanyJSON([H|T], H.ident, T).
-removerCompanyJSON([H|T], Ident, [H|Out]) :- removerCompanyJSON(T, Ident, Out).
+removeCompany([], _, []).
+removeCompany([H|T], H.ident, T).
+removeCompany([H|T], Ident, [H|Out]) :- removeCompany(T, Ident, Out).
 
 removeCompany(Id) :-
     lerJSON("../../Data/Companies.json", File),
-    removerCompanyJSON(File, Id, SaidaParcial),
+    removeCompany(File, Id, SaidaParcial),
     companiesToJSON(SaidaParcial, Saida),
     open("../../Data/Companies.json", write, Stream), write(Stream, Saida), close(Stream).
 
+% ok
 getCompany(Int, Company) :- 
-    listarCompanies(Out), 
+    getCompanyJSON(Out), 
     buscarCompanyPorId(Int, Out, Company).
 
 buscarCompanyPorId(_, [], _) :- fail.
