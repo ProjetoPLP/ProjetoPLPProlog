@@ -61,7 +61,7 @@ removeClientJSON(Id) :-
 
 % ok
 getClient(Int, Clients) :- 
-    listarClientes(Out),
+    getClientJSON(Out),
     getClientsByID(Int, Out, Clients).
 
 % ok

@@ -1,5 +1,6 @@
 :- consult('GetInfoForMakeLogin.pl').
 :- consult('SaveClient.pl').
+:- consult('LoginClient.pl').
 :- use_module(library(http/json)).
 
 fazerLogin(Result) :-
@@ -25,16 +26,10 @@ verificarSenha(PasswordClient, Client, Result) :-
     string_lower(PasswordClient, LowerPasswordClient),
     string_lower(Password, LowerPassword),
     LowerPasswordClient = LowerPassword,
-    clientesToJSON(Client, Saida),  % Correção: Mudança de "clienteToJSON" para "clientesToJSON"
-    open("../../Data/Login.json", write, Stream),
-    write(Stream, Saida),
-    close(Stream),
+    clientesToJSON(Client, Saida),
+    saveLogin(Saida),
     Result = true.
         
-clientesToJSON(Client, Saida) :-  % Correção: Mudança de "clienteToJSON" para "clientesToJSON"
+clientesToJSON(Client, Saida) :-
     Client = client(Ident, Name, Age, Cpf, Email, Password, Cash, Patrimony, CanDeposit, Row, Col, AllAssets),
     swritef(Saida, '{"ident": %w, "name":"%w", "age": "%w", "cpf": "%w", "email": "%w", "password": "%w", "cash": %w,"patrimony": %w,"canDeposit": %w, "row": %w,"col": %w,"allAssets": %w}', [Ident,  Name, Age, Cpf, Email, Password, Cash, Patrimony, CanDeposit, Row, Col, AllAssets]).
-    
-main :- 
-    fazerLogin(Client),
-    write(Client).
