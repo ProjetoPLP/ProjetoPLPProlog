@@ -33,7 +33,7 @@ companiesToJSON([H|T], [X|Out]) :-
 	companyToJSON(H.ident, H.name, H.age, H.cnpj, H.actuation, H.declaration, H.code, H.price, H.trendIndicator, H.minPrice, H.maxPrice, H.startPrice, H.row, H.col, X), 
 	companiesToJSON(T, Out).
 
-saveCompany(FilePath, Company) :- 
+saveCompanyJSON(FilePath, Company) :- 
     Company = company(Ident, Name, Age, Cnpj, Actuation, Declaration, Code, Price, TrendIndicator, MinPrice, MaxPrice, StartPrice, Row, Col),
     lerJSON(FilePath, File),
     companiesToJSON(File, ListaCompaniesJSON),
@@ -61,3 +61,8 @@ buscarCompanyPorId(_, [], _) :- fail.
 buscarCompanyPorId(Ident, [company(Ident, Name, Age, Cnpj, Actuation, Declaration, Code, Price, TrendIndicator, MinPrice, MaxPrice, StartPrice, Row, Col)|_], company(Ident,  Name, Age, Cnpj, Actuation, Declaration, Code, Price, TrendIndicator, MinPrice, MaxPrice, StartPrice, Row, Col)).
 buscarCompanyPorId(Ident, [_|Resto], CompanyeEncontrado) :-
     buscarCompanyPorId(Ident, Resto, CompanyeEncontrado).
+
+main:-
+    %existCompanyByName('levi', Result),
+    Company = company(1, 'levi', '2023', '1111', 'atua', 'declaro', 'LEVI', 0, '|', 0, 0, 0, 0, 0),
+    saveCompany('../../Data/Companies.json', Company), halt.
