@@ -12,15 +12,18 @@ printLines(Stream) :-
 printLines(_).
 
 
+writeMatrixValue(Arquivo, Linha, Coluna, Valor) :-
+    atom_chars(Valor, CharList),
+    writeValue(Arquivo, Linha, Coluna, CharList).
+    
 
-
-
-
-writeMatrixValue(Arquivo, Linha, Coluna, NovoValor) :-
+writeValue(_, _, _, []) :- !.
+writeValue(Arquivo, Linha, Coluna, [H|T]) :-
     leia_arquivo(Arquivo, Linhas),
-    substitua_valor(Linha, Coluna, NovoValor, Linhas, NovaLista),
-    gravar_arquivo(Arquivo, NovaLista).
-
+    substitua_valor(Linha, Coluna, H, Linhas, NovaLista),
+    gravar_arquivo(Arquivo, NovaLista),
+    C1 is Coluna + 1,
+    writeValue(Arquivo, Linha, C1, T).
 
 leia_arquivo(Arquivo, Linhas) :-
     open(Arquivo, read, Stream),
@@ -47,12 +50,11 @@ substitua_valor_na_linha(Linha, Coluna, NovoValor, [L|Resto], N, [L|RestoSubstit
     N1 is N + 1,
     substitua_valor_na_linha(Linha, Coluna, NovoValor, Resto, N1, RestoSubstituido).
 
-
 substitua_na_coluna(Coluna, NovoValor, ListaOriginal, ListaSubstituida) :-
     substitua_na_coluna(Coluna, NovoValor, ListaOriginal, ListaSubstituida, 1).
 
 substitua_na_coluna(_, _, [], [], _).
-substitua_na_coluna(Coluna, NovoValor, [C|Resto], [NovoValor|RestoSubstituido], N) :-
+substitua_na_coluna(Coluna, NovoValor, [_|Resto], [NovoValor|RestoSubstituido], N) :-
     N =:= Coluna,
     N1 is N + 1,
     substitua_na_coluna(Coluna, NovoValor, Resto, RestoSubstituido, N1).
@@ -60,7 +62,6 @@ substitua_na_coluna(Coluna, NovoValor, [C|Resto], [C|RestoSubstituido], N) :-
     N \= Coluna,
     N1 is N + 1,
     substitua_na_coluna(Coluna, NovoValor, Resto, RestoSubstituido, N1).
-
 
 gravar_arquivo(Arquivo, Linhas) :-
     open(Arquivo, write, Stream),
@@ -70,12 +71,3 @@ gravar_arquivo(Arquivo, Linhas) :-
 escreva_linha(Stream, Linha) :-
     maplist(put_code(Stream), Linha),
     nl(Stream).
-
-
-
-
-
-
-main :-
-    writeMatrixValue("../Sprites/Wallet/wallet_base.txt", 5, 3, "t").
-    % imprimir_arquivo("../Sprites/Wallet/wallet_base.txt").
