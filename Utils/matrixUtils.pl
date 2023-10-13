@@ -1,3 +1,4 @@
+% Printa no terminal o conteúdo do arquivo .txt
 printMatrix(NomeArquivo) :-
     open(NomeArquivo, read, Stream),
     printLines(Stream),
@@ -11,9 +12,9 @@ printLines(Stream) :-
 
 printLines(_).
 
-
+% Sobrescreve no arquivo .txt um novo valor
 writeMatrixValue(Arquivo, Linha, Coluna, Valor) :-
-    atom_chars(Valor, CharList),
+    string_chars(Valor, CharList),
     writeValue(Arquivo, Linha, Coluna, CharList).
     
 
