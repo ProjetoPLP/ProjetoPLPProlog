@@ -1,20 +1,6 @@
-:- consult('../Utils/matrixUtils.pl').
+:- consult('updateUtils.pl').
+:- consult('matrixUtils.pl').
 :- consult('../Models/Company/GetSetAttrsCompany.pl').
-:- consult('../Utils/updateUtils.pl').
-:- consult('../Models/Company/GetSetAttrsCompany.pl').
-
-updateHBGraphCandle(Arquivo, Linha, Coluna):-
-    writeMatrixValue(Arquivo, Linha, Coluna, "❚").
-
-
-cleanHBGraph(FilePath, 26) :-
-    replicate("", 74, Spaces),
-    writeMatrixValue(FilePath, 26, 2, Spaces), !.
-cleanHBGraph(FilePath, Row) :-
-    replicate("", 74, Spaces),
-    writeMatrixValue(FilePath, Row, 2, Spaces),
-    NextRow is Row + 1,
-    cleanHBGraph(FilePath, NextRow).
 
 
 checkNewHBCandle(ID, OldPrice, NewPrice) :-
@@ -48,5 +34,13 @@ checkNewHBCandle(ID, OldPrice, NewPrice) :-
         getRow(ID, Row),
         setRow(ID, Row)
     ).
-    
 
+
+cleanHBGraph(FilePath, 26) :-
+    replicate("", 74, Spaces),
+    writeMatrixValue(FilePath, 26, 2, Spaces), !.
+cleanHBGraph(FilePath, Row) :-
+    replicate("", 74, Spaces),
+    writeMatrixValue(FilePath, Row, 2, Spaces),
+    NextRow is Row + 1,
+    cleanHBGraph(FilePath, NextRow).
