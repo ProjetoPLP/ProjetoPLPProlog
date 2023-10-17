@@ -3,66 +3,72 @@
 :- consult('../Models/Company/GetSetAttrsCompany.pl').
 
 
-attCompanyLineRow(IdComp, OldPrice, NewPrice) :-
-    checkCompanyColumn(IdComp),
+% Atualiza em uma empresa, a partir do seu ID, a nova linha e coluna baseado no novo preço
+attCompanyLineRow(JSONPath, IdComp, OldPrice, NewPrice) :-
+    checkCompanyColumn(JSONPath, IdComp),
     (   NewPrice > OldPrice ->
-        addRow(IdComp, -1),
-        checkCompanyRowOverflow(IdComp)
+        addRow(JSONPath, IdComp, -1),
+        checkCompanyRowOverflow(JSONPath, IdComp)
     ;   NewPrice < OldPrice ->
-        addRow(IdComp, 1),
-        checkCompanyRowUnderflow(IdComp)
-    ;   addRow(IdComp, 0)
+        addRow(JSONPath, IdComp, 1),
+        checkCompanyRowUnderflow(JSONPath, IdComp)
+    ;   addRow(JSONPath, IdComp, 0)
     ).
 
 
-cleanHBGraph(FilePath, 26) :-
-    replicate("", 74, Spaces),
-    writeMatrixValue(FilePath, 26, 2, Spaces), !.
-cleanHBGraph(FilePath, Row) :-
-    replicate("", 74, Spaces),
-    writeMatrixValue(FilePath, Row, 2, Spaces),
-    NextRow is Row + 1,
-    cleanHBGraph(FilePath, NextRow).
-
-
-checkCompanyColumn(idComp) :-
-    getCol(idComp, ColValue),
+% Verifica se a coluna do gráfico chegou no limite
+checkCompanyColumn(JSONPath, IdComp) :-
+    getCol(JSONPath, IdComp, ColValue),
     (   ColValue > 74 ->
-        number_string(idComp, IDString),
-        string_concat('../Model/Company/HomeBrokers/homebroker', IDString, Path0),
-        string_concat(Path0, '.txt', Path),
+        number_string(IdComp, IDString),
+        string_concat("../Models/Company/HomeBrokers/homebroker", IDString, TempPath),
+        string_concat(TempPath, ".txt", Path),
         cleanHBGraph(Path, 6),
-        setCol(ID, 3)
-    ;   addCol(IdComp, 0)
+        setCol(JSONPath, IdComp, 3)
+    ;   addCol(JSONPath, IdComp, 0)
     ).
 
 
-checkCompanyRowOverflow(IdComp) :-
-    getRow(IdComp, RowValue),
+% Verifica se a linha do gráfico chegou no limite superior
+checkCompanyRowOverflow(JSONPath, IdComp) :-
+    getRow(JSONPath, IdComp, RowValue),
     (   RowValue < 6 ->
-        number_string(idComp, IDString),
-        string_concat('../Model/Company/HomeBrokers/homebroker', IDString, Path0),
-        string_concat(Path0, '.txt', Path),
+        number_string(IdComp, IDString),
+        string_concat("../Models/Company/HomeBrokers/homebroker", IDString, TempPath),
+        string_concat(TempPath, ".txt", Path),
         cleanHBGraph(Path, 6),
-        setRow(IdComp, 26)
-    ;   addRow(IdComp, 0)
+        setRow(JSONPath, IdComp, 26)
+    ;   addRow(JSONPath, IdComp, 0)
     ).
 
 
-checkCompanyRowUnderflow(IdComp) :-
-    getRow(IdComp, RowValue),
+% Verifica se a linha do gráfico chegou no limite inferior
+checkCompanyRowUnderflow(JSONPath, IdComp) :-
+    getRow(JSONPath, IdComp, RowValue),
     (   RowValue > 26 ->
-        number_string(idComp, IDString),
-        string_concat('../Model/Company/HomeBrokers/homebroker', IDString, Path0),
-        string_concat(Path0, '.txt', Path),
+        number_string(IdComp, IDString),
+        string_concat("../Model/Company/HomeBrokers/homebroker", IDString, TempPath),
+        string_concat(TempPath, ".txt", Path),
         cleanHBGraph(Path, 6),
-        setRow(IdComp, 6)
-    ;   addRow(IdComp, 0)
+        setRow(JSONPath, IdComp, 6)
+    ;   addRow(JSONPath, IdComp, 0)
     ).
 
 
-attAllCompanyColumn([], _).
-attAllCompanyColumn([X|Xs]) :-
-    getIdent(X, IdComp),
-    addCol(IdComp, 3),
-    attAllCompanyColumn(Xs).
+% Atualiza a próxima coluna em todos os gráficos
+attAllCompanyColumn(_, []) :- !.
+attAllCompanyColumn(JSONPath, [X|Xs]) :-
+    getIdent(JSONPath, X, IdComp),
+    addCol(JSONPath, IdComp, 3),
+    attAllCompanyColumn(JSONPath, Xs).
+
+
+% Reinicia o gráfico do Home Broker sobrescrevendo todos os espaços com caracteres vazios
+cleanHBGraph(JSONPath, 26) :-
+    replicate("", 74, Spaces),
+    writeMatrixValue(JSONPath, Spaces, 26, 2), !.
+cleanHBGraph(JSONPath, Row) :-
+    replicate("", 74, Spaces),
+    writeMatrixValue(JSONPath, Spaces, Row, 2),
+    NextRow is Row + 1,
+    cleanHBGraph(JSONPath, NextRow).
