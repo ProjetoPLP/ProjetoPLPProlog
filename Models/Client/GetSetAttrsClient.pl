@@ -42,71 +42,62 @@ getQtdAssetsInCompany(ID, IDCompany, Acoes) :-
     Client = client(_, _, _, _, _, _, _, _, _, _, _, AllAssets),
     searchAcoes(AllAssets, IDCompany,  Acoes).
     
-setCash(ID, NewCash, Result) :- 
+setCash(ID, NewCash) :- 
     getClient(ID, Client),
     Client = client(Ident, Name, Age, Cpf, Email, Password, Cash, Patrimony, CanDeposit, Row, Col, AllAssets),
     NewClient = client(Ident, Name, Age, Cpf, Email, Password, NewCash, Patrimony, CanDeposit, Row, Col, AllAssets),
-    editClientJSON(NewClient),
-    Result = true.
+    editClientJSON(NewClient).
 
-setPatrimony(ID, NewPatrimony, Result) :- 
+setPatrimony(ID, NewPatrimony) :- 
     getClient(ID, Client),
     Client = client(Ident, Name, Age, Cpf, Email, Password, Cash, Patrimony, CanDeposit, Row, Col, AllAssets),
     NewClient = client(Ident, Name, Age, Cpf, Email, Password, Cash, NewPatrimony, CanDeposit, Row, Col, AllAssets),
-    editClientJSON(NewClient),
-    Result = true.
+    editClientJSON(NewClient).
 
-setCanDeposit(ID, NewCanDeposit, Result) :- 
+setCanDeposit(ID, NewCanDeposit) :- 
     getClient(ID, Client),
     Client = client(Ident, Name, Age, Cpf, Email, Password, Cash, Patrimony, CanDeposit, Row, Col, AllAssets),
     NewClient = client(Ident, Name, Age, Cpf, Email, Password, Cash, Patrimony, NewCanDeposit, Row, Col, AllAssets),
-    editClientJSON(NewClient),
-    Result = true.
+    editClientJSON(NewClient).
 
-setAllAssets(ID, NewAllAssets, Result) :- 
+setAllAssets(ID, NewAllAssets) :- 
     getClient(ID, Client),
     Client = client(Ident, Name, Age, Cpf, Email, Password, Cash, Patrimony, CanDeposit, Row, Col, AllAssets),
     NewClient = client(Ident, Name, Age, Cpf, Email, Password, Cash, Patrimony, CanDeposit, Row, Col, NewAllAssets),
-    editClientJSON(NewClient),
-    Result = true.
+    editClientJSON(NewClient).
 
-setRow(ID, NewRow, Result) :- 
+setRow(ID, NewRow) :- 
     getClient(ID, Client),
     Client = client(Ident, Name, Age, Cpf, Email, Password, Cash, Patrimony, CanDeposit, Row, Col, AllAssets),
     NewClient = client(Ident, Name, Age, Cpf, Email, Password, Cash, Patrimony, CanDeposit, NewRow, Col, AllAssets),
-    editClientJSON(NewClient),
-    Result = true.
+    editClientJSON(NewClient).
     
-setCol(ID, NewCol, Result) :- 
+setCol(ID, NewCol) :- 
     getClient(ID, Client),
     Client = client(Ident, Name, Age, Cpf, Email, Password, Cash, Patrimony, CanDeposit, Row, Col, AllAssets),
     NewClient = client(Ident, Name, Age, Cpf, Email, Password, Cash, Patrimony, CanDeposit, Row, NewCol, AllAssets),
-    editClientJSON(NewClient),
-    Result = true.
+    editClientJSON(NewClient).
 
-addCash(ID, AddCash, Result) :- 
+addCash(ID, AddCash) :- 
     getClient(ID, Client),
     Client = client(Ident, Name, Age, Cpf, Email, Password, Cash, Patrimony, CanDeposit, Row, Col, AllAssets),
     NewCash is (Cash + AddCash),
     NewClient = client(Ident, Name, Age, Cpf, Email, Password, NewCash, Patrimony, CanDeposit, Row, Col, AllAssets),
-    editClientJSON(NewClient),
-    Result = true.
+    editClientJSON(NewClient).
 
-addRow(ID, AddRow, Result) :- 
+addRow(ID, AddRow) :- 
     getClient(ID, Client),
     Client = client(Ident, Name, Age, Cpf, Email, Password, Cash, Patrimony, CanDeposit, Row, Col, AllAssets),
     NewRow is (Row + AddRow),
     NewClient = client(Ident, Name, Age, Cpf, Email, Password, Cash, Patrimony, CanDeposit, NewRow, Col, AllAssets),
-    editClientJSON(NewClient),
-    Result = true.
+    editClientJSON(NewClient).
 
-addCol(ID, AddCol, Result) :- 
+addCol(ID, AddCol) :- 
     getClient(ID, Client),
     Client = client(Ident, Name, Age, Cpf, Email, Password, Cash, Patrimony, CanDeposit, Row, Col, AllAssets),
     NewCol is (Col + AddCol),
     NewClient = client(Ident, Name, Age, Cpf, Email, Password, Cash, Patrimony, CanDeposit, Row, NewCol, AllAssets),
-    editClientJSON(NewClient),
-    Result = true.
+    editClientJSON(NewClient).
 
 searchAcoes(AllAssets, IDCompany, Acoes) :-
     buscarAcoes(AllAssets, IDCompany, Acoes).

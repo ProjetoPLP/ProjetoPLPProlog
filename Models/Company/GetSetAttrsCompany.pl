@@ -1,113 +1,113 @@
 :- consult('SaveCompany.pl').
 :- consult('ModelCompany.pl').
 
-getName(ID, Name) :- 
-    getCompany(ID, Company),
+getName(JSONPath, ID, Name) :- 
+    getCompany(JSONPath, ID, Company),
     Company = company(_, Name, _, _, _, _, _, _, _, _, _, _, _, _).
 
-getAge(ID, Age) :- 
-    getCompany(ID, Company),
+getAge(JSONPath, ID, Age) :- 
+    getCompany(JSONPath, ID, Company),
     Company = company(_, _, Age, _, _, _, _, _, _, _, _, _, _, _).
 
-getCNPJ(ID, CNPJ) :- 
-    getCompany(ID, Company),
+getCNPJ(JSONPath, ID, CNPJ) :- 
+    getCompany(JSONPath, ID, Company),
     Company = company(_, _, _, CNPJ, _, _, _, _, _, _, _, _, _, _).
 
-getActuation(ID, Actuation) :- 
-    getCompany(ID, Company),
+getActuation(JSONPath, ID, Actuation) :- 
+    getCompany(JSONPath, ID, Company),
     Company = company(_, _, _, _, Actuation, _, _, _, _, _, _, _, _, _).
 
-getDeclaration(ID, Declaration) :- 
-    getCompany(ID, Company),
+getDeclaration(JSONPath, ID, Declaration) :- 
+    getCompany(JSONPath, ID, Company),
     Company = company(_, _, _, _, _, Declaration, _, _, _, _, _, _, _, _).
 
-getCode(ID, Code) :-
-    getCompany(ID, Company),
+getCode(JSONPath, ID, Code) :-
+    getCompany(JSONPath, ID, Company),
     Company = company(_, _, _, _, _, _, Code, _, _, _, _, _, _, _).
 
-getPrice(ID, Price) :-
-    getCompany(ID, Company),
+getPrice(JSONPath, ID, Price) :-
+    getCompany(JSONPath, ID, Company),
     Company = company(_, _, _, _, _, _, _, Price, _, _, _, _, _, _).
 
-getTrendIndicator(ID, TrendIndicator) :-
-    getCompany(ID, Company),
+getTrendIndicator(JSONPath, ID, TrendIndicator) :-
+    getCompany(JSONPath, ID, Company),
     Company = company(_, _, _, _, _, _, _, _, TrendIndicator, _, _, _, _, _).
 
-getMinPrice(ID, MinPrice) :-
-    getCompany(ID, Company),
+getMinPrice(JSONPath, ID, MinPrice) :-
+    getCompany(JSONPath, ID, Company),
     Company = company(_, _, _, _, _, _, _, _, _, MinPrice, _, _, _, _).
 
-getMaxPrice(ID, MaxPrice) :-
-    getCompany(ID, Company),
+getMaxPrice(JSONPath, ID, MaxPrice) :-
+    getCompany(JSONPath, ID, Company),
     Company = company(_, _, _, _, _, _, _, _, _, _, MaxPrice, _, _, _).
 
-getStartPrice(ID, StartPrice) :-
-    getCompany(ID, Company),
+getStartPrice(JSONPath, ID, StartPrice) :-
+    getCompany(JSONPath, ID, Company),
     Company = company(_, _, _, _, _, _, _, _, _, _, _, StartPrice, _, _).
 
-getRow(ID, Row) :-
-    getCompany(ID, Company),
+getRow(JSONPath, ID, Row) :-
+    getCompany(JSONPath, ID, Company),
     Company = company(_, _, _, _, _, _, _, _, _, _, _, _, Row, _).
 
-getCol(ID, Col) :-
-    getCompany(ID, Company),
+getCol(JSONPath, ID, Col) :-
+    getCompany(JSONPath, ID, Company),
     Company = company(_, _, _, _, _, _, _, _, _, _, _, _, _, Col).
 
-getIdent(Company, Ident) :- 
+getIdent(JSONPath, Company, Ident) :- 
     Company = company(Ident, _, _, _, _, _, _, _, _, _, _, _, _, _).
 
-setPrice(ID, NewPrice):-
-    getCompany(ID, Company),
+setPrice(JSONPath, ID, NewPrice):-
+    getCompany(JSONPath, ID, Company),
     Company = company(Ident, Name, Age, Cnpj, Actuation, Declaration, Code, Price, TrendIndicator, MinPrice, MaxPrice, StartPrice, Row, Col),
     NewCompany = company(Ident, Name, Age, Cnpj, Actuation, Declaration, Code, NewPrice, TrendIndicator, MinPrice, MaxPrice, StartPrice, Row, Col),
-    editCompanyJSON(NewCompany).
+    editCompanyJSON(JSONPath, NewCompany).
 
-setTrendIndicator(ID, NewTrendIndicator):-
-    getCompany(ID, Company),
+setTrendIndicator(JSONPath, ID, NewTrendIndicator):-
+    getCompany(JSONPath, ID, Company),
     Company = company(Ident, Name, Age, Cnpj, Actuation, Declaration, Code, Price, TrendIndicator, MinPrice, MaxPrice, StartPrice, Row, Col),
     NewCompany = company(Ident, Name, Age, Cnpj, Actuation, Declaration, Code, Price, NewTrendIndicator, MinPrice, MaxPrice, StartPrice, Row, Col),
-    editCompanyJSON(NewCompany).
+    editCompanyJSON(JSONPath, NewCompany).
 
-setMinPrice(ID, NewMinPrice):-
-    getCompany(ID, Company),
+setMinPrice(JSONPath, ID, NewMinPrice):-
+    getCompany(JSONPath, ID, Company),
     Company = company(Ident, Name, Age, Cnpj, Actuation, Declaration, Code, Price, TrendIndicator, MinPrice, MaxPrice, StartPrice, Row, Col),
     NewCompany = company(Ident, Name, Age, Cnpj, Actuation, Declaration, Code, Price, TrendIndicator, NewMinPrice, MaxPrice, StartPrice, Row, Col),
-    editCompanyJSON(NewCompany).
+    editCompanyJSON(JSONPath, NewCompany).
 
-setMaxPrice(ID, NewMaxPrice):-
-    getCompany(ID, Company),
+setMaxPrice(JSONPath, ID, NewMaxPrice):-
+    getCompany(JSONPath, ID, Company),
     Company = company(Ident, Name, Age, Cnpj, Actuation, Declaration, Code, Price, TrendIndicator, MinPrice, MaxPrice, StartPrice, Row, Col),
     NewCompany = company(Ident, Name, Age, Cnpj, Actuation, Declaration, Code, Price, TrendIndicator, MinPrice, NewMaxPrice, StartPrice, Row, Col),
-    editCompanyJSON(NewCompany).
+    editCompanyJSON(JSONPath, NewCompany).
 
-setStartPrice(ID, NewStartPrice):-
-    getCompany(ID, Company),
+setStartPrice(JSONPath, ID, NewStartPrice):-
+    getCompany(JSONPath, ID, Company),
     Company = company(Ident, Name, Age, Cnpj, Actuation, Declaration, Code, Price, TrendIndicator, MinPrice, MaxPrice, StartPrice, Row, Col),
     NewCompany = company(Ident, Name, Age, Cnpj, Actuation, Declaration, Code, Price, TrendIndicator, MinPrice, MaxPrice, NewStartPrice, Row, Col),
-    editCompanyJSON(NewCompany).
+    editCompanyJSON(JSONPath, NewCompany).
 
-setRow(ID, NewRow):-
-    getCompany(ID, Company),
+setRow(JSONPath, ID, NewRow):-
+    getCompany(JSONPath, ID, Company),
     Company = company(Ident, Name, Age, Cnpj, Actuation, Declaration, Code, Price, TrendIndicator, MinPrice, MaxPrice, StartPrice, Row, Col),
     NewCompany = company(Ident, Name, Age, Cnpj, Actuation, Declaration, Code, Price, TrendIndicator, MinPrice, MaxPrice, StartPrice, NewRow, Col),
-    editCompanyJSON(NewCompany).
+    editCompanyJSON(JSONPath, NewCompany).
 
-setCol(ID, NewCol):-
-    getCompany(ID, Company),
+setCol(JSONPath, ID, NewCol):-
+    getCompany(JSONPath, ID, Company),
     Company = company(Ident, Name, Age, Cnpj, Actuation, Declaration, Code, Price, TrendIndicator, MinPrice, MaxPrice, StartPrice, Row, Col),
     NewCompany = company(Ident, Name, Age, Cnpj, Actuation, Declaration, Code, Price, TrendIndicator, MinPrice, MaxPrice, StartPrice, Row, NewCol),
-    editCompanyJSON(NewCompany).
+    editCompanyJSON(JSONPath, NewCompany).
 
-addRow(ID, AddRow):-
-    getCompany(ID, Company),
+addRow(JSONPath, ID, AddRow):-
+    getCompany(JSONPath, ID, Company),
     Company = company(Ident, Name, Age, Cnpj, Actuation, Declaration, Code, Price, TrendIndicator, MinPrice, MaxPrice, StartPrice, Row, Col),
     NewRow is Row + AddRow,
     NewCompany = company(Ident, Name, Age, Cnpj, Actuation, Declaration, Code, Price, TrendIndicator, MinPrice, MaxPrice, StartPrice, NewRow, Col),
-    editCompanyJSON(NewCompany).
+    editCompanyJSON(JSONPath, NewCompany).
 
-addCol(ID, AddCol):-
-    getCompany(ID, Company),
+addCol(JSONPath, ID, AddCol):-
+    getCompany(JSONPath, ID, Company),
     Company = company(Ident, Name, Age, Cnpj, Actuation, Declaration, Code, Price, TrendIndicator, MinPrice, MaxPrice, StartPrice, Row, Col),
     NewCol is Col + AddCol,
     NewCompany = company(Ident, Name, Age, Cnpj, Actuation, Declaration, Code, Price, TrendIndicator, MinPrice, MaxPrice, StartPrice, Row, NewCol),
-    editCompanyJSON(NewCompany).
+    editCompanyJSON(JSONPath, NewCompany).
