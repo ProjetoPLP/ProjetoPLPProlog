@@ -2,13 +2,13 @@
 :- consult('SaveClient.pl').
 :- consult('ModelClient.pl').
 
-addAsset(ClientID, CompanyID, Qtd, Result) :- 
-    getClient(ClientID, Client),
+addAsset(JSONPath, ClientID, CompanyID, Qtd, Result) :- 
+    getClient(JSONPath, ClientID, Client),
     Client = client(Ident, Name, Age, Cpf, Email, Password, Cash, Patrimony, CanDeposit, Row, Col, AllAssets),
     exam(AllAssets, CompanyID, Qtd, NewAllAssets),
     deleteZeroOrNegative(NewAllAssets, NewAllAssetsPositive),
     NewClient = client(Ident, Name, Age, Cpf, Email, Password, Cash, Patrimony, CanDeposit, Row, Col, NewAllAssetsPositive),
-    editClientJSON(NewClient),
+    editClientJSON(JSONPath, NewClient),
     Result = true.
 
 exam(AllAssets, CompanyID, Qtd, NewAllAssets) :-
