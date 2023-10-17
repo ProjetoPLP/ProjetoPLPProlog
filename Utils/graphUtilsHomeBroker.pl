@@ -3,40 +3,6 @@
 :- consult('../Models/Company/GetSetAttrsCompany.pl').
 
 
-checkNewHBCandle(ID, OldPrice, NewPrice) :-
-    (   NewPrice > OldPrice,
-        getRow(ID, 6) ->
-        number_string(ID, IDString),
-        string_concat('../Model/Company/HomeBrokers/homebroker', IDString, Path0),
-        string_concat(Path0, '.txt', Path),
-        cleanHBGraph(Path, 6),
-        getRow(ID, Row),
-        newRow is Row + 20,
-        setRow(ID, newRow)
-    ;   NewPrice > OldPrice ->
-        getRow(ID, Row),
-        newRow is Row - 1,
-        setRow(ID, newRow)
-    ;   NewPrice < OldPrice,
-        getRow(ID, 26) ->
-        number_string(ID, IDString),
-        string_concat('../Model/Company/HomeBrokers/homebroker', IDString, Path0),
-        string_concat(Path0, '.txt', Path),
-        cleanHBGraph(Path, 6),
-        getRow(ID, Row),
-        newRow is Row - 20,
-        setRow(ID, newRow)
-    ;   NewPrice < OldPrice ->
-        getRow(ID, Row),
-        newRow is Row + 1,
-        setRow(ID, newRow)
-    ;   true ->
-        getRow(ID, Row),
-        setRow(ID, Row)
-    ).
-
-
-
 attCompanyLineRow(IdComp, OldPrice, NewPrice) :-
     checkCompanyColumn(IdComp),
     (   NewPrice > OldPrice ->
