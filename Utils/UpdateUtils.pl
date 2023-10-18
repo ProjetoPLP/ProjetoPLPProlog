@@ -41,5 +41,5 @@ getCompanyNameCol(Name, Col, R) :-
 
 % Formata as casas decimais de um número para uma
 format(Num, R) :-
-    Rounded is round(Num * 10),
-    R is Rounded / 10.
+    format(atom(Formated), '~1f', [Num]),
+    atom_number(Formated, R).
