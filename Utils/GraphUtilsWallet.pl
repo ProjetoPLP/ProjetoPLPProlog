@@ -7,59 +7,59 @@
 attClientLineRow(JSONPath, IdUser, OldPatrimony, NewPatrimony) :-
     checkClientColumn(JSONPath, IdUser),
     (   NewPatrimony > OldPatrimony ->
-        addRow(JSONPath, IdUser, -1),
+        addUserRow(JSONPath, IdUser, -1),
         checkClientRowOverflow(JSONPath, IdUser)
     ;   NewPatrimony < OldPatrimony ->
-        addRow(JSONPath, IdUser, 1),
+        addUserRow(JSONPath, IdUser, 1),
         checkClientRowUnderflow(JSONPath, IdUser)
-    ;   addRow(JSONPath, IdUser, 0)
+    ;   addUserRow(JSONPath, IdUser, 0)
     ).
 
 
 % Verifica se a coluna do gráfico chegou no limite
 checkClientColumn(JSONPath, IdUser) :-
-    getCol(JSONPath, IdUser, ColValue),
+    getUserCol(JSONPath, IdUser, ColValue),
     (   ColValue > 95 ->
         number_string(IdUser, IDString),
         string_concat("../Models/Client/Wallets/wallet", IDString, TempPath),
         string_concat(TempPath, ".txt", Path),
         cleanWLGraph(Path, 11),
-        setCol(JSONPath, IDComp, 51)
-    ;   addCol(JSONPath, IdUser, 0)
+        setUserCol(JSONPath, IDComp, 51)
+    ;   addUserCol(JSONPath, IdUser, 0)
     ).
 
 
 % Verifica se a linha do gráfico chegou no limite superior
 checkClientRowOverflow(JSONPath, IdUser) :-
-    getRow(JSONPath, IdUser, RowValue),
+    getUserRow(JSONPath, IdUser, RowValue),
     (   RowValue < 11 ->
         number_string(IdUser, IDString),
         string_concat("../Models/Client/Wallets/wallet", IDString, TempPath),
         string_concat(TempPath, ".txt", Path),
         cleanWLGraph(Path, 11),
-        setRow(JSONPath, IdUser, 20)
-    ;   addRow(JSONPath, IdUser, 0)
+        setUserRow(JSONPath, IdUser, 20)
+    ;   addUserRow(JSONPath, IdUser, 0)
     ).
 
 
 % Verifica se a linha do gráfico chegou no limite inferior
 checkClientRowUnderflow(JSONPath, IdUser) :-
-    getRow(JSONPath, IdUser, RowValue),
+    getUserRow(JSONPath, IdUser, RowValue),
     (   RowValue > 20 ->
         number_string(IdUser, IDString),
         string_concat("../Models/Client/Wallets/wallet", IDString, TempPath),
         string_concat(TempPath, ".txt", Path),
         cleanWLGraph(Path, 11),
-        setRow(JSONPath, IdUser, 11)
-    ;   addRow(JSONPath, IdUser, 0)
+        setUserRow(JSONPath, IdUser, 11)
+    ;   addUserRow(JSONPath, IdUser, 0)
     ).
 
 
 % Atualiza a próxima coluna em todos os gráficos
 attAllClientColumn(_, []) :- !.
 attAllClientColumn(JSONPath, [H|T]) :-
-    getIdent(JSONPath, H, IdUser),
-    addCol(JSONPath, IdUser, 2),
+    getUserIdent(JSONPath, H, IdUser),
+    addUserCol(JSONPath, IdUser, 2),
     attAllClientColumn(JSONPath, T).
 
 

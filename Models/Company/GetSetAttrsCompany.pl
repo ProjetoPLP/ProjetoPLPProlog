@@ -1,7 +1,7 @@
 :- consult('SaveCompany.pl').
 :- consult('ModelCompany.pl').
 
-getName(JSONPath, ID, Name) :- 
+getCompName(JSONPath, ID, Name) :- 
     getCompany(JSONPath, ID, Company),
     Company = company(_, Name, _, _, _, _, _, _, _, _, _, _, _, _).
 
@@ -45,15 +45,15 @@ getStartPrice(JSONPath, ID, StartPrice) :-
     getCompany(JSONPath, ID, Company),
     Company = company(_, _, _, _, _, _, _, _, _, _, _, StartPrice, _, _).
 
-getRow(JSONPath, ID, Row) :-
+getCompRow(JSONPath, ID, Row) :-
     getCompany(JSONPath, ID, Company),
     Company = company(_, _, _, _, _, _, _, _, _, _, _, _, Row, _).
 
-getCol(JSONPath, ID, Col) :-
+getCompCol(JSONPath, ID, Col) :-
     getCompany(JSONPath, ID, Company),
     Company = company(_, _, _, _, _, _, _, _, _, _, _, _, _, Col).
 
-getIdent(JSONPath, Company, Ident) :- 
+getCompIdent(JSONPath, Company, Ident) :- 
     Company = company(Ident, _, _, _, _, _, _, _, _, _, _, _, _, _).
 
 setPrice(JSONPath, ID, NewPrice):-
@@ -86,26 +86,26 @@ setStartPrice(JSONPath, ID, NewStartPrice):-
     NewCompany = company(Ident, Name, Age, Cnpj, Actuation, Declaration, Code, Price, TrendIndicator, MinPrice, MaxPrice, NewStartPrice, Row, Col),
     editCompanyJSON(JSONPath, NewCompany).
 
-setRow(JSONPath, ID, NewRow):-
+setCompRow(JSONPath, ID, NewRow):-
     getCompany(JSONPath, ID, Company),
     Company = company(Ident, Name, Age, Cnpj, Actuation, Declaration, Code, Price, TrendIndicator, MinPrice, MaxPrice, StartPrice, Row, Col),
     NewCompany = company(Ident, Name, Age, Cnpj, Actuation, Declaration, Code, Price, TrendIndicator, MinPrice, MaxPrice, StartPrice, NewRow, Col),
     editCompanyJSON(JSONPath, NewCompany).
 
-setCol(JSONPath, ID, NewCol):-
+setCompCol(JSONPath, ID, NewCol):-
     getCompany(JSONPath, ID, Company),
     Company = company(Ident, Name, Age, Cnpj, Actuation, Declaration, Code, Price, TrendIndicator, MinPrice, MaxPrice, StartPrice, Row, Col),
     NewCompany = company(Ident, Name, Age, Cnpj, Actuation, Declaration, Code, Price, TrendIndicator, MinPrice, MaxPrice, StartPrice, Row, NewCol),
     editCompanyJSON(JSONPath, NewCompany).
 
-addRow(JSONPath, ID, AddRow):-
+addCompRow(JSONPath, ID, AddRow):-
     getCompany(JSONPath, ID, Company),
     Company = company(Ident, Name, Age, Cnpj, Actuation, Declaration, Code, Price, TrendIndicator, MinPrice, MaxPrice, StartPrice, Row, Col),
     NewRow is Row + AddRow,
     NewCompany = company(Ident, Name, Age, Cnpj, Actuation, Declaration, Code, Price, TrendIndicator, MinPrice, MaxPrice, StartPrice, NewRow, Col),
     editCompanyJSON(JSONPath, NewCompany).
 
-addCol(JSONPath, ID, AddCol):-
+addCompCol(JSONPath, ID, AddCol):-
     getCompany(JSONPath, ID, Company),
     Company = company(Ident, Name, Age, Cnpj, Actuation, Declaration, Code, Price, TrendIndicator, MinPrice, MaxPrice, StartPrice, Row, Col),
     NewCol is Col + AddCol,

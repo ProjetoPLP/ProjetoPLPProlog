@@ -7,59 +7,59 @@
 attCompanyLineRow(JSONPath, IdComp, OldPrice, NewPrice) :-
     checkCompanyColumn(JSONPath, IdComp),
     (   NewPrice > OldPrice ->
-        addRow(JSONPath, IdComp, -1),
+        addCompRow(JSONPath, IdComp, -1),
         checkCompanyRowOverflow(JSONPath, IdComp)
     ;   NewPrice < OldPrice ->
-        addRow(JSONPath, IdComp, 1),
+        addCompRow(JSONPath, IdComp, 1),
         checkCompanyRowUnderflow(JSONPath, IdComp)
-    ;   addRow(JSONPath, IdComp, 0)
+    ;   addCompRow(JSONPath, IdComp, 0)
     ).
 
 
 % Verifica se a coluna do gráfico chegou no limite
 checkCompanyColumn(JSONPath, IdComp) :-
-    getCol(JSONPath, IdComp, ColValue),
+    getCompCol(JSONPath, IdComp, ColValue),
     (   ColValue > 74 ->
         number_string(IdComp, IDString),
         string_concat("../Models/Company/HomeBrokers/homebroker", IDString, TempPath),
         string_concat(TempPath, ".txt", Path),
         cleanHBGraph(Path, 6),
-        setCol(JSONPath, IdComp, 3)
-    ;   addCol(JSONPath, IdComp, 0)
+        setCompCol(JSONPath, IdComp, 3)
+    ;   addCompCol(JSONPath, IdComp, 0)
     ).
 
 
 % Verifica se a linha do gráfico chegou no limite superior
 checkCompanyRowOverflow(JSONPath, IdComp) :-
-    getRow(JSONPath, IdComp, RowValue),
+    getCompRow(JSONPath, IdComp, RowValue),
     (   RowValue < 6 ->
         number_string(IdComp, IDString),
         string_concat("../Models/Company/HomeBrokers/homebroker", IDString, TempPath),
         string_concat(TempPath, ".txt", Path),
         cleanHBGraph(Path, 6),
-        setRow(JSONPath, IdComp, 26)
-    ;   addRow(JSONPath, IdComp, 0)
+        setCompRow(JSONPath, IdComp, 26)
+    ;   addCompRow(JSONPath, IdComp, 0)
     ).
 
 
 % Verifica se a linha do gráfico chegou no limite inferior
 checkCompanyRowUnderflow(JSONPath, IdComp) :-
-    getRow(JSONPath, IdComp, RowValue),
+    getCompRow(JSONPath, IdComp, RowValue),
     (   RowValue > 26 ->
         number_string(IdComp, IDString),
         string_concat("../Models/Company/HomeBrokers/homebroker", IDString, TempPath),
         string_concat(TempPath, ".txt", Path),
         cleanHBGraph(Path, 6),
-        setRow(JSONPath, IdComp, 6)
-    ;   addRow(JSONPath, IdComp, 0)
+        setCompRow(JSONPath, IdComp, 6)
+    ;   addCompRow(JSONPath, IdComp, 0)
     ).
 
 
 % Atualiza a próxima coluna em todos os gráficos
 attAllCompanyColumn(_, []) :- !.
 attAllCompanyColumn(JSONPath, [X|Xs]) :-
-    getIdent(JSONPath, X, IdComp),
-    addCol(JSONPath, IdComp, 3),
+    getCompIdent(JSONPath, X, IdComp),
+    addCompCol(JSONPath, IdComp, 3),
     attAllCompanyColumn(JSONPath, Xs).
 
 

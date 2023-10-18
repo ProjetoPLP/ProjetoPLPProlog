@@ -8,7 +8,7 @@ existCompany(JSONPath, Id, R) :-
 
 existCompanyAux(_, _, [], false) :- !.
 existCompanyAux(JSONPath, Id, (H|T), R) :-
-    getIdent(JSONPath, H, CompId),
+    getCompIdent(JSONPath, H, CompId),
     (CompId =:= Id -> true ; existCompanyAux(JSONPath, Id, T, R)).
 
 
