@@ -33,3 +33,25 @@ deleteZeroOrNegative([[CompanyID, Qtd]|Rest], Filtered) :-
         Filtered = NewRest
     ),
     deleteZeroOrNegative(Rest, NewRest).
+
+
+removeAllClientsAsset(IdComp) :-
+    getClientJSON("../Data/Clients.json", Clients),
+    removeAllClientsAssetAux(IdComp, Clients).
+
+
+removeAllClientsAssetAux(_, []) :- !.
+removeAllClientsAssetAux(IdComp, [H|T]) :-
+    getUserIdent("../Data/Clients.json", H, IdUser),
+    getAllAssets("../Data/Clients.json", IdUser, AllAssets),
+    removeClientAsset(IdUser, IdComp, AllAssets),
+    removeAllClientsAssetAux(IdComp, T).
+
+
+removeClientAsset(_, _, []) :- !.
+removeClientAsset(IdUser, IdComp, [[CompanyID, Qtd]|T]) :-
+    (CompanyID =:= IdComp ->
+        addAsset("../Data/Clients.json", IdUser, IdComp, -Qtd)
+    ;
+        removeClientAsset(IdUser, IdComp, T)
+    ).
