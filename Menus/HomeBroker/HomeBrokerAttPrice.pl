@@ -46,7 +46,7 @@ attAllCompanyPriceGraph(JSONPath, IdComp, [Company|RestCompanies]) :-
     (CompanyId =:= IdComp ->
         attCurrentCompanyPriceGraph(JSONPath, IdComp),
         attAllCompanyPriceGraph(JSONPath, IdComp, RestCompanies)
-    ; isDown(JSONPath, CompanyId) ->
+    ; isDown(CompanyId) ->
         removeCompanyFromExchange(JSONPath, CompanyId),
         attAllCompanyPriceGraph(IdComp, RestCompanies)
     ;
@@ -85,4 +85,3 @@ attCompanyPriceGraph(JSONPath, IdComp) :-
     updateHBStockMinPrice(FilePath, NewMinPrice),
     updateHBStockStartPrice(FilePath, StartPrice),
     updateHBGraphCandle(FilePath, Row, Col).
-
