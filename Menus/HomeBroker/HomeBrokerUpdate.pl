@@ -4,14 +4,10 @@
 :- consult('../../Models/Company/GetSetAttrsCompany.pl').
 
 
-compFilePath(IdComp, FilePath) :-
-    string_concat("../Models/Company/HomeBrokers/homebroker", IdComp, Temp),
-    string_concat(Temp, ".txt", FilePath).
-
-
+% Atualiza todas as informações do Home Broker de uma determinada empresa
 updateHomeBroker(IdUser, IdComp) :-
     compFilePath(IdComp, FilePath),
-    %updateMatrixClock
+    % updateMatrixClock
     getCash("../Data/Clients.json", IdUser, Cash),
     updateHBCash(FilePath, Cash),
     getCompName("../Data/Companies.json", IdComp, Name),
@@ -28,6 +24,42 @@ updateHomeBroker(IdUser, IdComp) :-
     updateHBStockMinPrice(FilePath, MinPrice),
     getQtdAssetsInCompany("../Data/Clients.json", IdUser, IdComp, Stocks),
     updateHBOwnedStocks(FilePath, Stocks).
+
+compFilePath(IdComp, FilePath) :-
+    string_concat("../Models/Company/HomeBrokers/homebroker", IdComp, Temp),
+    string_concat(Temp, ".txt", FilePath).
+
+
+% Atualiza todas as informações do menu de compras em um Home Broker de uma determinada empresa
+updateHomeBrokerBuy(IdUser, IdComp) :-
+    resetMenu("./HomeBroker/BuySell/homebrokerBuy.txt", "../Sprites/HomeBroker/homebrokerBuy_base.txt"),
+    % updateMatrixClock
+    getCash("../Data/Clients.json", IdUser, Cash),
+    updateHBCash("./HomeBroker/BuySell/homebrokerBuy.txt", Cash),
+    getCompName("../Data/Companies.json", IdComp, Name),
+    updateHBCompanyName("./HomeBroker/BuySell/homebrokerBuy.txt", Name),
+    getCode("../Data/Companies.json", IdComp, Code),
+    updateHBCompanyCode("./HomeBroker/BuySell/homebrokerBuy.txt", Code),
+    getPrice("../Data/Companies.json", IdComp, Price), getTrendIndicator("../Data/Companies.json", IdComp, Trend),
+    updateHBStockPrice("./HomeBroker/BuySell/homebrokerBuy.txt", Price, Trend),
+    getQtdAssetsInCompany("../Data/Clients.json", IdUser, IdComp, Stocks),
+    updateHBOwnedStocks("./HomeBroker/BuySell/homebrokerBuy.txt", Stocks).
+
+
+% Atualiza todas as informações do menu de vendas em um Home Broker de uma determinada empresa
+updateHomeBrokerSell(IdUser, IdComp) :-
+    resetMenu("./HomeBroker/BuySell/homebrokerSell.txt", "../Sprites/HomeBroker/homebrokerSell_base.txt"),
+    % updateMatrixClock
+    getCash("../Data/Clients.json", IdUser, Cash),
+    updateHBCash("./HomeBroker/BuySell/homebrokerSell.txt", Cash),
+    getCompName("../Data/Companies.json", IdComp, Name),
+    updateHBCompanyName("./HomeBroker/BuySell/homebrokerSell.txt", Name),
+    getCode("../Data/Companies.json", IdComp, Code),
+    updateHBCompanyCode("./HomeBroker/BuySell/homebrokerSell.txt", Code),
+    getPrice("../Data/Companies.json", IdComp, Price), getTrendIndicator("../Data/Companies.json", IdComp, Trend),
+    updateHBStockPrice("./HomeBroker/BuySell/homebrokerSell.txt", Price, Trend),
+    getQtdAssetsInCompany("../Data/Clients.json", IdUser, IdComp, Stocks),
+    updateHBOwnedStocks("./HomeBroker/BuySell/homebrokerSell.txt", Stocks).
 
 
 updateHBStockPrice(FilePath, Price, TrendInd) :-
