@@ -73,7 +73,7 @@ getCode(Code) :-
     Code = UpperCode.
 
 existCompanyByName(Name, Result) :- 
-    getCompanyJSON(List),
+    getCompanyJSON("../Data/Companies.json", List),
     verifyIfExists(Name, List, Result).
 
 verifyIfExists(_, [], false).
