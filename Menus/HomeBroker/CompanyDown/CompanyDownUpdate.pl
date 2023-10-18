@@ -1,4 +1,5 @@
 :- consult('../../../Models/Company/GetSetAttrsCompany.pl').
+:- consult('../../../Models/Client/GetSetAttrsClient.pl').
 :- consult('../../../Models/Company/SaveCompany.pl').
 :- consult('../../../Utils/Company/UpdateUtils.pl').
 :- consult('../HomeBrokerUpdate.pl').
