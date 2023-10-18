@@ -33,6 +33,17 @@ companiesToJSON([H|T], [X|Out]) :-
 	companyToJSON(H.ident, H.name, H.age, H.cnpj, H.actuation, H.declaration, H.code, H.price, H.trendIndicator, H.minPrice, H.maxPrice, H.startPrice, H.row, H.col, X), 
 	companiesToJSON(T, Out).
 
+readFileTxt(FilePath, Text) :-
+    open(FilePath, read, Stream),
+    read_stream_to_codes(Stream, TextCodes),
+    close(Stream),
+    string_codes(Text, TextCodes).
+
+writeFileText(FilePath, TextContents) :-
+    open(FilePath, append, Stream),
+    write(Stream, TextContents),
+    close(Stream).
+
 saveCompanyJSON(FilePath, Company) :- 
     Company = company(Ident, Name, Age, Cnpj, Actuation, Declaration, Code, Price, TrendIndicator, MinPrice, MaxPrice, StartPrice, Row, Col),
     lerJSON(FilePath, File),
@@ -40,7 +51,11 @@ saveCompanyJSON(FilePath, Company) :-
     getCompanyJSON(Out), length(Out, Length), NewIdent is Length + 1,
     companyToJSON(NewIdent,  Name, Age, Cnpj, Actuation, Declaration, Code, Price, TrendIndicator, MinPrice, MaxPrice, StartPrice, Row, Col, CompanyJSON),
     append(ListaCompaniesJSON, [CompanyJSON], Saida),
-    open(FilePath, write, Stream), write(Stream, Saida), close(Stream).
+    open(FilePath, write, Stream), write(Stream, Saida), close(Stream),
+    readFileTxt('../../Sprites/HomeBroker/homebroker_base.txt', TextContents),
+    atom_concat('./HomeBrokers/homebroker', NewIdent, Temp),
+    atom_concat(Temp, '.txt', WalletFileName),
+    writeFileText(WalletFileName, TextContents).
 
 removeCompany([], _, []).
 removeCompany([H|T], H.ident, T).
