@@ -1,5 +1,5 @@
-:- consult('updateUtils.pl').
-:- consult('matrixUtils.pl').
+:- consult('UpdateUtils.pl').
+:- consult('MatrixUtils.pl').
 :- consult('../Models/Company/GetSetAttrsCompany.pl').
 
 
