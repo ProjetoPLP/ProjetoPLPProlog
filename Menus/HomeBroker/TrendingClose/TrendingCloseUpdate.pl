@@ -41,9 +41,9 @@ updateAllTCCompanyCode(FilePath, [H|T]) :-
 
 
 updateTCCompanyCode(FilePath, IdComp) :-
-    getCompanyCodePosition(IdComp, [Line|Row]),
+    getCompanyCodePosition(IdComp, [Row|Col]),
     getCode("../Data/Companies.json", IdComp, Code),
-    writeMatrixValue(FilePath, Code, Line, Row).
+    writeMatrixValue(FilePath, Code, Row, Col).
 
 
 updateAllTCCompanyVar(_, []) :- !.
@@ -54,11 +54,11 @@ updateAllTCCompanyVar(FilePath, [H|T]) :-
 
 
 updateTCCompanyVar(FilePath, IdComp) :-
-    getCompanyVarPosition(IdComp, [Line|Row]),
+    getCompanyVarPosition(IdComp, [Row|Col]),
     getVar(IdComp, Temp),
     fillLeft(Temp, 8, Var),
     string_length(Var, Len),
-    writeMatrixValue(FilePath, Var, Line, Row - Len).
+    writeMatrixValue(FilePath, Var, Row, Col - Len).
 
 
 updateAllCompaniesStartMaxMinPrice([]).
