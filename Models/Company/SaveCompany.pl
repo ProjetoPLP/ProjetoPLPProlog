@@ -39,7 +39,7 @@ readFileTxt(FilePath, Text) :-
     close(Stream),
     string_codes(Text, TextCodes).
 
-writeFileText(FilePath, TextContents) :-
+writeFileTxt(FilePath, TextContents) :-
     open(FilePath, append, Stream),
     write(Stream, TextContents),
     close(Stream).
@@ -55,7 +55,7 @@ saveCompanyJSON(FilePath, Company) :-
     readFileTxt('../../Sprites/HomeBroker/homebroker_base.txt', TextContents),
     atom_concat('./HomeBrokers/homebroker', NewIdent, Temp),
     atom_concat(Temp, '.txt', WalletFileName),
-    writeFileText(WalletFileName, TextContents).
+    writeFileTxt(WalletFileName, TextContents).
 
 removeCompany([], _, []).
 removeCompany([H|T], H.ident, T).

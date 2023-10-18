@@ -37,7 +37,7 @@ readFileTxt(FilePath, Text) :-
     close(Stream),
     string_codes(Text, TextCodes).
 
-writeFileText(FilePath, TextContents) :-
+writeFileTxt(FilePath, TextContents) :-
     open(FilePath, append, Stream),
     write(Stream, TextContents),
     close(Stream).
@@ -54,7 +54,7 @@ saveClientJSON(FilePath, Client) :-
     readFileTxt('../../Sprites/Wallet/wallet_base.txt', TextContents),
     atom_concat('./Wallets/wallet', NewIdent, Temp),
     atom_concat(Temp, '.txt', WalletFileName),
-    writeFileText(WalletFileName, TextContents).
+    writeFileTxt(WalletFileName, TextContents).
 
 removerClientJSON([], _, []).
 removerClientJSON([H|T], H.ident, T).
