@@ -33,6 +33,9 @@ getCol(JSONPath, ID, Col) :-
     getClient(JSONPath, ID, Client),
     Client = client(_, _, _, _, _, _, _, _, _, _, Col, _).
 
+getIdent(JSONPath, Client, Ident) :-
+    Client = client(Ident, _, _, _, _, _, _, _, _, _, _, _).
+
 getAllAssets(JSONPath, ID, AllAssets) :- 
     getClient(JSONPath, ID, Client),
     Client = client(_, _, _, _, _, _, _, _, _, _, _, AllAssets).
