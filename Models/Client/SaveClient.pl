@@ -31,7 +31,7 @@ clientesToJSON([H|T], [X|Out]) :-
 	clienteToJSON(H.ident, H.name, H.age, H.cpf, H.email, H.password, H.cash, H.patrimony, H.canDeposit, H.row, H.col, H.allAssets, X), 
 	clientesToJSON(T, Out).
 
-saveClientJSON(JSONPath, JSONPath, Client) :- 
+saveClientJSON(JSONPath, Client) :- 
     Client = client(Ident, Name, Age, Cpf, Email, Password, Cash, Patrimony, CanDeposit, Row, Col, AllAssets),
     lerJSON(JSONPath, File),
     clientesToJSON(File, ListaCompaniesJSON),
