@@ -1,5 +1,33 @@
 :- consult('../../Utils/MatrixUtils.pl').
-:- consult('../../Utils/UpdateUtils').
+:- consult('../../Utils/UpdateUtils.pl').
+:- consult('../../Models/Client/GetSetAttrsClient.pl').
+:- consult('../../Models/Company/GetSetAttrsCompany.pl').
+
+
+compFilePath(IdComp, FilePath) :-
+    string_concat("../Models/Company/HomeBrokers/homebroker", IdComp, Temp),
+    string_concat(Temp, ".txt", FilePath).
+
+
+updateHomeBroker(IdUser, IdComp) :-
+    compFilePath(IdComp, FilePath),
+    %updateMatrixClock
+    getCash("../Data/Clients.json", IdUser, Cash),
+    updateHBCash(FilePath, Cash),
+    getCompName("../Data/Companies.json", IdComp, Name),
+    updateHBCompanyName(FilePath, Name),
+    getCode("../Data/Companies.json", IdComp, Code),
+    updateHBCompanyCode(FilePath, Code),
+    getPrice("../Data/Companies.json", IdComp, Price), getTrendIndicator("../Data/Companies.json", IdComp, Trend),
+    updateHBStockPrice(FilePath, Price, Trend),
+    getStartPrice("../Data/Companies.json", IdComp, StartPrice),
+    updateHBStockStartPrice(FilePath, StartPrice),
+    getMaxPrice("../Data/Companies.json", IdComp, MaxPrice),
+    updateHBStockMaxPrice(FilePath, MaxPrice),
+    getMinPrice("../Data/Companies.json", IdComp, MinPrice),
+    updateHBStockMinPrice(FilePath, MinPrice),
+    getQtdAssetsInCompany("../Data/Clients.json", IdUser, IdComp, Stocks),
+    updateHBOwnedStocks(FilePath, Stocks).
 
 
 updateHBStockPrice(FilePath, Price, TrendInd) :-
@@ -43,8 +71,7 @@ updateHBCash(FilePath, Cash) :-
 
 
 updateHBOwnedStocks(FilePath, Num) :-
-    string_concat(Num, "0", Temp),
-    fillLeft(Temp, 5, StringR),
+    fillLeft(Num, 5, StringR),
     string_length(StringR, Len),
     writeMatrixValue(FilePath, StringR, 21, (95 - Len)).
 
