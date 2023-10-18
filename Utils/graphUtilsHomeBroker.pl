@@ -47,7 +47,7 @@ checkCompanyRowUnderflow(JSONPath, IdComp) :-
     getRow(JSONPath, IdComp, RowValue),
     (   RowValue > 26 ->
         number_string(IdComp, IDString),
-        string_concat("../Model/Company/HomeBrokers/homebroker", IDString, TempPath),
+        string_concat("../Models/Company/HomeBrokers/homebroker", IDString, TempPath),
         string_concat(TempPath, ".txt", Path),
         cleanHBGraph(Path, 6),
         setRow(JSONPath, IdComp, 6)
