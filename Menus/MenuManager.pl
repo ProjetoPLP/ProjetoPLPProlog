@@ -14,7 +14,7 @@
 :- consult('./HomeBroker/CompanyProfile/CompanyProfileUpdate.pl').
 :- consult('./HomeBroker/TrendingClose/TrendingCloseUpdate.pl').
 :- consult('./HomeBroker/CompanyDown/CompanyDownUpdate.pl').
-:- consult('../MainMenu/MainMenuUpdate.pl').
+:- consult('./MainMenu/MainMenuUpdate.pl').
 :- consult('../Models/Clock/GetSetClock.pl').
 
 
