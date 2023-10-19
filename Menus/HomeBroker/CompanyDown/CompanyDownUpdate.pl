@@ -3,7 +3,7 @@
 :- consult('../../../Models/Client/PostClient.pl').
 :- consult('../../../Models/Company/SaveCompany.pl').
 :- consult('../../../Models/Clock/ClockUpdate.pl').
-:- consult('../../../Utils/Company/UpdateUtils.pl').
+:- consult('../../../Utils/UpdateUtils.pl').
 :- consult('../HomeBrokerUpdate.pl').
 
 

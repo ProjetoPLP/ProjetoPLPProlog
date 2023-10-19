@@ -51,8 +51,8 @@ saveClientJSON(Client) :-
     clienteToJSON(NewIdent, Name, Age, Cpf, Email, Password, Cash, Patrimony, CanDeposit, Row, Col, AllAssets, ClienteJSON),
     append(ListaCompaniesJSON, [ClienteJSON], Saida),
     open("../Data/Clients.json", write, Stream), write(Stream, Saida), close(Stream),
-    readFileTxt('../../Sprites/Wallet/wallet_base.txt', TextContents),
-    atom_concat('./Wallets/wallet', NewIdent, Temp),
+    readFileTxt('../Sprites/Wallet/wallet_base.txt', TextContents),
+    atom_concat('../Models/Client/Wallets/wallet', NewIdent, Temp),
     atom_concat(Temp, '.txt', WalletFileName),
     writeFileText(WalletFileName, TextContents).
 
