@@ -2,6 +2,7 @@
 :- consult('../../../Models/Client/GetSetAttrsClient.pl').
 :- consult('../../../Models/Client/PostClient.pl').
 :- consult('../../../Models/Company/SaveCompany.pl').
+:- consult('../../../Models/Clock/ClockUpdate.pl').
 :- consult('../../../Utils/Company/UpdateUtils.pl').
 :- consult('../HomeBrokerUpdate.pl').
 
@@ -12,7 +13,7 @@ updateCompanyDown(IdUser, IdComp) :-
     getCompName(IdComp, Name),
     getCode(IdComp, Code),
 
-    % updateMatrixClock("HomeBroker/CompanyDown/companyDown.txt")
+    updateMatrixClock("./HomeBroker/CompanyDown/companyDown.txt"),
     updateHBCash("./HomeBroker/CompanyDown/companyDown.txt", Cash),
     updateHBCompanyName("./HomeBroker/CompanyDown/companyDown.txt", Name),
     updateHBCompanyCode("./HomeBroker/CompanyDown/companyDown.txt", Code),

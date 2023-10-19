@@ -2,6 +2,7 @@
 :- consult('../../Utils/UpdateUtils.pl').
 :- consult('../../Models/Client/GetSetAttrsClient.pl').
 :- consult('../../Models/Company/GetSetAttrsCompany.pl').
+:- consult('../../Models/Clock/ClockUpdate.pl').
 
 
 % Atualiza todas as informações do Home Broker de uma determinada empresa
@@ -16,7 +17,7 @@ updateHomeBroker(IdUser, IdComp) :-
     getMinPrice(IdComp, MinPrice),
     getQtdAssetsInCompany(IdUser, IdComp, Stocks),
 
-    % updateMatrixClock
+    updateMatrixClock(FilePath),
     updateHBCash(FilePath, Cash),
     updateHBCompanyName(FilePath, Name),
     updateHBCompanyCode(FilePath, Code),
@@ -40,7 +41,7 @@ updateHomeBrokerBuy(IdUser, IdComp) :-
     getPrice(IdComp, Price), getTrendIndicator(IdComp, Trend),
     getQtdAssetsInCompany(IdUser, IdComp, Stocks),
 
-    % updateMatrixClock
+    updateMatrixClock("./HomeBroker/BuySell/homebrokerBuy.txt"),
     updateHBCash("./HomeBroker/BuySell/homebrokerBuy.txt", Cash),
     updateHBCompanyName("./HomeBroker/BuySell/homebrokerBuy.txt", Name),
     updateHBCompanyCode("./HomeBroker/BuySell/homebrokerBuy.txt", Code),
@@ -56,8 +57,8 @@ updateHomeBrokerSell(IdUser, IdComp) :-
     getCode(IdComp, Code),
     getPrice(IdComp, Price), getTrendIndicator(IdComp, Trend),
     getQtdAssetsInCompany(IdUser, IdComp, Stocks),
-    
-    % updateMatrixClock
+
+    updateMatrixClock("./HomeBroker/BuySell/homebrokerSell.txt"),
     updateHBCash("./HomeBroker/BuySell/homebrokerSell.txt", Cash),
     updateHBCompanyName("./HomeBroker/BuySell/homebrokerSell.txt", Name),
     updateHBCompanyCode("./HomeBroker/BuySell/homebrokerSell.txt", Code),

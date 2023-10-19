@@ -2,6 +2,7 @@
 :- consult('../../../Utils/UpdateUtils.pl').
 :- consult('../../../Models/Client/GetSetAttrsClient.pl').
 :- consult('../../../Models/Company/GetSetAttrsCompany.pl').
+:- consult('../../../Models/Clock/ClockUpdate.pl').
 
 
 % Atualiza todas as informações de uma empresa em Company Description
@@ -15,8 +16,8 @@ updateCompanyProfile(IdUser, IdComp) :-
     getDeclaration(IdComp, Declaration),
     getAge(IdComp, Age),
     getCNPJ(IdComp, CNPJ),
-    
-    % updateMatrixClock
+
+    updateMatrixClock("./HomeBroker/CompanyProfile/companyProfile.txt"),
     updateCPCash("./HomeBroker/CompanyProfile/companyProfile.txt", Cash),
     updateCPCompanyCode("./HomeBroker/CompanyProfile/companyProfile.txt",Code),
     updateCPCompanyName("./HomeBroker/CompanyProfile/companyProfile.txt", Name),
