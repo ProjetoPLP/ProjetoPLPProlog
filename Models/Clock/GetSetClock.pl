@@ -6,13 +6,13 @@ lerJSON(JSONPath, File) :-
 	json_read_dict(F, File).
 
 getClock(Minutes) :- 
-    open("../../Data/Clock.json", read, F),
+    open("../Data/Clock.json", read, F),
     json_read_dict(F, Clock),
     Minutes is Clock.minutes.
 
 saveClock(Minutes) :- 
     clockToJSON(Minutes, Saida),
-    open("../../Data/Clock.json", write, Stream),
+    open("../Data/Clock.json", write, Stream),
     write(Stream, Saida),
     close(Stream).
 

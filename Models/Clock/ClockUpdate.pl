@@ -6,7 +6,7 @@
 updateMatrixClock(FilePath) :-
     getClock(Minutes),
     formatHour(Minutes, MinutesFormated),
-    writeMatrixValue(FilePath, MinutesFormated, 3, 38).
+    writeMatrixValue(FilePath, MinutesFormated, 3, 88).
 
 
 % Recebe os minutos e formata para horas em uma String (500 minutos -> 08:20)
