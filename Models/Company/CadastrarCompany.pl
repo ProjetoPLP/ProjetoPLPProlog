@@ -5,7 +5,7 @@
 cadastrarCompany(LimitCompanies, Success) :-
     (LimitCompanies < 12 ->
         getNewCompany(Company),
-        saveCompanyJSON("../Data/Companies.json", Company),
+        saveCompanyJSON(Company),
         Success = true;
         Success = false
     ).

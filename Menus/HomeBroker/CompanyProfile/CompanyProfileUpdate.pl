@@ -10,19 +10,19 @@ updateCompanyProfile(IdUser, IdComp) :-
     % updateMatrixClock
     getCash("../Data/Clients.json", IdUser, Cash),
     updateCPCash("./HomeBroker/CompanyProfile/companyProfile.txt", Cash),
-    getCode("../Data/Companies.json", IdComp, Code),
+    getCode(IdComp, Code),
     updateCPCompanyCode("./HomeBroker/CompanyProfile/companyProfile.txt",Code),
-    getCompName("../Data/Companies.json", IdComp, Name),
+    getCompName(IdComp, Name),
     updateCPCompanyName("./HomeBroker/CompanyProfile/companyProfile.txt", Name),
-    getActuation("../Data/Companies.json", IdComp, Actuation),
+    getActuation(IdComp, Actuation),
     updateCPCompanyActuation("./HomeBroker/CompanyProfile/companyProfile.txt", Actuation),
-    getPrice("../Data/Companies.json", IdComp, Price), getTrendIndicator("../Data/Companies.json", IdComp, Trend),
+    getPrice(IdComp, Price), getTrendIndicator(IdComp, Trend),
     updateCPCompanyPrice("./HomeBroker/CompanyProfile/companyProfile.txt", Price, Trend),
-    getDeclaration("../Data/Companies.json", IdComp, Declaration),
+    getDeclaration(IdComp, Declaration),
     updateCPCompanyDeclaration("./HomeBroker/CompanyProfile/companyProfile.txt", Declaration),
-    getAge("../Data/Companies.json", IdComp, Age),
+    getAge(IdComp, Age),
     updateCPCompanyAge("./HomeBroker/CompanyProfile/companyProfile.txt", Age),
-    getCNPJ("../Data/Companies.json", IdComp, CNPJ),
+    getCNPJ(IdComp, CNPJ),
     updateCPCompanyCNPJ("./HomeBroker/CompanyProfile/companyProfile.txt", CNPJ).
 
 

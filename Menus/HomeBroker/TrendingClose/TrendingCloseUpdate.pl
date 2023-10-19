@@ -13,7 +13,7 @@ updateTrendingClose(IdUser) :-
     updateTCCash("./HomeBroker/TrendingClose/trendingClose.txt", Cash),
     getPatrimony("../Data/Clients.json", IdUser, Patrimony),
     updateTCPatrimony("./HomeBroker/TrendingClose/trendingClose.txt", Patrimony),
-    getCompanyJSON("../Data/Companies.json", Comps),
+    getCompanyJSON(Comps),
     updateAllTCCompanyCode("./HomeBroker/TrendingClose/trendingClose.txt", Comps),
     updateAllTCCompanyVar("./HomeBroker/TrendingClose/trendingClose.txt", Comps),
     updateAllCompaniesStartMaxMinPrice(Comps).
@@ -35,20 +35,20 @@ updateTCPatrimony(FilePath, Patrimony) :-
 
 updateAllTCCompanyCode(_, []) :- !.
 updateAllTCCompanyCode(FilePath, [H|T]) :-
-    getCompIdent("../Data/Companies.json", H, IdComp),
+    getCompIdent(H, IdComp),
     updateTCCompanyCode(FilePath, IdComp),
     updateAllTCCompanyCode(FilePath, T).
 
 
 updateTCCompanyCode(FilePath, IdComp) :-
     getCompanyCodePosition(IdComp, [Row|Col]),
-    getCode("../Data/Companies.json", IdComp, Code),
+    getCode(IdComp, Code),
     writeMatrixValue(FilePath, Code, Row, Col).
 
 
 updateAllTCCompanyVar(_, []) :- !.
 updateAllTCCompanyVar(FilePath, [H|T]) :-
-    getCompIdent("../Data/Companies.json", H, IdComp),
+    getCompIdent(H, IdComp),
     updateTCCompanyVar(FilePath, IdComp),
     updateAllTCCompanyVar(FilePath, T).
 
@@ -63,17 +63,17 @@ updateTCCompanyVar(FilePath, IdComp) :-
 
 updateAllCompaniesStartMaxMinPrice([]).
 updateAllCompaniesStartMaxMinPrice([H|T]) :-
-    getCompIdent("../Data/Companies.json", H, IdComp),
-    getPrice("../Data/Companies.json", IdComp, Price),
-    setStartPrice("../Data/Companies.json", IdComp, Price),
-    setMaxPrice("../Data/Companies.json", IdComp, Price),
-    setMinPrice("../Data/Companies.json", IdComp, Price),
+    getCompIdent(H, IdComp),
+    getPrice(IdComp, Price),
+    setStartPrice(IdComp, Price),
+    setMaxPrice(IdComp, Price),
+    setMinPrice(IdComp, Price),
     updateAllCompaniesStartMaxMinPrice(T).
 
 
 getVar(IdComp, R) :-
-    getPrice("../Data/Companies.json", IdComp, Price),
-    getStartPrice("../Data/Companies.json", IdComp, StartPrice),
+    getPrice(IdComp, Price),
+    getStartPrice(IdComp, StartPrice),
     Var is ((Price - StartPrice) / StartPrice) * 100,
     formatVar(Var, R).
 

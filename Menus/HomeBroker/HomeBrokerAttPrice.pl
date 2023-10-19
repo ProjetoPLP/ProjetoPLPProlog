@@ -13,73 +13,73 @@ getNewPrice(OldPrice, NewPrice) :-
     format(New, NewPrice).
 
 
-attCompanyTrendIndicator(JSONPath, IdComp, OldPrice, NewPrice) :-
+attCompanyTrendIndicator(IdComp, OldPrice, NewPrice) :-
     (   NewPrice > OldPrice ->
-        setTrendIndicator(JSONPath, IdComp, "▲")
+        setTrendIndicator(IdComp, "▲")
     ;   NewPrice < OldPrice ->
-        setTrendIndicator(JSONPath, IdComp, "▼")
-    ;   setTrendIndicator(JSONPath, IdComp, " ")
+        setTrendIndicator(IdComp, "▼")
+    ;   setTrendIndicator(IdComp, " ")
     ).
 
 
-getNewMaxPrice(JSONPath, IdComp, NewPrice, Result) :-
-    getMaxPrice(JSONPath, IdComp, MaxPrice),
+getNewMaxPrice(IdComp, NewPrice, Result) :-
+    getMaxPrice(IdComp, MaxPrice),
     (   MaxPrice >= NewPrice ->
         Result = MaxPrice
-    ;   setMaxPrice(JSONPath, IdComp, NewPrice),
+    ;   setMaxPrice(IdComp, NewPrice),
         Result = NewPrice
     ).
 
 
-getNewMinPrice(JSONPath, IdComp, NewPrice, Result) :-
-    getMinPrice(JSONPath, IdComp, MinPrice),
+getNewMinPrice(IdComp, NewPrice, Result) :-
+    getMinPrice(IdComp, MinPrice),
     (   MinPrice =< NewPrice ->
         Result = MinPrice
-    ;   setMinPrice(JSONPath, IdComp, NewPrice),
+    ;   setMinPrice(IdComp, NewPrice),
         Result = NewPrice
     ).
 
 
 attAllCompanyPriceGraph(_, []) :- !.
-attAllCompanyPriceGraph(JSONPath, IdComp, [Company|RestCompanies]) :-
-    getCompIdent(JSONPath, Company, CompanyId),
+attAllCompanyPriceGraph(IdComp, [Company|RestCompanies]) :-
+    getCompIdent(Company, CompanyId),
     (CompanyId =:= IdComp ->
-        attCurrentCompanyPriceGraph(JSONPath, IdComp),
-        attAllCompanyPriceGraph(JSONPath, IdComp, RestCompanies)
+        attCurrentCompanyPriceGraph(IdComp),
+        attAllCompanyPriceGraph(IdComp, RestCompanies)
     ; isDown(CompanyId) ->
-        removeCompanyFromExchange(JSONPath, CompanyId),
+        removeCompanyFromExchange(CompanyId),
         attAllCompanyPriceGraph(IdComp, RestCompanies)
     ;
-        attCompanyPriceGraph(JSONPath, CompanyId),
-        attAllCompanyPriceGraph(JSONPath, IdComp, RestCompanies)
+        attCompanyPriceGraph(CompanyId),
+        attAllCompanyPriceGraph(IdComp, RestCompanies)
     ).
 
 
 
-attCurrentCompanyPriceGraph(JSONPath, IdComp) :-
+attCurrentCompanyPriceGraph(IdComp) :-
     number_string(IdComp, IDString),
     string_concat("../Models/Company/HomeBrokers/homebroker", IDString, TempPath),
     string_concat(TempPath, ".txt", FilePath),
-    attCompanyPriceGraph(JSONPath, IdComp),
+    attCompanyPriceGraph(IdComp),
     printMatrix(FilePath).
 
 
-attCompanyPriceGraph(JSONPath, IdComp) :-
+attCompanyPriceGraph(IdComp) :-
     number_string(IdComp, IDString),
     string_concat("../Models/Company/HomeBrokers/homebroker", IDString, TempPath),
     string_concat(TempPath, ".txt", FilePath),
-    getPrice(JSONPath, IdComp, OldPrice),
+    getPrice(IdComp, OldPrice),
     getNewPrice(OldPrice, NewPrice),
-    getNewMaxPrice(JSONPath, IdComp, NewPrice, NewMaxPrice),
-    getNewMinPrice(JSONPath, IdComp, NewPrice, NewMinPrice),
-    getTrendIndicator(JSONPath, IdComp, TrendIndicator),
-    getStartPrice(JSONPath, IdComp, StartPrice),
-    getCompRow(JSONPath, IdComp, Row),
-    getCompCol(JSONPath, IdComp, Col),
+    getNewMaxPrice(IdComp, NewPrice, NewMaxPrice),
+    getNewMinPrice(IdComp, NewPrice, NewMinPrice),
+    getTrendIndicator(IdComp, TrendIndicator),
+    getStartPrice(IdComp, StartPrice),
+    getCompRow(IdComp, Row),
+    getCompCol(IdComp, Col),
 
-    setPrice(JSONPath, IdComp, NewPrice),
-    attCompanyTrendIndicator(JSONPath, IdComp, OldPrice, NewPrice),
-    attCompanyLineRow(JSONPath, IdComp, OldPrice, NewPrice),
+    setPrice(IdComp, NewPrice),
+    attCompanyTrendIndicator(IdComp, OldPrice, NewPrice),
+    attCompanyLineRow(IdComp, OldPrice, NewPrice),
     updateHBStockPrice(FilePath, NewPrice, TredIndicator),
     updateHBStockMaxPrice(FilePath, NewMaxPrice),
     updateHBStockMinPrice(FilePath, NewMinPrice),

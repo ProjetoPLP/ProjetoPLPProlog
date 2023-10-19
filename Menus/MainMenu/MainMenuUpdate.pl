@@ -10,7 +10,7 @@ updateMainMenu(IdUser) :-
     % updateMatrixClock
     getCash("../Data/Clients.json", IdUser, Cash),
     updateMMCash("./MainMenu/mainMenu.txt", Cash),
-    getCompanyJSON("../Data/Companies.json", Comps),
+    getCompanyJSON(Comps),
     updateAllMMCompanyCode("./MainMenu/mainMenu.txt", Comps),
     updateAllMMCompanyPrice("./MainMenu/mainMenu.txt", Comps),
     updateAllMMCompanyName("./MainMenu/mainMenu.txt", Comps).
@@ -26,13 +26,13 @@ updateMMCash(FilePath, Cash) :-
 % Atualiza o código de todas as empresas no Main Menu
 updateAllMMCompanyCode(_, []) :- !.
 updateAllMMCompanyCode(FilePath, [H|T]) :-
-    getCompIdent("../Data/Companies.json", H, IdComp),
+    getCompIdent(H, IdComp),
     updateMMCompanyCode(FilePath, IdComp),
     updateAllMMCompanyCode(FilePath, T).
 
 
 updateMMCompanyCode(FilePath, IdComp) :-
-    getCode("../Data/Companies.json", IdComp, Code),
+    getCode(IdComp, Code),
     getCompanyCodePosition(IdComp, [Row|Col]),
     writeMatrixValue(FilePath, Code, Row, Col).
 
@@ -40,13 +40,13 @@ updateMMCompanyCode(FilePath, IdComp) :-
 % Atualiza o nome de todas as empresas no Main Menu
 updateAllMMCompanyName(_, []) :- !.
 updateAllMMCompanyName(FilePath, [H|T]) :-
-    getCompIdent("../Data/Companies.json", H, IdComp),
+    getCompIdent(H, IdComp),
     updateMMCompanyName(FilePath, IdComp),
     updateAllMMCompanyName(FilePath, T).
 
 
 updateMMCompanyName(FilePath, IdComp) :-
-    getCompName("../Data/Companies.json", IdComp, Name),
+    getCompName(IdComp, Name),
     getCompanyNamePosition(IdComp, [Row|Col]),
     getCompanyNameCol(Name, Col, NewCol),
     writeMatrixValue(FilePath, Name, Row, NewCol).
@@ -55,14 +55,14 @@ updateMMCompanyName(FilePath, IdComp) :-
 % Atualiza o preço de todas as empresas no Main Menu
 updateAllMMCompanyPrice(_, []) :- !.
 updateAllMMCompanyPrice(FilePath, [H|T]) :-
-    getCompIdent("../Data/Companies.json", H, IdComp),
+    getCompIdent(H, IdComp),
     updateMMCompanyPrice(FilePath, IdComp),
     updateAllMMCompanyPrice(FilePath, T).
 
 
 updateMMCompanyPrice(FilePath, IdComp) :-
-    getPrice("../Data/Companies.json", IdComp, Price),
-    getTrendIndicator("../Data/Companies.json", IdComp, Trend),
+    getPrice(IdComp, Price),
+    getTrendIndicator(IdComp, Trend),
     getCompanyPricePosition(IdComp, [Row|Col]),
     string_concat(Trend, Price, Temp1),
     string_concat(Temp1, "0", Temp2),

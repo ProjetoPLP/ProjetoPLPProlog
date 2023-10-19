@@ -6,23 +6,23 @@
 :- consult('../HomeBrokerUpdate.pl').
 
 
-updateCompanyDown(JSONPathCom, JSONPathUser, IdUser, IdComp) :-
+updateCompanyDown(JSONPathUser, IdUser, IdComp) :-
     getCash(JSONPathUser, IdUser, Cash),
-    getCompName(JSONPathCom, IdComp, Name),
-    getCode(JSONPathCom, IdComp, Code),
+    getCompName(IdComp, Name),
+    getCode(IdComp, Code),
 
     resetMenu("HomeBroker/CompanyDown/companyDown.txt", "../Sprites/HomeBroker/companyDown_base.txt"),
     % updateMatrixClock("HomeBroker/CompanyDown/companyDown.txt")
     updateHBCash("HomeBroker/CompanyDown/companyDown.txt", Cash),
     updateHBCompanyName("HomeBroker/CompanyDown/companyDown.txt", Name),
     updateHBCompanyCode("HomeBroker/CompanyDown/companyDown.txt", Code),
-    removeCompanyFromExchange(JSONPathCom, IdComp).
+    removeCompanyFromExchange(IdComp).
 
 
-removeCompanyFromExchange(JSONPath, IdComp) :-
-    removeCompany(JSONPath, IdComp),
+removeCompanyFromExchange(IdComp) :-
+    removeCompany(IdComp),
     removeAllClientsAsset(IdComp).
 
 isDown(IdComp) :-
-    getPrice("../Data/Companies.json", IdComp, Price),
+    getPrice(IdComp, Price),
     Price =< 0, !.
