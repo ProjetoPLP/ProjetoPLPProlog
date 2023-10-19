@@ -16,7 +16,7 @@ callLoop(IdComp, Seconds) :-
     addClock(Seconds),
     number_string(IdComp, IdString),
     string_concat("./Models/Company/HomeBrokers/homebroker", IdString, Path0),
-    string_concat(Path0, ".txt", Path)
+    string_concat(Path0, ".txt", Path),
     updateMatrixClock(Path),
     add_seconds_to_time(StartTime, Seconds, EndTime),
     loop(IdComp, EndTime).
