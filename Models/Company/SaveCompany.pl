@@ -33,6 +33,17 @@ companiesToJSON([H|T], [X|Out]) :-
 	companyToJSON(H.ident, H.name, H.age, H.cnpj, H.actuation, H.declaration, H.code, H.price, H.trendIndicator, H.minPrice, H.maxPrice, H.startPrice, H.row, H.col, X), 
 	companiesToJSON(T, Out).
 
+readFileTxt(FilePath, Text) :-
+    open(FilePath, read, Stream),
+    read_stream_to_codes(Stream, TextCodes),
+    close(Stream),
+    string_codes(Text, TextCodes).
+
+writeFileTxt(FilePath, TextContents) :-
+    open(FilePath, append, Stream),
+    write(Stream, TextContents),
+    close(Stream).
+
 saveCompanyJSON(JSONPath, Company) :- 
     Company = company(Ident, Name, Age, Cnpj, Actuation, Declaration, Code, Price, TrendIndicator, MinPrice, MaxPrice, StartPrice, Row, Col),
     lerJSON(JSONPath, File),
@@ -40,15 +51,25 @@ saveCompanyJSON(JSONPath, Company) :-
     getCompanyJSON(JSONPath, Out), length(Out, Length), NewIdent is Length + 1,
     companyToJSON(NewIdent,  Name, Age, Cnpj, Actuation, Declaration, Code, Price, TrendIndicator, MinPrice, MaxPrice, StartPrice, Row, Col, CompanyJSON),
     append(ListaCompaniesJSON, [CompanyJSON], Saida),
-    open(JSONPath, write, Stream), write(Stream, Saida), close(Stream).
+    open(JSONPath, write, Stream), write(Stream, Saida), close(Stream),
+    readFileTxt('../../Sprites/HomeBroker/homebroker_base.txt', TextContents),
+    atom_concat('./HomeBrokers/homebroker', NewIdent, Temp),
+    atom_concat(Temp, '.txt', WalletFileName),
+    writeFileTxt(WalletFileName, TextContents).
 
 removeCompany([], _, []).
 removeCompany([H|T], H.ident, T).
 removeCompany([H|T], Ident, [H|Out]) :- removeCompany(T, Ident, Out).
 
+deleteFile(Id) :-
+    atom_concat('./HomeBrokers/homebroker', Id, Temp),
+    atom_concat(Temp, '.txt', DeleteFilePath),
+    delete_file(DeleteFilePath).
+
 removeCompany(JSONPath, Id) :-
     lerJSON(JSONPath, File),
     removeCompany(File, Id, SaidaParcial),
+    deleteFile(Id),
     companiesToJSON(SaidaParcial, Saida),
     open(JSONPath, write, Stream), write(Stream, Saida), close(Stream).
 
@@ -61,8 +82,3 @@ buscarCompanyPorId(_, [], _) :- fail.
 buscarCompanyPorId(Ident, [company(Ident, Name, Age, Cnpj, Actuation, Declaration, Code, Price, TrendIndicator, MinPrice, MaxPrice, StartPrice, Row, Col)|_], company(Ident,  Name, Age, Cnpj, Actuation, Declaration, Code, Price, TrendIndicator, MinPrice, MaxPrice, StartPrice, Row, Col)).
 buscarCompanyPorId(Ident, [_|Resto], CompanyeEncontrado) :-
     buscarCompanyPorId(Ident, Resto, CompanyeEncontrado).
-
-main:-
-    %existCompanyByName('levi', Result),
-    Company = company(1, 'levi', '2023', '1111', 'atua', 'declaro', 'LEVI', 0, '|', 0, 0, 0, 0, 0),
-    saveCompany('../../Data/Companies.json', Company), halt.

@@ -104,7 +104,7 @@ addUserCol(JSONPath, ID, AddCol) :-
 
 searchAcoes(AllAssets, IDCompany, Acoes) :-
     buscarAcoes(AllAssets, IDCompany, Acoes).
-buscarAcoes([], _, 0).
-buscarAcoes([[IDCompany, Acoes]|_], IDCompany, Acoes).
-buscarAcoes([_|Rest], IDCompany, Acoes) :-
+    buscarAcoes([], _, 0).
+    buscarAcoes([[IDCompany, Acoes]|_], IDCompany, Acoes).
+    buscarAcoes([_|Rest], IDCompany, Acoes) :-
     buscarAcoes(Rest, IDCompany, Acoes).

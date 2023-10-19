@@ -31,14 +31,30 @@ clientesToJSON([H|T], [X|Out]) :-
 	clienteToJSON(H.ident, H.name, H.age, H.cpf, H.email, H.password, H.cash, H.patrimony, H.canDeposit, H.row, H.col, H.allAssets, X), 
 	clientesToJSON(T, Out).
 
-saveClientJSON(JSONPath, Client) :- 
+readFileTxt(FilePath, Text) :-
+    open(FilePath, read, Stream),
+    read_stream_to_codes(Stream, TextCodes),
+    close(Stream),
+    string_codes(Text, TextCodes).
+
+writeFileText(FilePath, TextContents) :-
+    open(FilePath, write, St),
+    open(FilePath, append, Stream),
+    write(Stream, TextContents),
+    close(Stream).
+
+saveClientJSON(FilePath, Client) :- 
     Client = client(Ident, Name, Age, Cpf, Email, Password, Cash, Patrimony, CanDeposit, Row, Col, AllAssets),
     lerJSON(JSONPath, File),
     clientesToJSON(File, ListaCompaniesJSON),
     getClientJSON(JSONPath, Out), length(Out, Length), NewIdent is Length + 1,
     clienteToJSON(NewIdent, Name, Age, Cpf, Email, Password, Cash, Patrimony, CanDeposit, Row, Col, AllAssets, ClienteJSON),
     append(ListaCompaniesJSON, [ClienteJSON], Saida),
-    open(JSONPath, write, Stream), write(Stream, Saida), close(Stream).
+    open(JSONPath, write, Stream), write(Stream, Saida), close(Stream),
+    readFileTxt('../../Sprites/Wallet/wallet_base.txt', TextContents),
+    atom_concat('./Wallets/wallet', NewIdent, Temp),
+    atom_concat(Temp, '.txt', WalletFileName),
+    writeFileText(WalletFileName, TextContents).
 
 removerClientJSON([], _, []).
 removerClientJSON([H|T], H.ident, T).
