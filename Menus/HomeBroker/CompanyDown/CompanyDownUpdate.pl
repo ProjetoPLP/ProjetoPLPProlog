@@ -7,21 +7,22 @@
 
 
 updateCompanyDown(IdUser, IdComp) :-
+    resetMenu("./HomeBroker/CompanyDown/companyDown.txt", "../Sprites/HomeBroker/companyDown_base.txt"),
     getCash(IdUser, Cash),
     getCompName(IdComp, Name),
     getCode(IdComp, Code),
 
-    resetMenu("HomeBroker/CompanyDown/companyDown.txt", "../Sprites/HomeBroker/companyDown_base.txt"),
     % updateMatrixClock("HomeBroker/CompanyDown/companyDown.txt")
-    updateHBCash("HomeBroker/CompanyDown/companyDown.txt", Cash),
-    updateHBCompanyName("HomeBroker/CompanyDown/companyDown.txt", Name),
-    updateHBCompanyCode("HomeBroker/CompanyDown/companyDown.txt", Code),
+    updateHBCash("./HomeBroker/CompanyDown/companyDown.txt", Cash),
+    updateHBCompanyName("./HomeBroker/CompanyDown/companyDown.txt", Name),
+    updateHBCompanyCode("./HomeBroker/CompanyDown/companyDown.txt", Code),
     removeCompanyFromExchange(IdComp).
 
 
 removeCompanyFromExchange(IdComp) :-
     removeCompany(IdComp),
     removeAllClientsAsset(IdComp).
+
 
 isDown(IdComp) :-
     getPrice(IdComp, Price),

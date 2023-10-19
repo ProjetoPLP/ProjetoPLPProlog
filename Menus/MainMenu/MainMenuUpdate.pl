@@ -7,10 +7,11 @@
 % Atualiza todas as informações no Main Menu
 updateMainMenu(IdUser) :-
     resetMenu("./MainMenu/mainMenu.txt", "../Sprites/MainMenu/mainMenu_base.txt"),
-    % updateMatrixClock
     getCash(IdUser, Cash),
-    updateMMCash("./MainMenu/mainMenu.txt", Cash),
     getCompanyJSON(Comps),
+    
+    % updateMatrixClock
+    updateMMCash("./MainMenu/mainMenu.txt", Cash),
     updateAllMMCompanyCode("./MainMenu/mainMenu.txt", Comps),
     updateAllMMCompanyPrice("./MainMenu/mainMenu.txt", Comps),
     updateAllMMCompanyName("./MainMenu/mainMenu.txt", Comps).

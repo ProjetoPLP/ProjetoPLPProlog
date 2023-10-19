@@ -7,22 +7,23 @@
 % Atualiza todas as informações do Home Broker de uma determinada empresa
 updateHomeBroker(IdUser, IdComp) :-
     compFilePath(IdComp, FilePath),
-    % updateMatrixClock
     getCash(IdUser, Cash),
-    updateHBCash(FilePath, Cash),
     getCompName(IdComp, Name),
-    updateHBCompanyName(FilePath, Name),
     getCode(IdComp, Code),
-    updateHBCompanyCode(FilePath, Code),
     getPrice(IdComp, Price), getTrendIndicator(IdComp, Trend),
-    updateHBStockPrice(FilePath, Price, Trend),
     getStartPrice(IdComp, StartPrice),
-    updateHBStockStartPrice(FilePath, StartPrice),
     getMaxPrice(IdComp, MaxPrice),
-    updateHBStockMaxPrice(FilePath, MaxPrice),
     getMinPrice(IdComp, MinPrice),
-    updateHBStockMinPrice(FilePath, MinPrice),
     getQtdAssetsInCompany(IdUser, IdComp, Stocks),
+
+    % updateMatrixClock
+    updateHBCash(FilePath, Cash),
+    updateHBCompanyName(FilePath, Name),
+    updateHBCompanyCode(FilePath, Code),
+    updateHBStockPrice(FilePath, Price, Trend),
+    updateHBStockStartPrice(FilePath, StartPrice),
+    updateHBStockMaxPrice(FilePath, MaxPrice),
+    updateHBStockMinPrice(FilePath, MinPrice),
     updateHBOwnedStocks(FilePath, Stocks).
 
 compFilePath(IdComp, FilePath) :-
@@ -33,32 +34,34 @@ compFilePath(IdComp, FilePath) :-
 % Atualiza todas as informações do menu de compras em um Home Broker de uma determinada empresa
 updateHomeBrokerBuy(IdUser, IdComp) :-
     resetMenu("./HomeBroker/BuySell/homebrokerBuy.txt", "../Sprites/HomeBroker/homebrokerBuy_base.txt"),
-    % updateMatrixClock
     getCash(IdUser, Cash),
-    updateHBCash("./HomeBroker/BuySell/homebrokerBuy.txt", Cash),
     getCompName(IdComp, Name),
-    updateHBCompanyName("./HomeBroker/BuySell/homebrokerBuy.txt", Name),
     getCode(IdComp, Code),
-    updateHBCompanyCode("./HomeBroker/BuySell/homebrokerBuy.txt", Code),
     getPrice(IdComp, Price), getTrendIndicator(IdComp, Trend),
-    updateHBStockPrice("./HomeBroker/BuySell/homebrokerBuy.txt", Price, Trend),
     getQtdAssetsInCompany(IdUser, IdComp, Stocks),
+
+    % updateMatrixClock
+    updateHBCash("./HomeBroker/BuySell/homebrokerBuy.txt", Cash),
+    updateHBCompanyName("./HomeBroker/BuySell/homebrokerBuy.txt", Name),
+    updateHBCompanyCode("./HomeBroker/BuySell/homebrokerBuy.txt", Code),
+    updateHBStockPrice("./HomeBroker/BuySell/homebrokerBuy.txt", Price, Trend),
     updateHBOwnedStocks("./HomeBroker/BuySell/homebrokerBuy.txt", Stocks).
 
 
 % Atualiza todas as informações do menu de vendas em um Home Broker de uma determinada empresa
 updateHomeBrokerSell(IdUser, IdComp) :-
     resetMenu("./HomeBroker/BuySell/homebrokerSell.txt", "../Sprites/HomeBroker/homebrokerSell_base.txt"),
-    % updateMatrixClock
     getCash(IdUser, Cash),
-    updateHBCash("./HomeBroker/BuySell/homebrokerSell.txt", Cash),
     getCompName(IdComp, Name),
-    updateHBCompanyName("./HomeBroker/BuySell/homebrokerSell.txt", Name),
     getCode(IdComp, Code),
-    updateHBCompanyCode("./HomeBroker/BuySell/homebrokerSell.txt", Code),
     getPrice(IdComp, Price), getTrendIndicator(IdComp, Trend),
-    updateHBStockPrice("./HomeBroker/BuySell/homebrokerSell.txt", Price, Trend),
     getQtdAssetsInCompany(IdUser, IdComp, Stocks),
+    
+    % updateMatrixClock
+    updateHBCash("./HomeBroker/BuySell/homebrokerSell.txt", Cash),
+    updateHBCompanyName("./HomeBroker/BuySell/homebrokerSell.txt", Name),
+    updateHBCompanyCode("./HomeBroker/BuySell/homebrokerSell.txt", Code),
+    updateHBStockPrice("./HomeBroker/BuySell/homebrokerSell.txt", Price, Trend),
     updateHBOwnedStocks("./HomeBroker/BuySell/homebrokerSell.txt", Stocks).
 
 
