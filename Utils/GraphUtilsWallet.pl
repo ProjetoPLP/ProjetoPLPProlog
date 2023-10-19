@@ -4,63 +4,63 @@
 
 
 % Atualiza em uma carteira, a partir do seu ID, a nova linha e coluna baseado no novo patrimônio
-attClientLineRow(JSONPath, IdUser, OldPatrimony, NewPatrimony) :-
-    checkClientColumn(JSONPath, IdUser),
+attClientLineRow(IdUser, OldPatrimony, NewPatrimony) :-
+    checkClientColumn(IdUser),
     (   NewPatrimony > OldPatrimony ->
-        addUserRow(JSONPath, IdUser, -1),
-        checkClientRowOverflow(JSONPath, IdUser)
+        addUserRow(IdUser, -1),
+        checkClientRowOverflow(IdUser)
     ;   NewPatrimony < OldPatrimony ->
-        addUserRow(JSONPath, IdUser, 1),
-        checkClientRowUnderflow(JSONPath, IdUser)
-    ;   addUserRow(JSONPath, IdUser, 0)
+        addUserRow(IdUser, 1),
+        checkClientRowUnderflow(IdUser)
+    ;   addUserRow(IdUser, 0)
     ).
 
 
 % Verifica se a coluna do gráfico chegou no limite
-checkClientColumn(JSONPath, IdUser) :-
-    getUserCol(JSONPath, IdUser, ColValue),
+checkClientColumn(IdUser) :-
+    getUserCol(IdUser, ColValue),
     (   ColValue > 95 ->
         number_string(IdUser, IDString),
         string_concat("../Models/Client/Wallets/wallet", IDString, TempPath),
-        string_concat(TempPath, ".txt", Path),
-        cleanWLGraph(Path, 11),
-        setUserCol(JSONPath, IDComp, 51)
-    ;   addUserCol(JSONPath, IdUser, 0)
+        string_concat(TempPath, ".txt", FilePath),
+        cleanWLGraph(FilePath, 11),
+        setUserCol(IDComp, 51)
+    ;   addUserCol(IdUser, 0)
     ).
 
 
 % Verifica se a linha do gráfico chegou no limite superior
-checkClientRowOverflow(JSONPath, IdUser) :-
-    getUserRow(JSONPath, IdUser, RowValue),
+checkClientRowOverflow(IdUser) :-
+    getUserRow(IdUser, RowValue),
     (   RowValue < 11 ->
         number_string(IdUser, IDString),
         string_concat("../Models/Client/Wallets/wallet", IDString, TempPath),
-        string_concat(TempPath, ".txt", Path),
-        cleanWLGraph(Path, 11),
-        setUserRow(JSONPath, IdUser, 20)
-    ;   addUserRow(JSONPath, IdUser, 0)
+        string_concat(TempPath, ".txt", FilePath),
+        cleanWLGraph(FilePath, 11),
+        setUserRow(IdUser, 20)
+    ;   addUserRow(IdUser, 0)
     ).
 
 
 % Verifica se a linha do gráfico chegou no limite inferior
-checkClientRowUnderflow(JSONPath, IdUser) :-
-    getUserRow(JSONPath, IdUser, RowValue),
+checkClientRowUnderflow(IdUser) :-
+    getUserRow(IdUser, RowValue),
     (   RowValue > 20 ->
         number_string(IdUser, IDString),
         string_concat("../Models/Client/Wallets/wallet", IDString, TempPath),
-        string_concat(TempPath, ".txt", Path),
-        cleanWLGraph(Path, 11),
-        setUserRow(JSONPath, IdUser, 11)
-    ;   addUserRow(JSONPath, IdUser, 0)
+        string_concat(TempPath, ".txt", FilePath),
+        cleanWLGraph(FilePath, 11),
+        setUserRow(IdUser, 11)
+    ;   addUserRow(IdUser, 0)
     ).
 
 
 % Atualiza a próxima coluna em todos os gráficos
 attAllClientColumn(_, []) :- !.
-attAllClientColumn(JSONPath, [H|T]) :-
-    getUserIdent(JSONPath, H, IdUser),
-    addUserCol(JSONPath, IdUser, 2),
-    attAllClientColumn(JSONPath, T).
+attAllClientColumn([H|T]) :-
+    getUserIdent(H, IdUser),
+    addUserCol(IdUser, 2),
+    attAllClientColumn(T).
 
 
 % Reinicia o gráfico da carteira sobrescrevendo todos os espaços com caracteres vazios
