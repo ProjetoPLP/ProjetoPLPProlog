@@ -6,8 +6,8 @@
 :- consult('../HomeBrokerUpdate.pl').
 
 
-updateCompanyDown(JSONPathUser, IdUser, IdComp) :-
-    getCash(JSONPathUser, IdUser, Cash),
+updateCompanyDown(IdUser, IdComp) :-
+    getCash(IdUser, Cash),
     getCompName(IdComp, Name),
     getCode(IdComp, Code),
 

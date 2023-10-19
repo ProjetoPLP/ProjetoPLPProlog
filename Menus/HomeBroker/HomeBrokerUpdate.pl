@@ -8,7 +8,7 @@
 updateHomeBroker(IdUser, IdComp) :-
     compFilePath(IdComp, FilePath),
     % updateMatrixClock
-    getCash("../Data/Clients.json", IdUser, Cash),
+    getCash(IdUser, Cash),
     updateHBCash(FilePath, Cash),
     getCompName(IdComp, Name),
     updateHBCompanyName(FilePath, Name),
@@ -22,7 +22,7 @@ updateHomeBroker(IdUser, IdComp) :-
     updateHBStockMaxPrice(FilePath, MaxPrice),
     getMinPrice(IdComp, MinPrice),
     updateHBStockMinPrice(FilePath, MinPrice),
-    getQtdAssetsInCompany("../Data/Clients.json", IdUser, IdComp, Stocks),
+    getQtdAssetsInCompany(IdUser, IdComp, Stocks),
     updateHBOwnedStocks(FilePath, Stocks).
 
 compFilePath(IdComp, FilePath) :-
@@ -34,7 +34,7 @@ compFilePath(IdComp, FilePath) :-
 updateHomeBrokerBuy(IdUser, IdComp) :-
     resetMenu("./HomeBroker/BuySell/homebrokerBuy.txt", "../Sprites/HomeBroker/homebrokerBuy_base.txt"),
     % updateMatrixClock
-    getCash("../Data/Clients.json", IdUser, Cash),
+    getCash(IdUser, Cash),
     updateHBCash("./HomeBroker/BuySell/homebrokerBuy.txt", Cash),
     getCompName(IdComp, Name),
     updateHBCompanyName("./HomeBroker/BuySell/homebrokerBuy.txt", Name),
@@ -42,7 +42,7 @@ updateHomeBrokerBuy(IdUser, IdComp) :-
     updateHBCompanyCode("./HomeBroker/BuySell/homebrokerBuy.txt", Code),
     getPrice(IdComp, Price), getTrendIndicator(IdComp, Trend),
     updateHBStockPrice("./HomeBroker/BuySell/homebrokerBuy.txt", Price, Trend),
-    getQtdAssetsInCompany("../Data/Clients.json", IdUser, IdComp, Stocks),
+    getQtdAssetsInCompany(IdUser, IdComp, Stocks),
     updateHBOwnedStocks("./HomeBroker/BuySell/homebrokerBuy.txt", Stocks).
 
 
@@ -50,7 +50,7 @@ updateHomeBrokerBuy(IdUser, IdComp) :-
 updateHomeBrokerSell(IdUser, IdComp) :-
     resetMenu("./HomeBroker/BuySell/homebrokerSell.txt", "../Sprites/HomeBroker/homebrokerSell_base.txt"),
     % updateMatrixClock
-    getCash("../Data/Clients.json", IdUser, Cash),
+    getCash(IdUser, Cash),
     updateHBCash("./HomeBroker/BuySell/homebrokerSell.txt", Cash),
     getCompName(IdComp, Name),
     updateHBCompanyName("./HomeBroker/BuySell/homebrokerSell.txt", Name),
@@ -58,7 +58,7 @@ updateHomeBrokerSell(IdUser, IdComp) :-
     updateHBCompanyCode("./HomeBroker/BuySell/homebrokerSell.txt", Code),
     getPrice(IdComp, Price), getTrendIndicator(IdComp, Trend),
     updateHBStockPrice("./HomeBroker/BuySell/homebrokerSell.txt", Price, Trend),
-    getQtdAssetsInCompany("../Data/Clients.json", IdUser, IdComp, Stocks),
+    getQtdAssetsInCompany(IdUser, IdComp, Stocks),
     updateHBOwnedStocks("./HomeBroker/BuySell/homebrokerSell.txt", Stocks).
 
 

@@ -8,7 +8,7 @@
 updateMainMenu(IdUser) :-
     resetMenu("./MainMenu/mainMenu.txt", "../Sprites/MainMenu/mainMenu_base.txt"),
     % updateMatrixClock
-    getCash("../Data/Clients.json", IdUser, Cash),
+    getCash(IdUser, Cash),
     updateMMCash("./MainMenu/mainMenu.txt", Cash),
     getCompanyJSON(Comps),
     updateAllMMCompanyCode("./MainMenu/mainMenu.txt", Comps),

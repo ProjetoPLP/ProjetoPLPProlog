@@ -1,35 +1,35 @@
 :- consult('../../../Models/Client/GetSetAttrsClient.pl').
 
-depositar(JSONPath, IdClient, CanDeposit) :-
+depositar(IdClient, CanDeposit) :-
     (CanDeposit = true ->
-        addCash(JSONPath, IdClient, 100),
-        setCanDeposit(JSONPath, IdClient, false)
+        addCash(IdClient, 100),
+        setCanDeposit(IdClient, false)
     ; writeln("Depósito negado. O cliente não realizou um saque anteriormente.")
     ).
 
 
-sacarTudo(JSONPath, IdClient) :-
-    getCash(JSONPath, IdClient, Cash),
+sacarTudo(IdClient) :-
+    getCash(IdClient, Cash),
     (Cash >= 200 ->
-        setCash(JSONPath, IdClient, 0),
-        setCanDeposit(JSONPath, IdClient, true)
+        setCash(IdClient, 0),
+        setCanDeposit(IdClient, true)
     ; writeln("Saque negado. O cliente não possui um saldo de 200 reais ou mais.")
     ).
 
 
-sacar200(JSONPath, IdClient) :-
-    getCash(JSONPath, IdClient, Cash),
+sacar200(IdClient) :-
+    getCash(IdClient, Cash),
     (Cash >= 200 ->
-        addCash(JSONPath, IdClient, -200),
-        setCanDeposit(JSONPath, IdClient, true)
+        addCash(IdClient, -200),
+        setCanDeposit(IdClient, true)
     ; writeln("Saque negado. O cliente não possui um saldo de 200 reais ou mais.")
     ).
 
 
-sacar500(JSONPath, IdClient) :-
-    getCash(JSONPath, IdClient, Cash),
+sacar500(IdClient) :-
+    getCash(IdClient, Cash),
     (Cash >= 500 ->
-        addCash(JSONPath, IdClient, -500),
-        setCanDeposit(JSONPath, IdClient, true)
+        addCash(IdClient, -500),
+        setCanDeposit(IdClient, true)
     ; writeln("Saque negado. O cliente não possui um saldo de 500 reais ou mais.")
     ).

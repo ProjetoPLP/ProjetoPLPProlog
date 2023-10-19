@@ -9,9 +9,9 @@
 updateTrendingClose(IdUser) :-
     resetMenu("./HomeBroker/TrendingClose/trendingClose.txt", "../Sprites/HomeBroker/trendingClose_base.txt"),
     % updateMatrixClock
-    getCash("../Data/Clients.json", IdUser, Cash),
+    getCash(IdUser, Cash),
     updateTCCash("./HomeBroker/TrendingClose/trendingClose.txt", Cash),
-    getPatrimony("../Data/Clients.json", IdUser, Patrimony),
+    getPatrimony(IdUser, Patrimony),
     updateTCPatrimony("./HomeBroker/TrendingClose/trendingClose.txt", Patrimony),
     getCompanyJSON(Comps),
     updateAllTCCompanyCode("./HomeBroker/TrendingClose/trendingClose.txt", Comps),

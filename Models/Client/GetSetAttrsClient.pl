@@ -5,102 +5,102 @@ getLoggedUserID(ID) :-
     getLoggedClient(Client),
     Client = client(ID, _, _, _, _, _, _, _, _, _, _, _).
 
-getUserName(JSONPath, ID, Name) :- 
-    getClient(JSONPath, ID, Client),
+getUserName(ID, Name) :- 
+    getClient(ID, Client),
     Client = client(_, Name, _, _, _, _, _, _, _, _, _, _).
 
-getCPF(JSONPath, ID, CPF) :-
-    getClient(JSONPath, ID, Client),
+getCPF(ID, CPF) :-
+    getClient(ID, Client),
     Client = client(_, _, _, CPF, _, _, _, _, _, _, _, _).
 
-getCash(JSONPath, ID, Cash) :- 
-    getClient(JSONPath, ID, Client),
+getCash(ID, Cash) :- 
+    getClient(ID, Client),
     Client = client(_, _, _, _, _, _, Cash, _, _, _, _, _).
 
-getPatrimony(JSONPath, ID, Patrimony) :- 
-    getClient(JSONPath, ID, Client),
+getPatrimony(ID, Patrimony) :- 
+    getClient(ID, Client),
     Client = client(_, _, _, _, _, _, _, Patrimony, _, _, _, _).
 
-getCanDeposit(JSONPath, ID, CanDeposit) :-
-    getClient(JSONPath, ID, Client),
+getCanDeposit(ID, CanDeposit) :-
+    getClient(ID, Client),
     Client = client(_, _, _, _, _, _, _, _, CanDeposit, _, _, _).
 
-getUserRow(JSONPath, ID, Row) :- 
-    getClient(JSONPath, ID, Client),
+getUserRow(ID, Row) :- 
+    getClient(ID, Client),
     Client = client(_, _, _, _, _, _, _, _, _, Row, _, _).
 
-getUserCol(JSONPath, ID, Col) :- 
-    getClient(JSONPath, ID, Client),
+getUserCol(ID, Col) :- 
+    getClient(ID, Client),
     Client = client(_, _, _, _, _, _, _, _, _, _, Col, _).
 
-getUserIdent(JSONPath, Client, Ident) :-
+getUserIdent(Client, Ident) :-
     Client = client(Ident, _, _, _, _, _, _, _, _, _, _, _).
 
-getAllAssets(JSONPath, ID, AllAssets) :- 
-    getClient(JSONPath, ID, Client),
+getAllAssets(ID, AllAssets) :- 
+    getClient(ID, Client),
     Client = client(_, _, _, _, _, _, _, _, _, _, _, AllAssets).
 
-getQtdAssetsInCompany(JSONPath, ID, IDCompany, Acoes) :- 
-    getClient(JSONPath, ID, Client),
+getQtdAssetsInCompany(ID, IDCompany, Acoes) :- 
+    getClient(ID, Client),
     Client = client(_, _, _, _, _, _, _, _, _, _, _, AllAssets),
     searchAcoes(AllAssets, IDCompany,  Acoes).
     
-setCash(JSONPath, ID, NewCash) :- 
-    getClient(JSONPath, ID, Client),
+setCash(ID, NewCash) :- 
+    getClient(ID, Client),
     Client = client(Ident, Name, Age, Cpf, Email, Password, Cash, Patrimony, CanDeposit, Row, Col, AllAssets),
     NewClient = client(Ident, Name, Age, Cpf, Email, Password, NewCash, Patrimony, CanDeposit, Row, Col, AllAssets),
-    editClientJSON(JSONPath, NewClient).
+    editClientJSON(NewClient).
 
-setPatrimony(JSONPath, ID, NewPatrimony) :- 
-    getClient(JSONPath, ID, Client),
+setPatrimony(ID, NewPatrimony) :- 
+    getClient(ID, Client),
     Client = client(Ident, Name, Age, Cpf, Email, Password, Cash, Patrimony, CanDeposit, Row, Col, AllAssets),
     NewClient = client(Ident, Name, Age, Cpf, Email, Password, Cash, NewPatrimony, CanDeposit, Row, Col, AllAssets),
-    editClientJSON(JSONPath, NewClient).
+    editClientJSON(NewClient).
 
-setCanDeposit(JSONPath, ID, NewCanDeposit) :- 
-    getClient(JSONPath, ID, Client),
+setCanDeposit(ID, NewCanDeposit) :- 
+    getClient(ID, Client),
     Client = client(Ident, Name, Age, Cpf, Email, Password, Cash, Patrimony, CanDeposit, Row, Col, AllAssets),
     NewClient = client(Ident, Name, Age, Cpf, Email, Password, Cash, Patrimony, NewCanDeposit, Row, Col, AllAssets),
-    editClientJSON(JSONPath, NewClient).
+    editClientJSON(NewClient).
 
-setAllAssets(JSONPath, ID, NewAllAssets) :- 
-    getClient(JSONPath, ID, Client),
+setAllAssets(ID, NewAllAssets) :- 
+    getClient(ID, Client),
     Client = client(Ident, Name, Age, Cpf, Email, Password, Cash, Patrimony, CanDeposit, Row, Col, AllAssets),
     NewClient = client(Ident, Name, Age, Cpf, Email, Password, Cash, Patrimony, CanDeposit, Row, Col, NewAllAssets),
-    editClientJSON(JSONPath, NewClient).
+    editClientJSON(NewClient).
 
-setUserRow(JSONPath, ID, NewRow) :- 
-    getClient(JSONPath, ID, Client),
+setUserRow(ID, NewRow) :- 
+    getClient(ID, Client),
     Client = client(Ident, Name, Age, Cpf, Email, Password, Cash, Patrimony, CanDeposit, Row, Col, AllAssets),
     NewClient = client(Ident, Name, Age, Cpf, Email, Password, Cash, Patrimony, CanDeposit, NewRow, Col, AllAssets),
-    editClientJSON(JSONPath, NewClient).
+    editClientJSON(NewClient).
     
-setUserCol(JSONPath, ID, NewCol) :- 
-    getClient(JSONPath, ID, Client),
+setUserCol(ID, NewCol) :- 
+    getClient(ID, Client),
     Client = client(Ident, Name, Age, Cpf, Email, Password, Cash, Patrimony, CanDeposit, Row, Col, AllAssets),
     NewClient = client(Ident, Name, Age, Cpf, Email, Password, Cash, Patrimony, CanDeposit, Row, NewCol, AllAssets),
-    editClientJSON(JSONPath, NewClient).
+    editClientJSON(NewClient).
 
-addCash(JSONPath, ID, AddCash) :- 
-    getClient(JSONPath, ID, Client),
+addCash(ID, AddCash) :- 
+    getClient(ID, Client),
     Client = client(Ident, Name, Age, Cpf, Email, Password, Cash, Patrimony, CanDeposit, Row, Col, AllAssets),
     NewCash is (Cash + AddCash),
     NewClient = client(Ident, Name, Age, Cpf, Email, Password, NewCash, Patrimony, CanDeposit, Row, Col, AllAssets),
-    editClientJSON(JSONPath, NewClient).
+    editClientJSON(NewClient).
 
-addUserRow(JSONPath, ID, AddRow) :- 
-    getClient(JSONPath, ID, Client),
+addUserRow(ID, AddRow) :- 
+    getClient(ID, Client),
     Client = client(Ident, Name, Age, Cpf, Email, Password, Cash, Patrimony, CanDeposit, Row, Col, AllAssets),
     NewRow is (Row + AddRow),
     NewClient = client(Ident, Name, Age, Cpf, Email, Password, Cash, Patrimony, CanDeposit, NewRow, Col, AllAssets),
-    editClientJSON(JSONPath, NewClient).
+    editClientJSON(NewClient).
 
-addUserCol(JSONPath, ID, AddCol) :- 
-    getClient(JSONPath, ID, Client),
+addUserCol(ID, AddCol) :- 
+    getClient(ID, Client),
     Client = client(Ident, Name, Age, Cpf, Email, Password, Cash, Patrimony, CanDeposit, Row, Col, AllAssets),
     NewCol is (Col + AddCol),
     NewClient = client(Ident, Name, Age, Cpf, Email, Password, Cash, Patrimony, CanDeposit, Row, NewCol, AllAssets),
-    editClientJSON(JSONPath, NewClient).
+    editClientJSON(NewClient).
 
 searchAcoes(AllAssets, IDCompany, Acoes) :-
     buscarAcoes(AllAssets, IDCompany, Acoes).

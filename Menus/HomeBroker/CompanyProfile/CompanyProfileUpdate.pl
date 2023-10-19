@@ -8,7 +8,7 @@
 updateCompanyProfile(IdUser, IdComp) :-
     resetMenu("./HomeBroker/CompanyProfile/companyProfile.txt", "../Sprites/HomeBroker/companyProfile_base.txt"),
     % updateMatrixClock
-    getCash("../Data/Clients.json", IdUser, Cash),
+    getCash(IdUser, Cash),
     updateCPCash("./HomeBroker/CompanyProfile/companyProfile.txt", Cash),
     getCode(IdComp, Code),
     updateCPCompanyCode("./HomeBroker/CompanyProfile/companyProfile.txt",Code),
