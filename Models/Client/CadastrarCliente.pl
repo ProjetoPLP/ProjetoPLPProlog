@@ -4,7 +4,7 @@
 
 cadastrarCliente :-
     getNewClient(Client),
-    saveClientJSON("../../Data/Clients.json", Client).
+    saveClientJSON(Client).
 
 getNewClient(Client) :-
     getName(Name),
@@ -13,7 +13,3 @@ getNewClient(Client) :-
     getEmail(Email),
     getPassword(Password),
     createClient(1, Name, Age, CPF, Email, Password, 100.0, Client).
-
-main:-
-    cadastrarCliente,
-    halt.

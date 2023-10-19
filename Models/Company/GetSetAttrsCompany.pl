@@ -1,7 +1,7 @@
 :- consult('SaveCompany.pl').
 :- consult('ModelCompany.pl').
 
-getName(ID, Name) :- 
+getCompName(ID, Name) :- 
     getCompany(ID, Company),
     Company = company(_, Name, _, _, _, _, _, _, _, _, _, _, _, _).
 
@@ -45,15 +45,15 @@ getStartPrice(ID, StartPrice) :-
     getCompany(ID, Company),
     Company = company(_, _, _, _, _, _, _, _, _, _, _, StartPrice, _, _).
 
-getRow(ID, Row) :-
+getCompRow(ID, Row) :-
     getCompany(ID, Company),
     Company = company(_, _, _, _, _, _, _, _, _, _, _, _, Row, _).
 
-getCol(ID, Col) :-
+getCompCol(ID, Col) :-
     getCompany(ID, Company),
     Company = company(_, _, _, _, _, _, _, _, _, _, _, _, _, Col).
 
-getIdent(Company, Ident) :- 
+getCompIdent(Company, Ident) :- 
     Company = company(Ident, _, _, _, _, _, _, _, _, _, _, _, _, _).
 
 setPrice(ID, NewPrice):-
@@ -86,26 +86,26 @@ setStartPrice(ID, NewStartPrice):-
     NewCompany = company(Ident, Name, Age, Cnpj, Actuation, Declaration, Code, Price, TrendIndicator, MinPrice, MaxPrice, NewStartPrice, Row, Col),
     editCompanyJSON(NewCompany).
 
-setRow(ID, NewRow):-
+setCompRow(ID, NewRow):-
     getCompany(ID, Company),
     Company = company(Ident, Name, Age, Cnpj, Actuation, Declaration, Code, Price, TrendIndicator, MinPrice, MaxPrice, StartPrice, Row, Col),
     NewCompany = company(Ident, Name, Age, Cnpj, Actuation, Declaration, Code, Price, TrendIndicator, MinPrice, MaxPrice, StartPrice, NewRow, Col),
     editCompanyJSON(NewCompany).
 
-setCol(ID, NewCol):-
+setCompCol(ID, NewCol):-
     getCompany(ID, Company),
     Company = company(Ident, Name, Age, Cnpj, Actuation, Declaration, Code, Price, TrendIndicator, MinPrice, MaxPrice, StartPrice, Row, Col),
     NewCompany = company(Ident, Name, Age, Cnpj, Actuation, Declaration, Code, Price, TrendIndicator, MinPrice, MaxPrice, StartPrice, Row, NewCol),
     editCompanyJSON(NewCompany).
 
-addRow(ID, AddRow):-
+addCompRow(ID, AddRow):-
     getCompany(ID, Company),
     Company = company(Ident, Name, Age, Cnpj, Actuation, Declaration, Code, Price, TrendIndicator, MinPrice, MaxPrice, StartPrice, Row, Col),
     NewRow is Row + AddRow,
     NewCompany = company(Ident, Name, Age, Cnpj, Actuation, Declaration, Code, Price, TrendIndicator, MinPrice, MaxPrice, StartPrice, NewRow, Col),
     editCompanyJSON(NewCompany).
 
-addCol(ID, AddCol):-
+addCompCol(ID, AddCol):-
     getCompany(ID, Company),
     Company = company(Ident, Name, Age, Cnpj, Actuation, Declaration, Code, Price, TrendIndicator, MinPrice, MaxPrice, StartPrice, Row, Col),
     NewCol is Col + AddCol,

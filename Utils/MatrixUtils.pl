@@ -13,7 +13,7 @@ printLines(Stream) :-
 printLines(_).
 
 % Sobrescreve no arquivo .txt um novo valor
-writeMatrixValue(Arquivo, Linha, Coluna, Valor) :-
+writeMatrixValue(Arquivo, Valor, Linha, Coluna) :-
     string_chars(Valor, CharList),
     writeValue(Arquivo, Linha, Coluna, CharList).
     

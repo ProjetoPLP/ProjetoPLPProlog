@@ -2,14 +2,13 @@
 :- consult('SaveClient.pl').
 :- consult('ModelClient.pl').
 
-addAsset(ClientID, CompanyID, Qtd, Result) :- 
+addAsset(ClientID, CompanyID, Qtd) :- 
     getClient(ClientID, Client),
     Client = client(Ident, Name, Age, Cpf, Email, Password, Cash, Patrimony, CanDeposit, Row, Col, AllAssets),
     exam(AllAssets, CompanyID, Qtd, NewAllAssets),
     deleteZeroOrNegative(NewAllAssets, NewAllAssetsPositive),
     NewClient = client(Ident, Name, Age, Cpf, Email, Password, Cash, Patrimony, CanDeposit, Row, Col, NewAllAssetsPositive),
-    editClientJSON(NewClient),
-    Result = true.
+    editClientJSON(NewClient).
 
 exam(AllAssets, CompanyID, Qtd, NewAllAssets) :-
     buscarEmpresa(AllAssets, CompanyID, OldQtd),
@@ -34,3 +33,25 @@ deleteZeroOrNegative([[CompanyID, Qtd]|Rest], Filtered) :-
         Filtered = NewRest
     ),
     deleteZeroOrNegative(Rest, NewRest).
+
+
+removeAllClientsAsset(IdComp) :-
+    getClientJSON(Clients),
+    removeAllClientsAssetAux(IdComp, Clients).
+
+
+removeAllClientsAssetAux(_, []) :- !.
+removeAllClientsAssetAux(IdComp, [H|T]) :-
+    getUserIdent(H, IdUser),
+    getAllAssets(IdUser, AllAssets),
+    removeClientAsset(IdUser, IdComp, AllAssets),
+    removeAllClientsAssetAux(IdComp, T).
+
+
+removeClientAsset(_, _, []) :- !.
+removeClientAsset(IdUser, IdComp, [[CompanyID, Qtd]|T]) :-
+    (CompanyID =:= IdComp ->
+        addAsset(IdUser, IdComp, -Qtd)
+    ;
+        removeClientAsset(IdUser, IdComp, T)
+    ).
