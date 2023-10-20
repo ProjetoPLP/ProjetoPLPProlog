@@ -23,7 +23,7 @@ getAge(Age) :-
     writeln('\nAviso: proibido menores de 18 anos.'),
     getAge(Age);
     true),
-    Age = AgeNum.
+    Age = AgeStr.
     
 getCPF(CPF) :-
     write('Digite o seu CPF (apenas números, 11 dígitos): '),
@@ -51,9 +51,10 @@ getEmail(Email) :-
     read_line_to_string(user_input, EmailStr),
     (existClientByEmail(EmailStr, false) -> 
         Email = EmailStr;
-    writeln('\nAviso: O e-mail já foi cadastrado.'),
-    getEmail(Email)).
-    
+        writeln('\nAviso: O e-mail já foi cadastrado.'),
+        getEmail(Email)
+    ).
+
 getPassword(Password) :-
     write('Digite a sua senha: '),
     flush_output(current_output),

@@ -1,7 +1,6 @@
 :- consult('../../Utils/JsonUtils.pl').
 :- use_module(library(http/json)).
 
-
 listClientsJSON([], []).
 listClientsJSON([H|T], [client(H.ident, H.name, H.age, H.cpf, H.email, H.password, H.cash, H.patrimony, H.canDeposit, H.row, H.col, H.allAssets)|Rest]) :- 
     listClientsJSON(T, Rest).
