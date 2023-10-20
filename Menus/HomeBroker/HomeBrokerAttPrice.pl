@@ -65,7 +65,7 @@ attAllCompanyPriceGraph(IdComp, [Company|RestCompanies]) :-
 attCurrentCompanyPriceGraph(IdComp) :-
     homeBrokerFilePath(IdComp, FilePath),
     attCompanyPriceGraph(IdComp),
-    printMatrix(FilePath).
+    printMatrix(FilePath), !.
 
 
 % Atualiza em uma empresa qualquer, a partir do seu ID, o preço e o gráfico

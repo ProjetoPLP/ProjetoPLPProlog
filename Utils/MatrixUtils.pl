@@ -1,16 +1,16 @@
 % Printa no terminal o conteúdo do arquivo .txt
 printMatrix(NomeArquivo) :-
     open(NomeArquivo, read, Stream),
-    printLines(Stream),
+    repeat,
+    (   read_line_to_string(Stream, Linha),
+        (   Linha == end_of_file
+        ->  true
+        ;   writeln(Linha),
+            fail
+        )
+    ),
     close(Stream).
 
-printLines(Stream) :-
-    \+ at_end_of_stream(Stream),
-    read_line_to_string(Stream, Linha),
-    write(Linha), nl, % Imprime a linha
-    printLines(Stream).
-
-printLines(_).
 
 % Sobrescreve no arquivo .txt um novo valor
 writeMatrixValue(Arquivo, Valor, Linha, Coluna) :-
