@@ -2,6 +2,7 @@
 :- consult('ModelCompany.pl').
 :- consult('GetInfoForCreateCompany.pl').
 
+
 cadastrarCompany(LimitCompanies, Success) :-
     (LimitCompanies < 12 ->
         getNewCompany(Company),
@@ -9,6 +10,7 @@ cadastrarCompany(LimitCompanies, Success) :-
         Success = true;
         Success = false
     ).
+
 
 getNewCompany(Company) :-
     getName(CompanyName),
@@ -18,8 +20,9 @@ getNewCompany(Company) :-
     getDeclaration(CompanyDeclaration),
     getCode(CompanyCode),
     randomCompanyPrice(CompanyPrice),
-    Company = company(10, CompanyName, CompanyAgeFounded, CompanyCNPJ, CompanyActuation, CompanyDeclaration, CompanyCode, CompanyPrice, " ", 0, 0, 0, 0, 0).
+    createCompany(10, CompanyName, CompanyAgeFounded, CompanyCNPJ, CompanyActuation, CompanyDeclaration, CompanyCode, CompanyPrice, " ", CompanyPrice, CompanyPrice, CompanyPrice, Company).
+
 
 randomCompanyPrice(CompanyPrice) :-
     random_between(10, 30, RandomPrice),
-    format(atom(CompanyPrice), '~2f', [RandomPrice]).
+    format(atom(CompanyPrice), '~1f', [RandomPrice]).

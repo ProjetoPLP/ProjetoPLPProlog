@@ -1,65 +1,68 @@
 :- consult('../../Utils/MatrixUtils.pl').
 :- consult('../../Utils/UpdateUtils.pl').
+:- consult('../../Utils/GraphUtilsHomeBroker.pl').
 :- consult('../../Models/Client/GetSetAttrsClient.pl').
 :- consult('../../Models/Company/GetSetAttrsCompany.pl').
+:- consult('../../Models/Clock/ClockUpdate.pl').
 
 
 % Atualiza todas as informações do Home Broker de uma determinada empresa
 updateHomeBroker(IdUser, IdComp) :-
-    compFilePath(IdComp, FilePath),
-    % updateMatrixClock
+    homeBrokerFilePath(IdComp, FilePath),
     getCash(IdUser, Cash),
-    updateHBCash(FilePath, Cash),
     getCompName(IdComp, Name),
-    updateHBCompanyName(FilePath, Name),
     getCode(IdComp, Code),
-    updateHBCompanyCode(FilePath, Code),
     getPrice(IdComp, Price), getTrendIndicator(IdComp, Trend),
-    updateHBStockPrice(FilePath, Price, Trend),
     getStartPrice(IdComp, StartPrice),
-    updateHBStockStartPrice(FilePath, StartPrice),
     getMaxPrice(IdComp, MaxPrice),
-    updateHBStockMaxPrice(FilePath, MaxPrice),
     getMinPrice(IdComp, MinPrice),
-    updateHBStockMinPrice(FilePath, MinPrice),
     getQtdAssetsInCompany(IdUser, IdComp, Stocks),
-    updateHBOwnedStocks(FilePath, Stocks).
 
-compFilePath(IdComp, FilePath) :-
-    string_concat("../Models/Company/HomeBrokers/homebroker", IdComp, Temp),
-    string_concat(Temp, ".txt", FilePath).
+    updateMatrixClock(FilePath),
+    updateHBCash(FilePath, Cash),
+    updateHBCompanyName(FilePath, Name),
+    updateHBCompanyCode(FilePath, Code),
+    updateHBStockPrice(FilePath, Price, Trend),
+    updateHBStockStartPrice(FilePath, StartPrice),
+    updateHBStockMaxPrice(FilePath, MaxPrice),
+    updateHBStockMinPrice(FilePath, MinPrice),
+    updateHBOwnedStocks(FilePath, Stocks).
 
 
 % Atualiza todas as informações do menu de compras em um Home Broker de uma determinada empresa
 updateHomeBrokerBuy(IdUser, IdComp) :-
-    resetMenu("./HomeBroker/BuySell/homebrokerBuy.txt", "../Sprites/HomeBroker/homebrokerBuy_base.txt"),
-    % updateMatrixClock
+    FilePath = "./HomeBroker/BuySell/homebrokerBuy.txt",
+    resetMenu(FilePath, "../Sprites/HomeBroker/homebrokerBuy_base.txt"),
     getCash(IdUser, Cash),
-    updateHBCash("./HomeBroker/BuySell/homebrokerBuy.txt", Cash),
     getCompName(IdComp, Name),
-    updateHBCompanyName("./HomeBroker/BuySell/homebrokerBuy.txt", Name),
     getCode(IdComp, Code),
-    updateHBCompanyCode("./HomeBroker/BuySell/homebrokerBuy.txt", Code),
     getPrice(IdComp, Price), getTrendIndicator(IdComp, Trend),
-    updateHBStockPrice("./HomeBroker/BuySell/homebrokerBuy.txt", Price, Trend),
     getQtdAssetsInCompany(IdUser, IdComp, Stocks),
-    updateHBOwnedStocks("./HomeBroker/BuySell/homebrokerBuy.txt", Stocks).
+
+    updateMatrixClock(FilePath),
+    updateHBCash(FilePath, Cash),
+    updateHBCompanyName(FilePath, Name),
+    updateHBCompanyCode(FilePath, Code),
+    updateHBStockPrice(FilePath, Price, Trend),
+    updateHBOwnedStocks(FilePath, Stocks).
 
 
 % Atualiza todas as informações do menu de vendas em um Home Broker de uma determinada empresa
 updateHomeBrokerSell(IdUser, IdComp) :-
-    resetMenu("./HomeBroker/BuySell/homebrokerSell.txt", "../Sprites/HomeBroker/homebrokerSell_base.txt"),
-    % updateMatrixClock
+    FilePath = "./HomeBroker/BuySell/homebrokerSell.txt",
+    resetMenu(FilePath, "../Sprites/HomeBroker/homebrokerSell_base.txt"),
     getCash(IdUser, Cash),
-    updateHBCash("./HomeBroker/BuySell/homebrokerSell.txt", Cash),
     getCompName(IdComp, Name),
-    updateHBCompanyName("./HomeBroker/BuySell/homebrokerSell.txt", Name),
     getCode(IdComp, Code),
-    updateHBCompanyCode("./HomeBroker/BuySell/homebrokerSell.txt", Code),
     getPrice(IdComp, Price), getTrendIndicator(IdComp, Trend),
-    updateHBStockPrice("./HomeBroker/BuySell/homebrokerSell.txt", Price, Trend),
     getQtdAssetsInCompany(IdUser, IdComp, Stocks),
-    updateHBOwnedStocks("./HomeBroker/BuySell/homebrokerSell.txt", Stocks).
+
+    updateMatrixClock(FilePath),
+    updateHBCash(FilePath, Cash),
+    updateHBCompanyName(FilePath, Name),
+    updateHBCompanyCode(FilePath, Code),
+    updateHBStockPrice(FilePath, Price, Trend),
+    updateHBOwnedStocks(FilePath, Stocks).
 
 
 updateHBStockPrice(FilePath, Price, TrendInd) :-

@@ -1,8 +1,9 @@
 :- use_module(library(http/json)).
 
 lerJSON(JSONPath, File) :-
-	open(JSONPath, read, F),
-	json_read_dict(F, File).
+	open(JSONPath, read, Stream),
+	json_read_dict(Stream, File),
+    close(Stream).
 
 listClientsJSON([], []).
 listClientsJSON([H|T], [client(H.ident, H.name, H.age, H.cpf, H.email, H.password, H.cash, H.patrimony, H.canDeposit, H.row, H.col, H.allAssets)|Rest]) :- 
@@ -51,8 +52,8 @@ saveClientJSON(Client) :-
     clienteToJSON(NewIdent, Name, Age, Cpf, Email, Password, Cash, Patrimony, CanDeposit, Row, Col, AllAssets, ClienteJSON),
     append(ListaCompaniesJSON, [ClienteJSON], Saida),
     open("../Data/Clients.json", write, Stream), write(Stream, Saida), close(Stream),
-    readFileTxt('../../Sprites/Wallet/wallet_base.txt', TextContents),
-    atom_concat('./Wallets/wallet', NewIdent, Temp),
+    readFileTxt('../Sprites/Wallet/wallet_base.txt', TextContents),
+    atom_concat('../Models/Client/Wallets/wallet', NewIdent, Temp),
     atom_concat(Temp, '.txt', WalletFileName),
     writeFileText(WalletFileName, TextContents).
 

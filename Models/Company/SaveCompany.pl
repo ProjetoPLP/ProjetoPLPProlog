@@ -1,8 +1,9 @@
 :- use_module(library(http/json)).
 
 lerJSON(JSONPath, File) :-
-	open(JSONPath, read, F),
-	json_read_dict(F, File).
+	open(JSONPath, read, Stream),
+	json_read_dict(Stream, File),
+    close(Stream).
 
 exibirCompaniesAux([], []).
 exibirCompaniesAux([H|T], [company(H.ident, H.name, H.age, H.cnpj, H.actuation, H.declaration, H.code, H.price, H.trendIndicator, H.minPrice, H.maxPrice, H.startPrice, H.row, H.col)|Rest]) :- 
@@ -48,21 +49,34 @@ saveCompanyJSON(Company) :-
     Company = company(Ident, Name, Age, Cnpj, Actuation, Declaration, Code, Price, TrendIndicator, MinPrice, MaxPrice, StartPrice, Row, Col),
     lerJSON("../Data/Companies.json", File),
     companiesToJSON(File, ListaCompaniesJSON),
-    getCompanyJSON(Out), length(Out, Length), NewIdent is Length + 1,
+    identifyIDSequenceBreak([1, 2, 3, 4, 5, 6, 7, 8, 9, 10, 11, 12], NewIdent),
     companyToJSON(NewIdent,  Name, Age, Cnpj, Actuation, Declaration, Code, Price, TrendIndicator, MinPrice, MaxPrice, StartPrice, Row, Col, CompanyJSON),
     append(ListaCompaniesJSON, [CompanyJSON], Saida),
     open("../Data/Companies.json", write, Stream), write(Stream, Saida), close(Stream),
-    readFileTxt('../../Sprites/HomeBroker/homebroker_base.txt', TextContents),
-    atom_concat('./HomeBrokers/homebroker', NewIdent, Temp),
+    readFileTxt('../Sprites/HomeBroker/homebroker_base.txt', TextContents),
+    atom_concat('../Models/Company/HomeBrokers/homebroker', NewIdent, Temp),
     atom_concat(Temp, '.txt', WalletFileName),
     writeFileTxt(WalletFileName, TextContents).
+
+
+identifyIDSequenceBreak([], 1).
+identifyIDSequenceBreak([H|T], R) :-
+    getCompanyJSON(Companies),
+    getCompaniesIds(Companies, Ids),
+    sort(Ids, Sorted),
+    (\+ member(H, Sorted) -> R is H ; identifyIDSequenceBreak(T, R)).
+
+getCompaniesIds([], []) :- !.
+getCompaniesIds([company(Ident, _, _, _, _, _, _, _, _, _, _, _, _, _)|T], [Ident|RestoIds]) :-
+    getCompaniesIds(T, RestoIds).
+
 
 removeCompany([], _, []).
 removeCompany([H|T], H.ident, T).
 removeCompany([H|T], Ident, [H|Out]) :- removeCompany(T, Ident, Out).
 
 deleteFile(Id) :-
-    atom_concat('./HomeBrokers/homebroker', Id, Temp),
+    atom_concat('../Models/Company/HomeBrokers/homebroker', Id, Temp),
     atom_concat(Temp, '.txt', DeleteFilePath),
     delete_file(DeleteFilePath).
 

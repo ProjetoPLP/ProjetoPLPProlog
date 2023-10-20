@@ -1,5 +1,6 @@
 :- consult('../../../Models/Client/GetSetAttrsClient.pl').
 
+
 depositar(IdClient, CanDeposit) :-
     (CanDeposit = true ->
         addCash(IdClient, 100),

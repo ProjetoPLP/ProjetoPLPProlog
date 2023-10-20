@@ -2,28 +2,31 @@
 :- consult('../../../Utils/UpdateUtils.pl').
 :- consult('../../../Models/Client/GetSetAttrsClient.pl').
 :- consult('../../../Models/Company/GetSetAttrsCompany.pl').
+:- consult('../../../Models/Clock/ClockUpdate.pl').
 
 
 % Atualiza todas as informações de uma empresa em Company Description
 updateCompanyProfile(IdUser, IdComp) :-
-    resetMenu("./HomeBroker/CompanyProfile/companyProfile.txt", "../Sprites/HomeBroker/companyProfile_base.txt"),
-    % updateMatrixClock
+    FilePath = "./HomeBroker/CompanyProfile/companyProfile.txt",
+    resetMenu(FilePath, "../Sprites/HomeBroker/companyProfile_base.txt"),
     getCash(IdUser, Cash),
-    updateCPCash("./HomeBroker/CompanyProfile/companyProfile.txt", Cash),
     getCode(IdComp, Code),
-    updateCPCompanyCode("./HomeBroker/CompanyProfile/companyProfile.txt",Code),
     getCompName(IdComp, Name),
-    updateCPCompanyName("./HomeBroker/CompanyProfile/companyProfile.txt", Name),
     getActuation(IdComp, Actuation),
-    updateCPCompanyActuation("./HomeBroker/CompanyProfile/companyProfile.txt", Actuation),
     getPrice(IdComp, Price), getTrendIndicator(IdComp, Trend),
-    updateCPCompanyPrice("./HomeBroker/CompanyProfile/companyProfile.txt", Price, Trend),
     getDeclaration(IdComp, Declaration),
-    updateCPCompanyDeclaration("./HomeBroker/CompanyProfile/companyProfile.txt", Declaration),
     getAge(IdComp, Age),
-    updateCPCompanyAge("./HomeBroker/CompanyProfile/companyProfile.txt", Age),
     getCNPJ(IdComp, CNPJ),
-    updateCPCompanyCNPJ("./HomeBroker/CompanyProfile/companyProfile.txt", CNPJ).
+
+    updateMatrixClock(FilePath),
+    updateCPCash(FilePath, Cash),
+    updateCPCompanyCode(FilePath,Code),
+    updateCPCompanyName(FilePath, Name),
+    updateCPCompanyActuation(FilePath, Actuation),
+    updateCPCompanyPrice(FilePath, Price, Trend),
+    updateCPCompanyDeclaration(FilePath, Declaration),
+    updateCPCompanyAge(FilePath, Age),
+    updateCPCompanyCNPJ(FilePath, CNPJ).
 
 
 updateCPCash(FilePath, Cash) :-

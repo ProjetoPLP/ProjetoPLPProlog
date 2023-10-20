@@ -2,18 +2,21 @@
 :- consult('../../Utils/UpdateUtils.pl').
 :- consult('../../Models/Client/GetSetAttrsClient.pl').
 :- consult('../../Models/Company/GetSetAttrsCompany.pl').
+:- consult('../../Models/Clock/ClockUpdate.pl').
 
 
 % Atualiza todas as informações no Main Menu
 updateMainMenu(IdUser) :-
-    resetMenu("./MainMenu/mainMenu.txt", "../Sprites/MainMenu/mainMenu_base.txt"),
-    % updateMatrixClock
+    FilePath = "./MainMenu/mainMenu.txt",
+    resetMenu(FilePath, "../Sprites/MainMenu/mainMenu_base.txt"),
     getCash(IdUser, Cash),
-    updateMMCash("./MainMenu/mainMenu.txt", Cash),
     getCompanyJSON(Comps),
-    updateAllMMCompanyCode("./MainMenu/mainMenu.txt", Comps),
-    updateAllMMCompanyPrice("./MainMenu/mainMenu.txt", Comps),
-    updateAllMMCompanyName("./MainMenu/mainMenu.txt", Comps).
+
+    updateMatrixClock(FilePath),
+    updateMMCash(FilePath, Cash),
+    updateAllMMCompanyCode(FilePath, Comps),
+    updateAllMMCompanyPrice(FilePath, Comps),
+    updateAllMMCompanyName(FilePath, Comps).
 
 
 updateMMCash(FilePath, Cash) :-

@@ -2,12 +2,14 @@
 :- consult('ModelClock.pl').
 
 lerJSON(JSONPath, File) :-
-	open(JSONPath, read, F),
-	json_read_dict(F, File).
+	open(JSONPath, read, Stream),
+	json_read_dict(Stream, File),
+    close(Stream).
 
 getClock(Minutes) :- 
-    open("../Data/Clock.json", read, F),
-    json_read_dict(F, Clock),
+    open("../Data/Clock.json", read, Stream),
+    json_read_dict(Stream, Clock),
+    close(Stream),
     Minutes is Clock.minutes.
 
 saveClock(Minutes) :- 

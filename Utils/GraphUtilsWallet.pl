@@ -20,9 +20,7 @@ attClientLineRow(IdUser, OldPatrimony, NewPatrimony) :-
 checkClientColumn(IdUser) :-
     getUserCol(IdUser, ColValue),
     (   ColValue > 95 ->
-        number_string(IdUser, IDString),
-        string_concat("../Models/Client/Wallets/wallet", IDString, TempPath),
-        string_concat(TempPath, ".txt", FilePath),
+        walletFilePath(IdUser, FilePath),
         cleanWLGraph(FilePath, 11),
         setUserCol(IDComp, 51)
     ;   addUserCol(IdUser, 0)
@@ -33,9 +31,7 @@ checkClientColumn(IdUser) :-
 checkClientRowOverflow(IdUser) :-
     getUserRow(IdUser, RowValue),
     (   RowValue < 11 ->
-        number_string(IdUser, IDString),
-        string_concat("../Models/Client/Wallets/wallet", IDString, TempPath),
-        string_concat(TempPath, ".txt", FilePath),
+        walletFilePath(IdUser, FilePath),
         cleanWLGraph(FilePath, 11),
         setUserRow(IdUser, 20)
     ;   addUserRow(IdUser, 0)
@@ -46,9 +42,7 @@ checkClientRowOverflow(IdUser) :-
 checkClientRowUnderflow(IdUser) :-
     getUserRow(IdUser, RowValue),
     (   RowValue > 20 ->
-        number_string(IdUser, IDString),
-        string_concat("../Models/Client/Wallets/wallet", IDString, TempPath),
-        string_concat(TempPath, ".txt", FilePath),
+        walletFilePath(IdUser, FilePath),
         cleanWLGraph(FilePath, 11),
         setUserRow(IdUser, 11)
     ;   addUserRow(IdUser, 0)
@@ -72,3 +66,13 @@ cleanWLGraph(FilePath, Row) :-
     writeMatrixValue(FilePath, Spaces, Row, 50),
     NextRow is Row + 1,
     cleanWLGraph(FilePath, NextRow).
+
+
+% Retorna o caminha da carteira do cliente a partir do seu ID
+walletFilePath(IdUser, FilePath) :-
+    string_concat("../Models/Client/Wallets/wallet", IdUser, Temp),
+    string_concat(Temp, ".txt", FilePath).
+
+
+updateWLGraphCandle(Filepath, Row, Col) :-
+    writeMatrixValue(Filepath, "❚", Row, Col).

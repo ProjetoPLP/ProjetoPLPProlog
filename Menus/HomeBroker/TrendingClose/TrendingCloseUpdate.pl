@@ -3,19 +3,22 @@
 :- consult('../../../Models/Client/GetSetAttrsClient.pl').
 :- consult('../../../Models/Company/GetSetAttrsCompany.pl').
 :- consult('../../../Models/Company/SaveCompany.pl').
+:- consult('../../../Models/Clock/ClockUpdate.pl').
 
 
 % Atualiza todas as informações no menu de fechamento do pregão
 updateTrendingClose(IdUser) :-
-    resetMenu("./HomeBroker/TrendingClose/trendingClose.txt", "../Sprites/HomeBroker/trendingClose_base.txt"),
-    % updateMatrixClock
+    FilePath = "./HomeBroker/TrendingClose/trendingClose.txt",
+    resetMenu(FilePath, "../Sprites/HomeBroker/trendingClose_base.txt"),
     getCash(IdUser, Cash),
-    updateTCCash("./HomeBroker/TrendingClose/trendingClose.txt", Cash),
     getPatrimony(IdUser, Patrimony),
-    updateTCPatrimony("./HomeBroker/TrendingClose/trendingClose.txt", Patrimony),
     getCompanyJSON(Comps),
-    updateAllTCCompanyCode("./HomeBroker/TrendingClose/trendingClose.txt", Comps),
-    updateAllTCCompanyVar("./HomeBroker/TrendingClose/trendingClose.txt", Comps),
+
+    updateMatrixClock(FilePath),
+    updateTCCash(FilePath, Cash),
+    updateTCPatrimony(FilePath, Patrimony),
+    updateAllTCCompanyCode(FilePath, Comps),
+    updateAllTCCompanyVar(FilePath, Comps),
     updateAllCompaniesStartMaxMinPrice(Comps).
 
 
