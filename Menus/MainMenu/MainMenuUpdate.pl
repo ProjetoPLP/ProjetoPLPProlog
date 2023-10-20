@@ -36,7 +36,7 @@ updateAllMMCompanyCode(FilePath, [H|T]) :-
 
 updateMMCompanyCode(FilePath, IdComp) :-
     getCode(IdComp, Code),
-    getCompanyCodePosition(IdComp, [Row|Col]),
+    getMMCompanyCodePosition(IdComp, [Row|Col]),
     writeMatrixValue(FilePath, Code, Row, Col).
 
 
@@ -50,7 +50,7 @@ updateAllMMCompanyName(FilePath, [H|T]) :-
 
 updateMMCompanyName(FilePath, IdComp) :-
     getCompName(IdComp, Name),
-    getCompanyNamePosition(IdComp, [Row|Col]),
+    getMMCompanyNamePosition(IdComp, [Row|Col]),
     getCompanyNameCol(Name, Col, NewCol),
     writeMatrixValue(FilePath, Name, Row, NewCol).
 
@@ -66,7 +66,7 @@ updateAllMMCompanyPrice(FilePath, [H|T]) :-
 updateMMCompanyPrice(FilePath, IdComp) :-
     getPrice(IdComp, Price),
     getTrendIndicator(IdComp, Trend),
-    getCompanyPricePosition(IdComp, [Row|Col]),
+    getMMCompanyPricePosition(IdComp, [Row|Col]),
     string_concat(Trend, Price, Temp1),
     string_concat(Temp1, "0", Temp2),
     fillLeft(Temp2, 7, NewPrice),
@@ -74,43 +74,43 @@ updateMMCompanyPrice(FilePath, IdComp) :-
     writeMatrixValue(FilePath, NewPrice, Row, Col - Len).
 
 
-getCompanyCodePosition(1, [8, 24]).
-getCompanyCodePosition(2, [13, 24]).
-getCompanyCodePosition(3, [18, 24]).
-getCompanyCodePosition(4, [23, 24]).
-getCompanyCodePosition(5, [8, 49]).
-getCompanyCodePosition(6, [13, 49]).
-getCompanyCodePosition(7, [18, 49]).
-getCompanyCodePosition(8, [23, 49]).
-getCompanyCodePosition(9, [8, 74]).
-getCompanyCodePosition(10, [13, 74]).
-getCompanyCodePosition(11, [18, 74]).
-getCompanyCodePosition(12, [23, 74]).
+getMMCompanyCodePosition(1, [8, 24]).
+getMMCompanyCodePosition(2, [13, 24]).
+getMMCompanyCodePosition(3, [18, 24]).
+getMMCompanyCodePosition(4, [23, 24]).
+getMMCompanyCodePosition(5, [8, 49]).
+getMMCompanyCodePosition(6, [13, 49]).
+getMMCompanyCodePosition(7, [18, 49]).
+getMMCompanyCodePosition(8, [23, 49]).
+getMMCompanyCodePosition(9, [8, 74]).
+getMMCompanyCodePosition(10, [13, 74]).
+getMMCompanyCodePosition(11, [18, 74]).
+getMMCompanyCodePosition(12, [23, 74]).
 
 
-getCompanyNamePosition(1, [9, 31]).
-getCompanyNamePosition(2, [14, 31]).
-getCompanyNamePosition(3, [19, 31]).
-getCompanyNamePosition(4, [24, 31]).
-getCompanyNamePosition(5, [9, 56]).
-getCompanyNamePosition(6, [14, 56]).
-getCompanyNamePosition(7, [19, 56]).
-getCompanyNamePosition(8, [24, 56]).
-getCompanyNamePosition(9, [9, 81]).
-getCompanyNamePosition(10, [14, 81]).
-getCompanyNamePosition(11, [19, 81]).
-getCompanyNamePosition(12, [24, 81]).
+getMMCompanyNamePosition(1, [9, 31]).
+getMMCompanyNamePosition(2, [14, 31]).
+getMMCompanyNamePosition(3, [19, 31]).
+getMMCompanyNamePosition(4, [24, 31]).
+getMMCompanyNamePosition(5, [9, 56]).
+getMMCompanyNamePosition(6, [14, 56]).
+getMMCompanyNamePosition(7, [19, 56]).
+getMMCompanyNamePosition(8, [24, 56]).
+getMMCompanyNamePosition(9, [9, 81]).
+getMMCompanyNamePosition(10, [14, 81]).
+getMMCompanyNamePosition(11, [19, 81]).
+getMMCompanyNamePosition(12, [24, 81]).
 
 
-getCompanyPricePosition(1, [8, 39]).
-getCompanyPricePosition(2, [13, 39]).
-getCompanyPricePosition(3, [18, 39]).
-getCompanyPricePosition(4, [23, 39]).
-getCompanyPricePosition(5, [8, 64]).
-getCompanyPricePosition(6, [13, 64]).
-getCompanyPricePosition(7, [18, 64]).
-getCompanyPricePosition(8, [23, 64]).
-getCompanyPricePosition(9, [8, 89]).
-getCompanyPricePosition(10, [13, 89]).
-getCompanyPricePosition(11, [18, 89]).
-getCompanyPricePosition(12, [23, 89]).
+getMMCompanyPricePosition(1, [8, 39]).
+getMMCompanyPricePosition(2, [13, 39]).
+getMMCompanyPricePosition(3, [18, 39]).
+getMMCompanyPricePosition(4, [23, 39]).
+getMMCompanyPricePosition(5, [8, 64]).
+getMMCompanyPricePosition(6, [13, 64]).
+getMMCompanyPricePosition(7, [18, 64]).
+getMMCompanyPricePosition(8, [23, 64]).
+getMMCompanyPricePosition(9, [8, 89]).
+getMMCompanyPricePosition(10, [13, 89]).
+getMMCompanyPricePosition(11, [18, 89]).
+getMMCompanyPricePosition(12, [23, 89]).

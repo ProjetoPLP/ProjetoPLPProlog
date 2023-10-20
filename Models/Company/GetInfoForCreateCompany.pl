@@ -3,16 +3,16 @@
 :- dynamic user/5.
 :- dynamic user/5.
 
-getName(Name) :-
+getCompanyName(Name) :-
     write('Digite o nome da empresa: '),
     flush_output(current_output),
     read_string(user_input, "\n", "\r", _, NameStr),
     (string_length(NameStr, Length), Length > 18 ->
         writeln('Aviso: O nome da empresa deve ter no máximo 18 caracteres.'),
-        getName(Name);
+        getCompanyName(Name);
         (existCompanyByName(NameStr, true) ->
             writeln('\nAviso: A empresa já foi cadastrada.'),
-            getName(Name);
+            getCompanyName(Name);
             Name = NameStr
         )
     ).
