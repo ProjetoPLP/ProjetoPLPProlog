@@ -92,15 +92,15 @@ updateAllWLCompanyPrice(_, []) :- !.
 updateAllWLCompanyPrice(FilePath, [[IdComp, _]|T]) :-
     getPrice(IdComp, Price),
     getTrendIndicator(IdComp, Trend),
-    updateWLCompanyPrice(FilePath, IdComp, Price, Trend),
+    string_concat(Price, "0", NewPrice),
+    updateWLCompanyPrice(FilePath, IdComp, NewPrice, Trend),
     updateAllWLCompanyPrice(FilePath, T).
 
 
 updateWLCompanyPrice(FilePath, IdComp, Price, Trend) :-
     getCompanyPricePosition(IdComp, [Row|Col]),
-    string_concat(Trend, Price, Temp1),
-    string_concat(Temp1, "0", Temp2),
-    fillLeft(Temp2, 7, NewPrice),
+    string_concat(Trend, Price, Temp),
+    fillLeft(Temp, 7, NewPrice),
     string_length(NewPrice, Len),
     writeMatrixValue(FilePath, NewPrice, Row, Col - Len).
 
