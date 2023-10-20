@@ -72,3 +72,7 @@ cleanHBGraph(FilePath, Row) :-
 homeBrokerFilePath(IdComp, FilePath) :-
     string_concat("../Models/Company/HomeBrokers/homebroker", IdComp, Temp),
     string_concat(Temp, ".txt", FilePath).
+
+
+updateHBGraphCandle(FilePath, Row, Col) :-
+    writeMatrixValue(FilePath, "❚", Row, Col).

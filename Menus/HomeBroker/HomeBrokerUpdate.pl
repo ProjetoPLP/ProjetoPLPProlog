@@ -73,10 +73,6 @@ updateHBStockPrice(FilePath, Price, TrendInd) :-
     writeMatrixValue(FilePath, StringR, 11, (95 - Len)).
 
 
-updateHBGraphCandle(FilePath, Row, Col) :-
-    writeMatrixValue(FilePath, "❚", Row, Col).
-
-
 updateHBStockMaxPrice(FilePath, Price) :-
     string_concat(Price, "0", Temp),
     fillLeft(Temp, 6, StringR),
