@@ -1,5 +1,4 @@
 :- use_module(library(http/json)).
-:- consult('ModelClock.pl').
 
 lerJSON(JSONPath, File) :-
 	open(JSONPath, read, Stream),
