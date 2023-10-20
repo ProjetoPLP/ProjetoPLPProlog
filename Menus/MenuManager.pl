@@ -1,4 +1,4 @@
-:- consult('../Utils/MatrixUtilspl').
+:- consult('../Utils/MatrixUtils.pl').
 :- consult('../Utils/VerificationUtils.pl').
 :- consult('../Models/Client/RealizarLogin.pl').
 :- consult('../Models/Client/CadastrarCliente.pl').
@@ -20,31 +20,41 @@
 
 startMenu :-
     logoutClient,
-    printMatrix("./Menus/StartMenu/startMenu.txt"),
+    printMatrix("../Menus/StartMenu/startMenu.txt"),
     write("Digite uma opção: "),
     flush_output,
     read_line(UserChoice),
     optionsStartMenu(UserChoice).
 
-optionsStartMenu(UserChoice) :-
-    (   UserChoice = "L"; UserChoice = "l" ->
-        fazerLoginMenu
-    ;   UserChoice = "U"; UserChoice = "u" ->
-        cadastraUsuarioMenu
-    ;   UserChoice = "E"; UserChoice = "e" ->
-        cadastraEmpresaMenu
-    ;   UserChoice = "S"; UserChoice = "s" ->
-        true
-    ;   writeln("Opção Inválida!"),
-        startMenu
+read_line(Line) :-
+    read_line([], Line).
+
+read_line(Chars, Line) :-
+    get_char(Char),
+    (Char = '\n' ->
+        reverse(Chars, Line)
+    ;   read_line([Char|Chars], Line)
     ).
 
+optionsStartMenu(UserChoice) :-
+    (   memberchk('L', UserChoice); memberchk('l', UserChoice) ) ->
+        fazerLoginMenu
+    ;   (memberchk('U', UserChoice); memberchk('u', UserChoice)) ->
+        cadastraUsuarioMenu
+    ;   (memberchk('E', UserChoice); memberchk('e', UserChoice)) ->
+        cadastraEmpresaMenu
+    ;   (memberchk('S', UserChoice); memberchk('s', UserChoice)) ->
+        halt
+    ;   writeln("Opção Inválida!"),
+        startMenu.
+
+
 fazerLoginMenu :-
-    printMatrix("./Menus/StartMenu/loginMenu.txt"),
+    printMatrix("../Menus/StartMenu/loginMenu.txt"),
     write("Deseja fazer login? (S/N): "),
     flush_output,
     read_line(UserChoice),
-    (   querContinuarAOperacao(UserChoice) ->
+    (querContinuarAOperacao(UserChoice) ->
         fazerLogin(ResultadoLogin),
         (   ResultadoLogin ->
             getLoggedUserID(IdUser),
@@ -55,7 +65,7 @@ fazerLoginMenu :-
     ).
 
 cadastraUsuarioMenu :-
-    printMatrix("./Menus/StartMenu/cadastroUsuario.txt"),
+    printMatrix("../Menus/StartMenu/cadastroUsuario.txt"),
     write("Deseja cadastrar um novo usuário? (S/N): "),
     flush_output,
     read_line(UserChoice),
@@ -66,7 +76,7 @@ cadastraUsuarioMenu :-
     ).
 
 cadastraEmpresaMenu :-
-    printMatrix("./Menus/StartMenu/cadastroEmpresa.txt"),
+    printMatrix("../Menus/StartMenu/cadastroEmpresa.txt"),
     write("Deseja cadastrar uma nova empresa? (S/N): "),
     flush_output,
     read_line(UserChoice),
@@ -79,14 +89,13 @@ cadastraEmpresaMenu :-
     ).
 
 querContinuarAOperacao(UserChoice) :-
-    (   UserChoice = "S"; UserChoice = "s" ->
+    ( memberchk('S', UserChoice); memberchk('s', UserChoice) ) ->
         true
-    ;   false
-    ).
+    ;  false.
 
 menuCadastroRealizado(true) :-
-    printMatrix("./Menus/StartMenu/cadastroRealizado.txt"),
-    threadDelay(2000000),
+    printMatrix("../Menus/StartMenu/cadastroRealizado.txt"),
+    sleep(2),
     startMenu.
 
 menuCadastroRealizado(false) :-
@@ -95,7 +104,7 @@ menuCadastroRealizado(false) :-
 
 mainMenu(IdUser) :-
     updateMainMenu(IdUser),
-    printMatrix("./Menus/MainMenu/mainMenu.txt"),
+    printMatrix("../Menus/MainMenu/mainMenu.txt"),
     write("Digite uma opção: "),
     flush_output,
     read_line(UserChoice),
