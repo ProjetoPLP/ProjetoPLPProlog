@@ -4,8 +4,8 @@
 :- use_module(library(http/json)).
 
 fazerLogin(Result) :-
-    getEmail(Email),
-    getPassword(PasswordClient),
+    getLoginEmail(Email),
+    getLoginPassword(PasswordClient),
     getClientJSON(List),
     searchClientEmail(Email, List, Client),
     verificarSenha(PasswordClient, Client, Result).
@@ -22,14 +22,14 @@ searchClientEmail(EmailV, [_|T], Result) :-
     searchClientEmail(EmailV, T, Result).
 
 verificarSenha(PasswordClient, Client, Result) :-
-    Client = client(_, _, _, _, _, Password, _, _, _, _, _, _),
+    Client = client(Ident, Name, Age, Cpf, Email, Password, Cash, Patrimony, CanDeposit, Row, Col, AllAssets),
     string_lower(PasswordClient, LowerPasswordClient),
     string_lower(Password, LowerPassword),
-    LowerPasswordClient = LowerPassword,
-    clientesToJSON(Client, Saida),
+    (LowerPasswordClient = LowerPassword -> 
+        writeln("Logado!"); 
+        writeln("Senhas incorreta.")
+    ),
+    format(string(Saida), '{"ident": ~w, "name": "~w", "age": ~w, "cpf": "~w", "email": "~w", "password": "~w", "cash": ~w, "patrimony": ~w, "canDeposit": ~w, "row": ~w, "col": ~w, "allAssets": ~w}', [Ident, Name, Age, Cpf, Email, Password, Cash, Patrimony, CanDeposit, Row, Col, AllAssets]),
+    logoutClient,
     saveLogin(Saida),
     Result = true.
-        
-clientesToJSON(Client, Saida) :-
-    Client = client(Ident, Name, Age, Cpf, Email, Password, Cash, Patrimony, CanDeposit, Row, Col, AllAssets),
-    swritef(Saida, '{"ident": %w, "name":"%w", "age": "%w", "cpf": "%w", "email": "%w", "password": "%w", "cash": %w,"patrimony": %w,"canDeposit": %w, "row": %w,"col": %w,"allAssets": %w}', [Ident,  Name, Age, Cpf, Email, Password, Cash, Patrimony, CanDeposit, Row, Col, AllAssets]).
