@@ -7,7 +7,7 @@
 
 % Atualiza todas as informações do Home Broker de uma determinada empresa
 updateHomeBroker(IdUser, IdComp) :-
-    compFilePath(IdComp, FilePath),
+    homeBrokerFilePath(IdComp, FilePath),
     getCash(IdUser, Cash),
     getCompName(IdComp, Name),
     getCode(IdComp, Code),
@@ -27,7 +27,7 @@ updateHomeBroker(IdUser, IdComp) :-
     updateHBStockMinPrice(FilePath, MinPrice),
     updateHBOwnedStocks(FilePath, Stocks).
 
-compFilePath(IdComp, FilePath) :-
+homeBrokerFilePath(IdComp, FilePath) :-
     string_concat("../Models/Company/HomeBrokers/homebroker", IdComp, Temp),
     string_concat(Temp, ".txt", FilePath).
 
