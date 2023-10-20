@@ -17,7 +17,6 @@ buyDeposit(IdUser, IdComp, TotalPrice, Num) :-
 
 sell(_, _, Num) :- Num =< 0, !.
 sell(IdUser, IdComp, Num) :-
-    getCash(IdUser, Cash),
     getPrice(IdComp, Price),
     getQtdAssetsInCompany(IdUser, IdComp, Assets),
     TotalPrice is Price * Num,
