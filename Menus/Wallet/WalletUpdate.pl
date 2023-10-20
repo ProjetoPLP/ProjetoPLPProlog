@@ -83,7 +83,7 @@ updateAllWLCompanyCode(FilePath, [[IdComp, _]|T]) :-
 
 
 updateWLCompanyCode(FilePath, IdComp, Code) :-
-    getCompanyCodePosition(IdComp, [Row, Col]),
+    getWLCompanyCodePosition(IdComp, [Row, Col]),
     writeMatrixValue(FilePath, Code, Row, Col).
 
 
@@ -98,7 +98,7 @@ updateAllWLCompanyPrice(FilePath, [[IdComp, _]|T]) :-
 
 
 updateWLCompanyPrice(FilePath, IdComp, Price, Trend) :-
-    getCompanyPricePosition(IdComp, [Row|Col]),
+    getWLCompanyPricePosition(IdComp, [Row|Col]),
     string_concat(Trend, Price, Temp),
     fillLeft(Temp, 7, NewPrice),
     string_length(NewPrice, Len),
@@ -113,7 +113,7 @@ updateAllWLOwnedStocks(FilePath, [[IdComp, Qtd]|T]) :-
 
 
 updateWLOwnedStocks(FilePath, IdComp, Qtd) :-
-    getOwnedStocksPosition(IdComp, [Row, Col]),
+    getWLOwnedStocksPosition(IdComp, [Row, Col]),
     fillLeft(Qtd, 5, StringR),
     string_length(StringR, Len),
     writeMatrixValue(FilePath, StringR, Row, (Col - Len)).
@@ -136,43 +136,43 @@ resetStocks([H|T], FilePath) :-
     resetStocks(T, FilePath).
 
 
-getCompanyCodePosition(1, [22, 3]).
-getCompanyCodePosition(2, [24, 3]).
-getCompanyCodePosition(3, [26, 3]).
-getCompanyCodePosition(4, [22, 27]).
-getCompanyCodePosition(5, [24, 27]).
-getCompanyCodePosition(6, [26, 27]).
-getCompanyCodePosition(7, [22, 51]).
-getCompanyCodePosition(8, [24, 51]).
-getCompanyCodePosition(9, [26, 51]).
-getCompanyCodePosition(10, [22, 75]).
-getCompanyCodePosition(11, [24, 75]).
-getCompanyCodePosition(12, [26, 75]).
+getWLCompanyCodePosition(1, [22, 3]).
+getWLCompanyCodePosition(2, [24, 3]).
+getWLCompanyCodePosition(3, [26, 3]).
+getWLCompanyCodePosition(4, [22, 27]).
+getWLCompanyCodePosition(5, [24, 27]).
+getWLCompanyCodePosition(6, [26, 27]).
+getWLCompanyCodePosition(7, [22, 51]).
+getWLCompanyCodePosition(8, [24, 51]).
+getWLCompanyCodePosition(9, [26, 51]).
+getWLCompanyCodePosition(10, [22, 75]).
+getWLCompanyCodePosition(11, [24, 75]).
+getWLCompanyCodePosition(12, [26, 75]).
 
 
-getCompanyPricePosition(1, [22, 16]).
-getCompanyPricePosition(2, [24, 16]).
-getCompanyPricePosition(3, [26, 16]).
-getCompanyPricePosition(4, [22, 40]).
-getCompanyPricePosition(5, [24, 40]).
-getCompanyPricePosition(6, [26, 40]).
-getCompanyPricePosition(7, [22, 64]).
-getCompanyPricePosition(8, [24, 64]).
-getCompanyPricePosition(9, [26, 64]).
-getCompanyPricePosition(10, [22, 88]).
-getCompanyPricePosition(11, [24, 88]).
-getCompanyPricePosition(12, [26, 88]).
+getWLCompanyPricePosition(1, [22, 16]).
+getWLCompanyPricePosition(2, [24, 16]).
+getWLCompanyPricePosition(3, [26, 16]).
+getWLCompanyPricePosition(4, [22, 40]).
+getWLCompanyPricePosition(5, [24, 40]).
+getWLCompanyPricePosition(6, [26, 40]).
+getWLCompanyPricePosition(7, [22, 64]).
+getWLCompanyPricePosition(8, [24, 64]).
+getWLCompanyPricePosition(9, [26, 64]).
+getWLCompanyPricePosition(10, [22, 88]).
+getWLCompanyPricePosition(11, [24, 88]).
+getWLCompanyPricePosition(12, [26, 88]).
 
 
-getOwnedStocksPosition(1, [22, 23]).
-getOwnedStocksPosition(2, [24, 23]).
-getOwnedStocksPosition(3, [26, 23]).
-getOwnedStocksPosition(4, [22, 47]).
-getOwnedStocksPosition(5, [24, 47]).
-getOwnedStocksPosition(6, [26, 47]).
-getOwnedStocksPosition(7, [22, 71]).
-getOwnedStocksPosition(8, [24, 71]).
-getOwnedStocksPosition(9, [26, 71]).
-getOwnedStocksPosition(10, [22, 95]).
-getOwnedStocksPosition(11, [24, 95]).
-getOwnedStocksPosition(12, [26, 95]).
+getWLOwnedStocksPosition(1, [22, 23]).
+getWLOwnedStocksPosition(2, [24, 23]).
+getWLOwnedStocksPosition(3, [26, 23]).
+getWLOwnedStocksPosition(4, [22, 47]).
+getWLOwnedStocksPosition(5, [24, 47]).
+getWLOwnedStocksPosition(6, [26, 47]).
+getWLOwnedStocksPosition(7, [22, 71]).
+getWLOwnedStocksPosition(8, [24, 71]).
+getWLOwnedStocksPosition(9, [26, 71]).
+getWLOwnedStocksPosition(10, [22, 95]).
+getWLOwnedStocksPosition(11, [24, 95]).
+getWLOwnedStocksPosition(12, [26, 95]).

@@ -1,9 +1,6 @@
+:- consult('../../Utils/JsonUtils.pl').
 :- use_module(library(http/json)).
 
-lerJSON(JSONPath, File) :-
-	open(JSONPath, read, Stream),
-	json_read_dict(Stream, File),
-    close(Stream).
 
 listClientsJSON([], []).
 listClientsJSON([H|T], [client(H.ident, H.name, H.age, H.cpf, H.email, H.password, H.cash, H.patrimony, H.canDeposit, H.row, H.col, H.allAssets)|Rest]) :- 
@@ -32,11 +29,6 @@ clientesToJSON([H|T], [X|Out]) :-
 	clienteToJSON(H.ident, H.name, H.age, H.cpf, H.email, H.password, H.cash, H.patrimony, H.canDeposit, H.row, H.col, H.allAssets, X), 
 	clientesToJSON(T, Out).
 
-readFileTxt(FilePath, Text) :-
-    open(FilePath, read, Stream),
-    read_stream_to_codes(Stream, TextCodes),
-    close(Stream),
-    string_codes(Text, TextCodes).
 
 writeFileText(FilePath, TextContents) :-
     open(FilePath, write, _),

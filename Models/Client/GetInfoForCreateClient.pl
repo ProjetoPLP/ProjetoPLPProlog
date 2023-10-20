@@ -2,13 +2,13 @@
 :- dynamic user/5.
 :- dynamic user/5.
 
-getName(Name) :-
+getClientName(Name) :-
     write('Digite o seu nome: '),
     flush_output(current_output),
     read_string(user_input, "\n", "\r", _, NameStr),
     (string_length(NameStr, Length), Length > 18 ->
         writeln('\nAviso: O nome do usuário deve ter no máximo 18 caracteres.'),
-        getName(Name);
+        getClientName(Name);
      true),
     Name = NameStr.
 

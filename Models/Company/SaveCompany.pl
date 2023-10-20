@@ -1,9 +1,6 @@
+:- consult('../../Utils/JsonUtils.pl').
 :- use_module(library(http/json)).
 
-lerJSON(JSONPath, File) :-
-	open(JSONPath, read, Stream),
-	json_read_dict(Stream, File),
-    close(Stream).
 
 exibirCompaniesAux([], []).
 exibirCompaniesAux([H|T], [company(H.ident, H.name, H.age, H.cnpj, H.actuation, H.declaration, H.code, H.price, H.trendIndicator, H.minPrice, H.maxPrice, H.startPrice, H.row, H.col)|Rest]) :- 
@@ -33,12 +30,6 @@ companiesToJSON([], []).
 companiesToJSON([H|T], [X|Out]) :- 
 	companyToJSON(H.ident, H.name, H.age, H.cnpj, H.actuation, H.declaration, H.code, H.price, H.trendIndicator, H.minPrice, H.maxPrice, H.startPrice, H.row, H.col, X), 
 	companiesToJSON(T, Out).
-
-readFileTxt(FilePath, Text) :-
-    open(FilePath, read, Stream),
-    read_stream_to_codes(Stream, TextCodes),
-    close(Stream),
-    string_codes(Text, TextCodes).
 
 writeFileTxt(FilePath, TextContents) :-
     open(FilePath, append, Stream),

@@ -12,7 +12,7 @@ fazerLogin(Result) :-
 
 searchClientEmail(_, [], R) :- R = client(0, '', '', '', '', '', 0.0, 0.0, false, 0, 0, []), !.
 searchClientEmail(EmailV, [H|_], Result) :- 
-    H = client(Ident, Name, Age, Cpf, Email, Password, Cash, _, _, _, _, _),
+    H = client(_, _, _, _, Email, _, _, _, _, _, _, _),
     string_lower(EmailV, LowerEmail),
     string_lower(Email, LowerClientEmail),
     LowerEmail = LowerClientEmail,

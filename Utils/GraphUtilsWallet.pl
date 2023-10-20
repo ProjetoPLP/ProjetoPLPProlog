@@ -22,7 +22,7 @@ checkClientColumn(IdUser) :-
     (   ColValue > 95 ->
         walletFilePath(IdUser, FilePath),
         cleanWLGraph(FilePath, 11),
-        setUserCol(IDComp, 51)
+        setUserCol(IdUser, 51)
     ;   addUserCol(IdUser, 0)
     ).
 

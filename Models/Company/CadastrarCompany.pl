@@ -13,7 +13,7 @@ cadastrarCompany(LimitCompanies, Success) :-
 
 
 getNewCompany(Company) :-
-    getName(CompanyName),
+    getCompanyName(CompanyName),
     getAgeFounded(CompanyAgeFounded),
     getCNPJ(CompanyCNPJ),
     getActuation(CompanyActuation),

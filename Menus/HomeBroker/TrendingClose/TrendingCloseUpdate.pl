@@ -44,7 +44,7 @@ updateAllTCCompanyCode(FilePath, [H|T]) :-
 
 
 updateTCCompanyCode(FilePath, IdComp) :-
-    getCompanyCodePosition(IdComp, [Row|Col]),
+    getTCCompanyCodePosition(IdComp, [Row|Col]),
     getCode(IdComp, Code),
     writeMatrixValue(FilePath, Code, Row, Col).
 
@@ -57,7 +57,7 @@ updateAllTCCompanyVar(FilePath, [H|T]) :-
 
 
 updateTCCompanyVar(FilePath, IdComp) :-
-    getCompanyVarPosition(IdComp, [Row|Col]),
+    getTCCompanyVarPosition(IdComp, [Row|Col]),
     getVar(IdComp, Temp),
     fillLeft(Temp, 8, Var),
     string_length(Var, Len),
@@ -95,29 +95,29 @@ formatVar(Var, R) :-
 formatVar(_, "0.0%").
 
 
-getCompanyCodePosition(1, [14, 12]).
-getCompanyCodePosition(2, [17, 12]).
-getCompanyCodePosition(3, [20, 12]).
-getCompanyCodePosition(4, [23, 12]).
-getCompanyCodePosition(5, [14, 43]).
-getCompanyCodePosition(6, [17, 43]).
-getCompanyCodePosition(7, [20, 43]).
-getCompanyCodePosition(8, [23, 43]).
-getCompanyCodePosition(9, [14, 74]).
-getCompanyCodePosition(10, [17, 74]).
-getCompanyCodePosition(11, [20, 74]).
-getCompanyCodePosition(12, [23, 74]).
+getTCCompanyCodePosition(1, [14, 12]).
+getTCCompanyCodePosition(2, [17, 12]).
+getTCCompanyCodePosition(3, [20, 12]).
+getTCCompanyCodePosition(4, [23, 12]).
+getTCCompanyCodePosition(5, [14, 43]).
+getTCCompanyCodePosition(6, [17, 43]).
+getTCCompanyCodePosition(7, [20, 43]).
+getTCCompanyCodePosition(8, [23, 43]).
+getTCCompanyCodePosition(9, [14, 74]).
+getTCCompanyCodePosition(10, [17, 74]).
+getTCCompanyCodePosition(11, [20, 74]).
+getTCCompanyCodePosition(12, [23, 74]).
 
 
-getCompanyVarPosition(1, [14, 27]).
-getCompanyVarPosition(2, [17, 27]).
-getCompanyVarPosition(3, [20, 27]).
-getCompanyVarPosition(4, [23, 27]).
-getCompanyVarPosition(5, [14, 58]).
-getCompanyVarPosition(6, [17, 58]).
-getCompanyVarPosition(7, [20, 58]).
-getCompanyVarPosition(8, [23, 58]).
-getCompanyVarPosition(9, [14, 89]).
-getCompanyVarPosition(10, [17, 89]).
-getCompanyVarPosition(11, [20, 89]).
-getCompanyVarPosition(12, [23, 89]).
+getTCCompanyVarPosition(1, [14, 27]).
+getTCCompanyVarPosition(2, [17, 27]).
+getTCCompanyVarPosition(3, [20, 27]).
+getTCCompanyVarPosition(4, [23, 27]).
+getTCCompanyVarPosition(5, [14, 58]).
+getTCCompanyVarPosition(6, [17, 58]).
+getTCCompanyVarPosition(7, [20, 58]).
+getTCCompanyVarPosition(8, [23, 58]).
+getTCCompanyVarPosition(9, [14, 89]).
+getTCCompanyVarPosition(10, [17, 89]).
+getTCCompanyVarPosition(11, [20, 89]).
+getTCCompanyVarPosition(12, [23, 89]).

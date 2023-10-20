@@ -7,7 +7,7 @@ cadastrarCliente :-
     saveClientJSON(Client).
 
 getNewClient(Client) :-
-    getName(Name),
+    getClientName(Name),
     getAge(Age),
     getCPF(CPF),
     getEmail(Email),

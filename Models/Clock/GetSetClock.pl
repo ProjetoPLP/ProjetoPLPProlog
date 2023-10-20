@@ -1,10 +1,5 @@
 :- use_module(library(http/json)).
-:- consult('ModelClock.pl').
 
-lerJSON(JSONPath, File) :-
-	open(JSONPath, read, Stream),
-	json_read_dict(Stream, File),
-    close(Stream).
 
 getClock(Minutes) :- 
     open("../Data/Clock.json", read, Stream),
