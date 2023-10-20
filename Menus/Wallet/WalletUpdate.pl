@@ -3,7 +3,7 @@
 :- consult('../../Models/Client/GetSetAttrsClient.pl').
 :- consult('../../Models/Company/GetSetAttrsCompany.pl').
 :- consult('../../Models/Clock/ClockUpdate.pl').
-:- consult('WalletAttPatrimony.pl').
+:- consult('./WalletAttPatrimony.pl').
 
 
 % Aualiza todas as informações da carteira do cliente
@@ -15,16 +15,16 @@ updateClientWallet(IdUser) :-
     getCPF(IdUser,CPF),
     getAllAssets(IdUser, AllAssets),
 
-    resetStocks([1,2,3,4,5,6,7,8,9,10,11,12], Filepath),
-    updateMatrixClock(Filepath),
-    updateWLCash(Filepath, Cash),
+    resetStocks([1,2,3,4,5,6,7,8,9,10,11,12], FilePath),
+    updateMatrixClock(FilePath),
+    updateWLCash(FilePath, Cash),
     attClientPatrimony(IdUser),
-    updateWLPatrimony(Filepath, Patri),
-    updateWLUserName(Filepath, Name),
-    updateWLUserCPF(Filepath, CPF),
-    updateAllWLCompanyCode(Filepath, AllAssets),
-    updateAllWLCompanyPrice(Filepath, AllAssets),
-    updateAllWLOwnedStocks(Filepath, AllAssets).
+    updateWLPatrimony(FilePath, Patri),
+    updateWLUserName(FilePath, Name),
+    updateWLUserCPF(FilePath, CPF),
+    updateAllWLCompanyCode(FilePath, AllAssets),
+    updateAllWLCompanyPrice(FilePath, AllAssets),
+    updateAllWLOwnedStocks(FilePath, AllAssets).
 
 walletFilePath(IdUser, FilePath) :-
     string_concat("../Models/Client/Wallets/wallet", IdUser, Temp),
@@ -75,30 +75,26 @@ updateWLPatrimony(FilePath, Patrimony) :-
     writeMatrixValue(FilePath, StringR, 6, (24 - Len)).
 
 
-updateWLGraphCandle(Filepath, Row, Col) :-
-    writeMatrixValue(Filepath, "❚", Row, Col).
-
-
 % Atualiza o código de todas as empresas no carteira do usuário
 updateAllWLCompanyCode(_, []) :- !.
-updateAllWLCompanyCode(Filepath, [[IdComp, _]|T]) :-
+updateAllWLCompanyCode(FilePath, [[IdComp, _]|T]) :-
     getCode(IdComp, Code),
-    updateWLCompanyCode(Filepath, IdComp, Code),
-    updateAllWLCompanyCode(Filepath, T).
+    updateWLCompanyCode(FilePath, IdComp, Code),
+    updateAllWLCompanyCode(FilePath, T).
 
 
-updateWLCompanyCode(Filepath, IdComp, Code) :-
+updateWLCompanyCode(FilePath, IdComp, Code) :-
     getCompanyCodePosition(IdComp, [Row, Col]),
-    writeMatrixValue(Filepath, Code, Row, Col).
+    writeMatrixValue(FilePath, Code, Row, Col).
 
 
 % Atualiza o preço de todas as empresas no carteira do usuário
 updateAllWLCompanyPrice(_, []) :- !.
-updateAllWLCompanyPrice(Filepath, [[IdComp, _]|T]) :-
+updateAllWLCompanyPrice(FilePath, [[IdComp, _]|T]) :-
     getPrice(IdComp, Price),
     getTrendIndicator(IdComp, Trend),
-    updateWLCompanyPrice(Filepath, IdComp, Price, Trend),
-    updateAllWLCompanyPrice(Filepath, T).
+    updateWLCompanyPrice(FilePath, IdComp, Price, Trend),
+    updateAllWLCompanyPrice(FilePath, T).
 
 
 updateWLCompanyPrice(FilePath, IdComp, Price, Trend) :-
@@ -112,9 +108,9 @@ updateWLCompanyPrice(FilePath, IdComp, Price, Trend) :-
 
 % Atualiza a quantidade de ações que o usuário possui de cada empresa na sua carteira
 updateAllWLOwnedStocks(_, []) :- !.
-updateAllWLOwnedStocks(Filepath, [[IdComp, Qtd]|T]) :-
-    updateWLOwnedStocks(Filepath, IdComp, Qtd),
-    updateAllWLOwnedStocks(Filepath, T).
+updateAllWLOwnedStocks(FilePath, [[IdComp, Qtd]|T]) :-
+    updateWLOwnedStocks(FilePath, IdComp, Qtd),
+    updateAllWLOwnedStocks(FilePath, T).
 
 
 updateWLOwnedStocks(FilePath, IdComp, Qtd) :-
@@ -124,8 +120,8 @@ updateWLOwnedStocks(FilePath, IdComp, Qtd) :-
     writeMatrixValue(FilePath, StringR, Row, (Col - Len)).
 
 
-updateWLUserName(Filepath, Name) :-
-    writeMatrixValue(Filepath, Name, 10, 6).
+updateWLUserName(FilePath, Name) :-
+    writeMatrixValue(FilePath, Name, 10, 6).
 
 
 updateWLUserCPF(FilePath, CPF) :-
@@ -134,11 +130,11 @@ updateWLUserCPF(FilePath, CPF) :-
 
 % Reseta todas as informações de ações do usuário
 resetStocks([], _) :- !.
-resetStocks([H|T], Filepath) :-
-    updateWLCompanyCode(Filepath, H, "-----"),
-    updateWLCompanyPrice(Filepath, H, "     ", " "),
-    updateWLOwnedStocks(Filepath, H, "-----"),
-    resetStocks(T, Filepath).
+resetStocks([H|T], FilePath) :-
+    updateWLCompanyCode(FilePath, H, "-----"),
+    updateWLCompanyPrice(FilePath, H, "     ", " "),
+    updateWLOwnedStocks(FilePath, H, "-----"),
+    resetStocks(T, FilePath).
 
 
 getCompanyCodePosition(1, [22, 3]).

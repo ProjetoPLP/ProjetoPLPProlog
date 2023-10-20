@@ -72,3 +72,7 @@ cleanWLGraph(FilePath, Row) :-
     writeMatrixValue(FilePath, Spaces, Row, 50),
     NextRow is Row + 1,
     cleanWLGraph(FilePath, NextRow).
+
+
+updateWLGraphCandle(Filepath, Row, Col) :-
+    writeMatrixValue(Filepath, "❚", Row, Col).

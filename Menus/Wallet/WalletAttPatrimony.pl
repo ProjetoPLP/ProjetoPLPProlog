@@ -4,7 +4,6 @@
 :- consult('../../Models/Client/GetSetAttrsClient.pl').
 :- consult('../../Models/Company/GetSetAttrsCompany.pl').
 :- consult('../../Models/Clock/ClockUpdate.pl').
-:- consult('WalletUpdate.pl').
 
 
 attClientPatrimony(IdUser) :-
@@ -14,9 +13,9 @@ attClientPatrimony(IdUser) :-
 
 
 attClientPatrimonyAux([], 0) :- !.
-attClientPatrimonyAux([[IdComp, Num]|T], Patrimony) :-
+attClientPatrimonyAux([[IdComp, Qtd]|T], Patrimony) :-
     getPrice(IdComp, Price),
-    Total0 is Price * Num,
+    Total0 is Price * Qtd,
 
     attClientPatrimonyAux(T, PatAux),
     Total is Total0 + PatAux,
