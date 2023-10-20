@@ -63,8 +63,7 @@ identifyIDSequenceBreak([], 1).
 identifyIDSequenceBreak([H|T], R) :-
     getCompanyJSON(Companies),
     getCompaniesIds(Companies, Ids),
-    sort(Ids, Sorted),
-    (\+ member(H, Sorted) -> R is H ; identifyIDSequenceBreak(T, R)).
+    (\+ member(H, Ids) -> R is H ; identifyIDSequenceBreak(T, R)).
 
 getCompaniesIds([], []) :- !.
 getCompaniesIds([company(Ident, _, _, _, _, _, _, _, _, _, _, _, _, _)|T], [Ident|RestoIds]) :-
