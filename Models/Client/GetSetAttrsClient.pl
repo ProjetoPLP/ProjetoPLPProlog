@@ -47,37 +47,37 @@ getQtdAssetsInCompany(ID, IDCompany, Acoes) :-
     
 setCash(ID, NewCash) :- 
     getClient(ID, Client),
-    Client = client(Ident, Name, Age, Cpf, Email, Password, Cash, Patrimony, CanDeposit, Row, Col, AllAssets),
+    Client = client(Ident, Name, Age, Cpf, Email, Password, _, Patrimony, CanDeposit, Row, Col, AllAssets),
     NewClient = client(Ident, Name, Age, Cpf, Email, Password, NewCash, Patrimony, CanDeposit, Row, Col, AllAssets),
     editClientJSON(NewClient).
 
 setPatrimony(ID, NewPatrimony) :- 
     getClient(ID, Client),
-    Client = client(Ident, Name, Age, Cpf, Email, Password, Cash, Patrimony, CanDeposit, Row, Col, AllAssets),
+    Client = client(Ident, Name, Age, Cpf, Email, Password, Cash, _, CanDeposit, Row, Col, AllAssets),
     NewClient = client(Ident, Name, Age, Cpf, Email, Password, Cash, NewPatrimony, CanDeposit, Row, Col, AllAssets),
     editClientJSON(NewClient).
 
 setCanDeposit(ID, NewCanDeposit) :- 
     getClient(ID, Client),
-    Client = client(Ident, Name, Age, Cpf, Email, Password, Cash, Patrimony, CanDeposit, Row, Col, AllAssets),
+    Client = client(Ident, Name, Age, Cpf, Email, Password, Cash, Patrimony, _, Row, Col, AllAssets),
     NewClient = client(Ident, Name, Age, Cpf, Email, Password, Cash, Patrimony, NewCanDeposit, Row, Col, AllAssets),
     editClientJSON(NewClient).
 
 setAllAssets(ID, NewAllAssets) :- 
     getClient(ID, Client),
-    Client = client(Ident, Name, Age, Cpf, Email, Password, Cash, Patrimony, CanDeposit, Row, Col, AllAssets),
+    Client = client(Ident, Name, Age, Cpf, Email, Password, Cash, Patrimony, CanDeposit, Row, Col, _),
     NewClient = client(Ident, Name, Age, Cpf, Email, Password, Cash, Patrimony, CanDeposit, Row, Col, NewAllAssets),
     editClientJSON(NewClient).
 
 setUserRow(ID, NewRow) :- 
     getClient(ID, Client),
-    Client = client(Ident, Name, Age, Cpf, Email, Password, Cash, Patrimony, CanDeposit, Row, Col, AllAssets),
+    Client = client(Ident, Name, Age, Cpf, Email, Password, Cash, Patrimony, CanDeposit, _, Col, AllAssets),
     NewClient = client(Ident, Name, Age, Cpf, Email, Password, Cash, Patrimony, CanDeposit, NewRow, Col, AllAssets),
     editClientJSON(NewClient).
     
 setUserCol(ID, NewCol) :- 
     getClient(ID, Client),
-    Client = client(Ident, Name, Age, Cpf, Email, Password, Cash, Patrimony, CanDeposit, Row, Col, AllAssets),
+    Client = client(Ident, Name, Age, Cpf, Email, Password, Cash, Patrimony, CanDeposit, Row, _, AllAssets),
     NewClient = client(Ident, Name, Age, Cpf, Email, Password, Cash, Patrimony, CanDeposit, Row, NewCol, AllAssets),
     editClientJSON(NewClient).
 
