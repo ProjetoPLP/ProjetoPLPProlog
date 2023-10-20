@@ -2,14 +2,14 @@
 
 
 % Verifica se existe uma empresa cadastrada a bolsa a partir do seu ID
-existCompany(IdComp, R) :-
+existCompany(IdComp) :-
     getCompanyJSON(Comps),
-    existCompanyAux(IdComp, Comps, R).
+    existCompanyAux(IdComp, Comps).
 
-existCompanyAux(_, _, [], false) :- !.
-existCompanyAux(IdComp, (H|T), R) :-
+existCompanyAux(_, []) :- false, !.
+existCompanyAux(IdComp, [H|T]) :-
     getCompIdent(H, CompId),
-    (CompId =:= IdComp -> true ; existCompanyAux(IdComp, T, R)).
+    (CompId =:= IdComp -> true ; existCompanyAux(IdComp, T)).
 
 
 % Verifica se uma String é um número
