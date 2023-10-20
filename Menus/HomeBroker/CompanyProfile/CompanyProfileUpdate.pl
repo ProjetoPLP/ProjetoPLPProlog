@@ -7,7 +7,8 @@
 
 % Atualiza todas as informações de uma empresa em Company Description
 updateCompanyProfile(IdUser, IdComp) :-
-    resetMenu("./HomeBroker/CompanyProfile/companyProfile.txt", "../Sprites/HomeBroker/companyProfile_base.txt"),
+    FilePath = "./HomeBroker/CompanyProfile/companyProfile.txt",
+    resetMenu(FilePath, "../Sprites/HomeBroker/companyProfile_base.txt"),
     getCash(IdUser, Cash),
     getCode(IdComp, Code),
     getCompName(IdComp, Name),
@@ -17,15 +18,15 @@ updateCompanyProfile(IdUser, IdComp) :-
     getAge(IdComp, Age),
     getCNPJ(IdComp, CNPJ),
 
-    updateMatrixClock("./HomeBroker/CompanyProfile/companyProfile.txt"),
-    updateCPCash("./HomeBroker/CompanyProfile/companyProfile.txt", Cash),
-    updateCPCompanyCode("./HomeBroker/CompanyProfile/companyProfile.txt",Code),
-    updateCPCompanyName("./HomeBroker/CompanyProfile/companyProfile.txt", Name),
-    updateCPCompanyActuation("./HomeBroker/CompanyProfile/companyProfile.txt", Actuation),
-    updateCPCompanyPrice("./HomeBroker/CompanyProfile/companyProfile.txt", Price, Trend),
-    updateCPCompanyDeclaration("./HomeBroker/CompanyProfile/companyProfile.txt", Declaration),
-    updateCPCompanyAge("./HomeBroker/CompanyProfile/companyProfile.txt", Age),
-    updateCPCompanyCNPJ("./HomeBroker/CompanyProfile/companyProfile.txt", CNPJ).
+    updateMatrixClock(FilePath),
+    updateCPCash(FilePath, Cash),
+    updateCPCompanyCode(FilePath,Code),
+    updateCPCompanyName(FilePath, Name),
+    updateCPCompanyActuation(FilePath, Actuation),
+    updateCPCompanyPrice(FilePath, Price, Trend),
+    updateCPCompanyDeclaration(FilePath, Declaration),
+    updateCPCompanyAge(FilePath, Age),
+    updateCPCompanyCNPJ(FilePath, CNPJ).
 
 
 updateCPCash(FilePath, Cash) :-

@@ -8,15 +8,16 @@
 
 
 updateCompanyDown(IdUser, IdComp) :-
-    resetMenu("./HomeBroker/CompanyDown/companyDown.txt", "../Sprites/HomeBroker/companyDown_base.txt"),
+    FilePath = "./HomeBroker/CompanyDown/companyDown.txt",
+    resetMenu(FilePath, "../Sprites/HomeBroker/companyDown_base.txt"),
     getCash(IdUser, Cash),
     getCompName(IdComp, Name),
     getCode(IdComp, Code),
 
-    updateMatrixClock("./HomeBroker/CompanyDown/companyDown.txt"),
-    updateHBCash("./HomeBroker/CompanyDown/companyDown.txt", Cash),
-    updateHBCompanyName("./HomeBroker/CompanyDown/companyDown.txt", Name),
-    updateHBCompanyCode("./HomeBroker/CompanyDown/companyDown.txt", Code),
+    updateMatrixClock(FilePath),
+    updateHBCash(FilePath, Cash),
+    updateHBCompanyName(FilePath, Name),
+    updateHBCompanyCode(FilePath, Code),
     removeCompanyFromExchange(IdComp).
 
 

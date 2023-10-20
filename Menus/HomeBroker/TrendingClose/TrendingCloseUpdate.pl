@@ -8,16 +8,17 @@
 
 % Atualiza todas as informações no menu de fechamento do pregão
 updateTrendingClose(IdUser) :-
-    resetMenu("./HomeBroker/TrendingClose/trendingClose.txt", "../Sprites/HomeBroker/trendingClose_base.txt"),
+    FilePath = "./HomeBroker/TrendingClose/trendingClose.txt",
+    resetMenu(FilePath, "../Sprites/HomeBroker/trendingClose_base.txt"),
     getCash(IdUser, Cash),
     getPatrimony(IdUser, Patrimony),
     getCompanyJSON(Comps),
 
-    updateMatrixClock("./HomeBroker/TrendingClose/trendingClose.txt"),
-    updateTCCash("./HomeBroker/TrendingClose/trendingClose.txt", Cash),
-    updateTCPatrimony("./HomeBroker/TrendingClose/trendingClose.txt", Patrimony),
-    updateAllTCCompanyCode("./HomeBroker/TrendingClose/trendingClose.txt", Comps),
-    updateAllTCCompanyVar("./HomeBroker/TrendingClose/trendingClose.txt", Comps),
+    updateMatrixClock(FilePath),
+    updateTCCash(FilePath, Cash),
+    updateTCPatrimony(FilePath, Patrimony),
+    updateAllTCCompanyCode(FilePath, Comps),
+    updateAllTCCompanyVar(FilePath, Comps),
     updateAllCompaniesStartMaxMinPrice(Comps).
 
 

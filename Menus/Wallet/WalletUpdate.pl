@@ -33,32 +33,34 @@ walletFilePath(IdUser, FilePath) :-
 
 % Aualiza todas as informações do menu de depósito
 updateWalletDeposito(IdUser):-
-    resetMenu("./Wallet/DepositoSaque/walletDeposito.txt", "../Sprites/Wallet/walletDeposito_base.txt"),
+    FilePath = "./Wallet/DepositoSaque/walletDeposito.txt",
+    resetMenu(FilePath, "../Sprites/Wallet/walletDeposito_base.txt"),
     getCash(IdUser, Cash),
     getPatrimony(IdUser, Patri),
     getUserName(IdUser, Name),
     getCPF(IdUser, CPF),
     
-    updateMatrixClock("./Wallet/DepositoSaque/walletDeposito.txt"),
-    updateWLCash("./Wallet/DepositoSaque/walletDeposito.txt", Cash),
-    updateWLPatrimony("./Wallet/DepositoSaque/walletDeposito.txt", Patri),
-    updateWLUserName("./Wallet/DepositoSaque/walletDeposito.txt", Name),
-    updateWLUserCPF("./Wallet/DepositoSaque/walletDeposito.txt", CPF).
+    updateMatrixClock(FilePath),
+    updateWLCash(FilePath, Cash),
+    updateWLPatrimony(FilePath, Patri),
+    updateWLUserName(FilePath, Name),
+    updateWLUserCPF(FilePath, CPF).
 
 
 % Aualiza todas as informações do menu de saque
 updateWalletSaque(IdUser):-
-    resetMenu("./Wallet/DepositoSaque/walletSaque.txt", "../Sprites/Wallet/walletSaque_base.txt"),
+    FilePath = "./Wallet/DepositoSaque/walletSaque.txt",
+    resetMenu(FilePath, "../Sprites/Wallet/walletSaque_base.txt"),
     getCash(IdUser, Cash),
     getPatrimony(IdUser, Patri),
     getUserName(IdUser, Name),
     getCPF(IdUser, CPF),
     
-    updateMatrixClock("./Wallet/DepositoSaque/walletSaque.txt"),
-    updateWLCash("./Wallet/DepositoSaque/walletSaque.txt", Cash),
-    updateWLPatrimony("./Wallet/DepositoSaque/walletSaque.txt", Patri),
-    updateWLUserName("./Wallet/DepositoSaque/walletSaque.txt", Name),
-    updateWLUserCPF("./Wallet/DepositoSaque/walletSaque.txt", CPF).
+    updateMatrixClock(FilePath),
+    updateWLCash(FilePath, Cash),
+    updateWLPatrimony(FilePath, Patri),
+    updateWLUserName(FilePath, Name),
+    updateWLUserCPF(FilePath, CPF).
 
 
 updateWLCash(FilePath, Cash) :-

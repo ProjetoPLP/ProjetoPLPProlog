@@ -36,8 +36,7 @@ attAllClientsPatrimonyGraph([H|T]) :-
 
 
 attClientPatrimonyGraph(IdUser, OldPatri, NewPatri) :-
-    number_string(IdUser, IdUserString),
-    string_concat("../Models/Client/Wallets/wallet", IdUserString, Filepath1),
+    string_concat("../Models/Client/Wallets/wallet", IdUser, Filepath1),
     string_concat(Filepath1, ".txt", Filepath),
     getUserCol(IdUser, Col),
     getUserRow(IdUser, Row),
