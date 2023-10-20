@@ -74,5 +74,11 @@ cleanWLGraph(FilePath, Row) :-
     cleanWLGraph(FilePath, NextRow).
 
 
+% Retorna o caminha da carteira do cliente a partir do seu ID
+walletFilePath(IdUser, FilePath) :-
+    string_concat("../Models/Client/Wallets/wallet", IdUser, Temp),
+    string_concat(Temp, ".txt", FilePath).
+
+
 updateWLGraphCandle(Filepath, Row, Col) :-
     writeMatrixValue(Filepath, "❚", Row, Col).

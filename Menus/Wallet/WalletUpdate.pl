@@ -1,5 +1,6 @@
 :- consult('../../Utils/MatrixUtils.pl').
 :- consult('../../Utils/UpdateUtils.pl').
+:- consult('../../Utils/GraphUtilsWallet.pl').
 :- consult('../../Models/Client/GetSetAttrsClient.pl').
 :- consult('../../Models/Company/GetSetAttrsCompany.pl').
 :- consult('../../Models/Clock/ClockUpdate.pl').
@@ -25,10 +26,6 @@ updateClientWallet(IdUser) :-
     updateAllWLCompanyCode(FilePath, AllAssets),
     updateAllWLCompanyPrice(FilePath, AllAssets),
     updateAllWLOwnedStocks(FilePath, AllAssets).
-
-walletFilePath(IdUser, FilePath) :-
-    string_concat("../Models/Client/Wallets/wallet", IdUser, Temp),
-    string_concat(Temp, ".txt", FilePath).
 
 
 % Aualiza todas as informações do menu de depósito

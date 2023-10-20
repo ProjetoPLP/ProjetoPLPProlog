@@ -1,12 +1,13 @@
-:- consult('../Utils/UpdateUtils.pl').
+:- consult('../../Utils/UpdateUtils.pl').
 :- consult('../../Models/Company/GetSetAttrsCompany.pl').
 :- consult('../../Utils/GraphUtilsHomeBroker.pl').
 :- consult('../../Utils/MatrixUtils.pl').
-:- consult('HomeBrokerUpdate.pl').
-:- consult('CompanyDown/CompanyDownUpdate.pl').
+:- consult('./HomeBrokerUpdate.pl').
+:- consult('./CompanyDown/CompanyDownUpdate.pl').
 :- use_module(library(random)).
 
 
+% Retorna um novo preço
 getNewPrice(OldPrice, NewPrice) :-
     PossibleChanges = [-1.0, -0.9, -0.8, -0.7, -0.6, -0.5, -0.4, -0.3, -0.2, -0.1, 0, 0.1, 0.2, 0.3, 0.4, 0.5, 0.6, 0.7, 0.8, 0.9, 1.0],
     random_member(RandomChange, PossibleChanges),
@@ -14,6 +15,7 @@ getNewPrice(OldPrice, NewPrice) :-
     format(New, NewPrice).
 
 
+% Atualiza em uma empresa, a partir do seu ID, o novo trendIndicator
 attCompanyTrendIndicator(IdComp, OldPrice, NewPrice) :-
     (   NewPrice > OldPrice ->
         setTrendIndicator(IdComp, "▲")
@@ -23,6 +25,7 @@ attCompanyTrendIndicator(IdComp, OldPrice, NewPrice) :-
     ).
 
 
+% Retorna o novo preço máximo baseado no novo preço
 getNewMaxPrice(IdComp, NewPrice, Result) :-
     getMaxPrice(IdComp, MaxPrice),
     (   MaxPrice >= NewPrice ->
@@ -32,6 +35,7 @@ getNewMaxPrice(IdComp, NewPrice, Result) :-
     ).
 
 
+% Retorna o novo preço mínimo baseado no novo preço
 getNewMinPrice(IdComp, NewPrice, Result) :-
     getMinPrice(IdComp, MinPrice),
     (   MinPrice =< NewPrice ->
@@ -41,6 +45,7 @@ getNewMinPrice(IdComp, NewPrice, Result) :-
     ).
 
 
+% Atualiza o preço e o gráfico de todas as empresas
 attAllCompanyPriceGraph(_, []) :- !.
 attAllCompanyPriceGraph(IdComp, [Company|RestCompanies]) :-
     getCompIdent(Company, CompanyId),
@@ -56,32 +61,31 @@ attAllCompanyPriceGraph(IdComp, [Company|RestCompanies]) :-
     ).
 
 
-
+% Atualiza o preço e o gráfico na empresa que está sendo exibida
 attCurrentCompanyPriceGraph(IdComp) :-
-    number_string(IdComp, IDString),
-    string_concat("../Models/Company/HomeBrokers/homebroker", IDString, TempPath),
-    string_concat(TempPath, ".txt", FilePath),
+    homeBrokerFilePath(IdComp, FilePath),
     attCompanyPriceGraph(IdComp),
     printMatrix(FilePath).
 
 
+% Atualiza em uma empresa qualquer, a partir do seu ID, o preço e o gráfico
 attCompanyPriceGraph(IdComp) :-
-    number_string(IdComp, IDString),
-    string_concat("../Models/Company/HomeBrokers/homebroker", IDString, TempPath),
-    string_concat(TempPath, ".txt", FilePath),
+    homeBrokerFilePath(IdComp, FilePath),
     getPrice(IdComp, OldPrice),
     getNewPrice(OldPrice, NewPrice),
     getNewMaxPrice(IdComp, NewPrice, NewMaxPrice),
     getNewMinPrice(IdComp, NewPrice, NewMinPrice),
-    getTrendIndicator(IdComp, TrendIndicator),
     getStartPrice(IdComp, StartPrice),
+
+    attCompanyTrendIndicator(IdComp, OldPrice, NewPrice),
+    getTrendIndicator(IdComp, TrendIndicator),
+
+    attCompanyLineRow(IdComp, OldPrice, NewPrice),
     getCompRow(IdComp, Row),
     getCompCol(IdComp, Col),
 
     setPrice(IdComp, NewPrice),
-    attCompanyTrendIndicator(IdComp, OldPrice, NewPrice),
-    attCompanyLineRow(IdComp, OldPrice, NewPrice),
-    updateHBStockPrice(FilePath, NewPrice, TredIndicator),
+    updateHBStockPrice(FilePath, NewPrice, TrendIndicator),
     updateHBStockMaxPrice(FilePath, NewMaxPrice),
     updateHBStockMinPrice(FilePath, NewMinPrice),
     updateHBStockStartPrice(FilePath, StartPrice),

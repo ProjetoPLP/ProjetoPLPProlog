@@ -72,3 +72,9 @@ cleanHBGraph(FilePath, Row) :-
     writeMatrixValue(FilePath, Spaces, Row, 2),
     NextRow is Row + 1,
     cleanHBGraph(FilePath, NextRow).
+
+
+% Retorna o caminho para o Home Broker da empresa a partir do seu ID
+homeBrokerFilePath(IdComp, FilePath) :-
+    string_concat("../Models/Company/HomeBrokers/homebroker", IdComp, Temp),
+    string_concat(Temp, ".txt", FilePath).

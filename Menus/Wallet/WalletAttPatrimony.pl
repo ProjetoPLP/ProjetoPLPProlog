@@ -6,6 +6,7 @@
 :- consult('../../Models/Clock/ClockUpdate.pl').
 
 
+% Atualiza o patrimônio de um cliente
 attClientPatrimony(IdUser) :-
     getAllAssets(IdUser, Assets),
     attClientPatrimonyAux(Assets, Patrimony),
@@ -23,6 +24,7 @@ attClientPatrimonyAux([[IdComp, Qtd]|T], Patrimony) :-
     format(Total, Patrimony).
 
 
+% Atualiza o gráfico da carteira de todos os clientes
 attAllClientsPatrimonyGraph([]) :- !.
 attAllClientsPatrimonyGraph([H|T]) :-
     getUserIdent(H, IdUser),

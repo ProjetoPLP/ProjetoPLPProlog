@@ -1,5 +1,6 @@
 :- consult('../../Utils/MatrixUtils.pl').
 :- consult('../../Utils/UpdateUtils.pl').
+:- consult('../../Utils/GraphUtilsHomeBroker.pl').
 :- consult('../../Models/Client/GetSetAttrsClient.pl').
 :- consult('../../Models/Company/GetSetAttrsCompany.pl').
 :- consult('../../Models/Clock/ClockUpdate.pl').
@@ -26,10 +27,6 @@ updateHomeBroker(IdUser, IdComp) :-
     updateHBStockMaxPrice(FilePath, MaxPrice),
     updateHBStockMinPrice(FilePath, MinPrice),
     updateHBOwnedStocks(FilePath, Stocks).
-
-homeBrokerFilePath(IdComp, FilePath) :-
-    string_concat("../Models/Company/HomeBrokers/homebroker", IdComp, Temp),
-    string_concat(Temp, ".txt", FilePath).
 
 
 % Atualiza todas as informações do menu de compras em um Home Broker de uma determinada empresa
