@@ -46,7 +46,7 @@ writeFileTxt(FilePath, TextContents) :-
     close(Stream).
 
 saveCompanyJSON(Company) :- 
-    Company = company(Ident, Name, Age, Cnpj, Actuation, Declaration, Code, Price, TrendIndicator, MinPrice, MaxPrice, StartPrice, Row, Col),
+    Company = company(_, Name, Age, Cnpj, Actuation, Declaration, Code, Price, TrendIndicator, MinPrice, MaxPrice, StartPrice, Row, Col),
     lerJSON("../Data/Companies.json", File),
     companiesToJSON(File, ListaCompaniesJSON),
     identifyIDSequenceBreak([1, 2, 3, 4, 5, 6, 7, 8, 9, 10, 11, 12], NewIdent),
@@ -63,8 +63,7 @@ identifyIDSequenceBreak([], 1).
 identifyIDSequenceBreak([H|T], R) :-
     getCompanyJSON(Companies),
     getCompaniesIds(Companies, Ids),
-    sort(Ids, Sorted),
-    (\+ member(H, Sorted) -> R is H ; identifyIDSequenceBreak(T, R)).
+    (\+ member(H, Ids) -> R is H ; identifyIDSequenceBreak(T, R)).
 
 getCompaniesIds([], []) :- !.
 getCompaniesIds([company(Ident, _, _, _, _, _, _, _, _, _, _, _, _, _)|T], [Ident|RestoIds]) :-

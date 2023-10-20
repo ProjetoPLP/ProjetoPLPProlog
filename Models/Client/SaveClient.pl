@@ -39,13 +39,13 @@ readFileTxt(FilePath, Text) :-
     string_codes(Text, TextCodes).
 
 writeFileText(FilePath, TextContents) :-
-    open(FilePath, write, St),
+    open(FilePath, write, _),
     open(FilePath, append, Stream),
     write(Stream, TextContents),
     close(Stream).
 
 saveClientJSON(Client) :- 
-    Client = client(Ident, Name, Age, Cpf, Email, Password, Cash, Patrimony, CanDeposit, Row, Col, AllAssets),
+    Client = client(_, Name, Age, Cpf, Email, Password, Cash, Patrimony, CanDeposit, Row, Col, AllAssets),
     lerJSON("../Data/Clients.json", File),
     clientesToJSON(File, ListaCompaniesJSON),
     getClientJSON(Out), length(Out, Length), NewIdent is Length + 1,
