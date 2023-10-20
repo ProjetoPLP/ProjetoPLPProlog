@@ -1,8 +1,9 @@
 :- use_module(library(http/json)).
 
 lerJSON(JSONPath, File) :-
-	open(JSONPath, read, F),
-	json_read_dict(F, File).
+	open(JSONPath, read, Stream),
+	json_read_dict(Stream, File),
+    close(Stream).
 
 listClientsJSON([], []).
 listClientsJSON([H|T], [client(H.ident, H.name, H.age, H.cpf, H.email, H.password, H.cash, H.patrimony, H.canDeposit, H.row, H.col, H.allAssets)|Rest]) :- 

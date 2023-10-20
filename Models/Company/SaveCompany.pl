@@ -1,8 +1,9 @@
 :- use_module(library(http/json)).
 
 lerJSON(JSONPath, File) :-
-	open(JSONPath, read, F),
-	json_read_dict(F, File).
+	open(JSONPath, read, Stream),
+	json_read_dict(Stream, File),
+    close(Stream).
 
 exibirCompaniesAux([], []).
 exibirCompaniesAux([H|T], [company(H.ident, H.name, H.age, H.cnpj, H.actuation, H.declaration, H.code, H.price, H.trendIndicator, H.minPrice, H.maxPrice, H.startPrice, H.row, H.col)|Rest]) :- 

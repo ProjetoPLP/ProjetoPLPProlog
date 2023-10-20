@@ -15,8 +15,9 @@ getLoggedClient(Client) :-
     toClient(File, Client).
     
 lerJSON(FilePath, File) :-
-    open(FilePath, read, F),
-    json_read_dict(F, File).
+    open(FilePath, read, Stream),
+    json_read_dict(Stream, File),
+    close(Stream).
 
 toClient(JSON, Client) :- (
     get_dict(ident, JSON, Ident),
