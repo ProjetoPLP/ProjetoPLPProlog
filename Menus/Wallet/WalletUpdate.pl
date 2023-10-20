@@ -6,189 +6,178 @@
 :- consult('WalletAttPatrimony.pl').
 
 
+% Aualiza todas as informações da carteira do cliente
 updateClientWallet(IdUser) :-
+    walletFilePath(IdUser, FilePath),
     getCash(IdUser, Cash),
     getPatrimony(IdUser, Patri),
     getUserName(IdUser, Name),
-    getCPF(IdUser, Cpf),
+    getCPF(IdUser,CPF),
     getAllAssets(IdUser, AllAssets),
-    number_string(IdUser, IdUserString),
-    string_concat("../Models/Client/Wallets/wallet", IdUserString, Filepath1),
-    string_concat(Filepath1, ".txt", Filepath),
 
-    resetStocks([1,2,3,4,5,6,7,8,9,10,11,12], IdUser),
+    resetStocks([1,2,3,4,5,6,7,8,9,10,11,12], Filepath),
     updateMatrixClock(Filepath),
     updateWLCash(Filepath, Cash),
     attClientPatrimony(IdUser),
     updateWLPatrimony(Filepath, Patri),
     updateWLUserName(Filepath, Name),
-    updateWLUserCPF(Filepath, Cpf),
+    updateWLUserCPF(Filepath, CPF),
     updateAllWLCompanyCode(Filepath, AllAssets),
     updateAllWLCompanyPrice(Filepath, AllAssets),
     updateAllWLOwnedStocks(Filepath, AllAssets).
 
+walletFilePath(IdUser, FilePath) :-
+    string_concat("../Models/Client/Wallets/wallet", IdUser, Temp),
+    string_concat(Temp, ".txt", FilePath).
 
+
+% Aualiza todas as informações do menu de depósito
 updateWalletDeposito(IdUser):-
+    resetMenu("./Wallet/DepositoSaque/walletDeposito.txt", "../Sprites/Wallet/walletDeposito_base.txt"),
     getCash(IdUser, Cash),
     getPatrimony(IdUser, Patri),
     getUserName(IdUser, Name),
-    getCPF(IdUser, Cpf),
+    getCPF(IdUser, CPF),
     
-    resetMenu("Wallet/DepositoSaque/walletDeposito.txt", "../Sprites/Wallet/walletDeposito_base.txt"),
-    updateMatrixClock("Wallet/DepositoSaque/walletDeposito.txt"),
-    updateWLCash("Wallet/DepositoSaque/walletDeposito.txt", Cash),
-    updateWLPatrimony("Wallet/DepositoSaque/walletDeposito.txt", Patri),
-    updateWLUserName("Wallet/DepositoSaque/walletDeposito.txt", Name),
-    updateWLUserCPF("Wallet/DepositoSaque/walletDeposito.txt", Cpf).
+    updateMatrixClock("./Wallet/DepositoSaque/walletDeposito.txt"),
+    updateWLCash("./Wallet/DepositoSaque/walletDeposito.txt", Cash),
+    updateWLPatrimony("./Wallet/DepositoSaque/walletDeposito.txt", Patri),
+    updateWLUserName("./Wallet/DepositoSaque/walletDeposito.txt", Name),
+    updateWLUserCPF("./Wallet/DepositoSaque/walletDeposito.txt", CPF).
 
 
+% Aualiza todas as informações do menu de saque
 updateWalletSaque(IdUser):-
+    resetMenu("./Wallet/DepositoSaque/walletSaque.txt", "../Sprites/Wallet/walletSaque_base.txt"),
     getCash(IdUser, Cash),
     getPatrimony(IdUser, Patri),
     getUserName(IdUser, Name),
-    getCPF(IdUser, Cpf),
+    getCPF(IdUser, CPF),
     
-    resetMenu("Wallet/DepositoSaque/walletSaque.txt", "../Sprites/Wallet/walletSaque_base.txt"),
-    updateMatrixClock("Wallet/DepositoSaque/walletSaque.txt"),
-    updateWLCash("Wallet/DepositoSaque/walletSaque.txt", Cash),
-    updateWLPatrimony("Wallet/DepositoSaque/walletSaque.txt", Patri),
-    updateWLUserName("Wallet/DepositoSaque/walletSaque.txt", Name),
-    updateWLUserCPF("Wallet/DepositoSaque/walletSaque.txt", Cpf).
+    updateMatrixClock("./Wallet/DepositoSaque/walletSaque.txt"),
+    updateWLCash("./Wallet/DepositoSaque/walletSaque.txt", Cash),
+    updateWLPatrimony("./Wallet/DepositoSaque/walletSaque.txt", Patri),
+    updateWLUserName("./Wallet/DepositoSaque/walletSaque.txt", Name),
+    updateWLUserCPF("./Wallet/DepositoSaque/walletSaque.txt", CPF).
 
 
-updateWLCash(Filepath, Cash) :-
-    number_string(Cash, CashString),
-    string_concat(CashString, "0", Val),
-    fillLeft(Val, 9, R),
-    length(R, Comp),
-    Col is 22 - Comp,
-    writeMatrixValue(Filepath, R, 13, Col).
+updateWLCash(FilePath, Cash) :-
+    string_concat(Cash, "0", Temp),
+    fillLeft(Temp, 9, StringR),
+    string_length(StringR, Len),
+    writeMatrixValue(FilePath, StringR, 13, (22 - Len)).
 
 
-updateWLPatrimony(Filepath, Patri) :-
-    number_string(Patri, PatriString),
-    string_concat(PatriString, "0", Val),
-    fillLeft(Val, 10, R),
-    length(R, Comp),
-    Col is 24 - Comp,
-    writeMatrixValue(Filepath, R, 6, Col).
+updateWLPatrimony(FilePath, Patrimony) :-
+    string_concat(Patrimony, "0", Temp),
+    fillLeft(Temp, 10, StringR),
+    string_length(StringR, Len),
+    writeMatrixValue(FilePath, StringR, 6, (24 - Len)).
 
 
 updateWLGraphCandle(Filepath, Row, Col) :-
     writeMatrixValue(Filepath, "❚", Row, Col).
 
 
+% Atualiza o código de todas as empresas no carteira do usuário
 updateAllWLCompanyCode(_, []) :- !.
-updateAllWLCompanyCode(Filepath, [[IdComp, Num]|T]) :-
+updateAllWLCompanyCode(Filepath, [[IdComp, _]|T]) :-
     getCode(IdComp, Code),
     updateWLCompanyCode(Filepath, IdComp, Code),
     updateAllWLCompanyCode(Filepath, T).
 
 
-updateWLCompanyCode(Filepath, Id, Code) :-
-    getCompanyCodePosition(Id, [Row, Col]),
+updateWLCompanyCode(Filepath, IdComp, Code) :-
+    getCompanyCodePosition(IdComp, [Row, Col]),
     writeMatrixValue(Filepath, Code, Row, Col).
 
 
+% Atualiza o preço de todas as empresas no carteira do usuário
 updateAllWLCompanyPrice(_, []) :- !.
-updateAllWLCompanyPrice(Filepath, [[IdComp, Num]|T]) :-
+updateAllWLCompanyPrice(Filepath, [[IdComp, _]|T]) :-
     getPrice(IdComp, Price),
-    getTrendIndicator(IdComp, TrendInd),
-    number_string(Price, PriceString),
-    string_concat(PriceString, "0", Str),
-
-    updateWLCompanyPrice(Filepath, IdComp, Str, TrendInd),
+    getTrendIndicator(IdComp, Trend),
+    updateWLCompanyPrice(Filepath, IdComp, Price, Trend),
     updateAllWLCompanyPrice(Filepath, T).
 
 
-updateWLCompanyPrice(Filepath, Id, Price, TrendInd) :-
-    getCompanyPricePosition(Id, [Row, Col]),
-    number_string(Price, PriceString),
-    string_concat(TrendInd, PriceString, Str),
-    fillLeft(Str, 7, Val),
-    length(Val, Comp),
-    Col1 is Col - Comp,
-    writeMatrixValue(Filepath, Val, Row, Col1).
+updateWLCompanyPrice(FilePath, IdComp, Price, Trend) :-
+    getCompanyPricePosition(IdComp, [Row|Col]),
+    string_concat(Trend, Price, Temp1),
+    string_concat(Temp1, "0", Temp2),
+    fillLeft(Temp2, 7, NewPrice),
+    string_length(NewPrice, Len),
+    writeMatrixValue(FilePath, NewPrice, Row, Col - Len).
 
 
+% Atualiza a quantidade de ações que o usuário possui de cada empresa na sua carteira
 updateAllWLOwnedStocks(_, []) :- !.
-updateAllWLOwnedStocks(Filepath, [[IdComp, Num]|T]) :-
-    number_string(Num, NumString),
-    updateWLOwnedStocks(Filepath, IdComp, NumString),
+updateAllWLOwnedStocks(Filepath, [[IdComp, Qtd]|T]) :-
+    updateWLOwnedStocks(Filepath, IdComp, Qtd),
     updateAllWLOwnedStocks(Filepath, T).
 
 
-updateWLOwnedStocks(Filepath, Id, Num) :-
-    getOwnedStocksPosition(Id, [Row, Col]),
-    fillLeft(Num, 5, R),
-    length(R, Comp),
-    Col1 is Col - Comp,
-    writeMatrixValue(Filepath, R, Row, Col1).
+updateWLOwnedStocks(FilePath, IdComp, Qtd) :-
+    getOwnedStocksPosition(IdComp, [Row, Col]),
+    fillLeft(Qtd, 5, StringR),
+    string_length(StringR, Len),
+    writeMatrixValue(FilePath, StringR, Row, (Col - Len)).
 
 
 updateWLUserName(Filepath, Name) :-
     writeMatrixValue(Filepath, Name, 10, 6).
 
 
-updateWLUserCPF(FilePath, Cpf) :-
-    writeMatrixValue(FilePath, Cpf, 11, 6).
+updateWLUserCPF(FilePath, CPF) :-
+    writeMatrixValue(FilePath, CPF, 11, 6).
 
 
+% Reseta todas as informações de ações do usuário
 resetStocks([], _) :- !.
-resetStocks([H|T], IdUser) :-
-    number_string(IdUser, IdUserString),
-    string_concat("../Models/Client/Wallets/wallet", IdUserString, Filepath1),
-    string_concat(Filepath1, ".txt", Filepath),
-
+resetStocks([H|T], Filepath) :-
     updateWLCompanyCode(Filepath, H, "-----"),
     updateWLCompanyPrice(Filepath, H, "     ", " "),
     updateWLOwnedStocks(Filepath, H, "-----"),
-    resetStocks(T, IdUser).
+    resetStocks(T, Filepath).
 
 
-getCompanyCodePosition(ID, Position) :-
-(   ID =:= 1 -> Position = [22, 3]
-;   ID =:= 2 -> Position = [24, 3]
-;   ID =:= 3 -> Position = [26, 3]
-;   ID =:= 4 -> Position = [22, 27]
-;   ID =:= 5 -> Position = [24, 27]
-;   ID =:= 6 -> Position = [26, 27]
-;   ID =:= 7 -> Position = [22, 51]
-;   ID =:= 8 -> Position = [24, 51]
-;   ID =:= 9 -> Position = [26, 51]
-;   ID =:= 10 -> Position = [22, 75]
-;   ID =:= 11 -> Position = [24, 75]
-;   ID =:= 12 -> Position = [26, 75]
-).
+getCompanyCodePosition(1, [22, 3]).
+getCompanyCodePosition(2, [24, 3]).
+getCompanyCodePosition(3, [26, 3]).
+getCompanyCodePosition(4, [22, 27]).
+getCompanyCodePosition(5, [24, 27]).
+getCompanyCodePosition(6, [26, 27]).
+getCompanyCodePosition(7, [22, 51]).
+getCompanyCodePosition(8, [24, 51]).
+getCompanyCodePosition(9, [26, 51]).
+getCompanyCodePosition(10, [22, 75]).
+getCompanyCodePosition(11, [24, 75]).
+getCompanyCodePosition(12, [26, 75]).
 
 
-getCompanyPricePosition(ID, Position) :-
-(   ID =:= 1 -> Position = [22, 16]
-;   ID =:= 2 -> Position = [24, 16]
-;   ID =:= 3 -> Position = [26, 16]
-;   ID =:= 4 -> Position = [22, 40]
-;   ID =:= 5 -> Position = [24, 40]
-;   ID =:= 6 -> Position = [26, 40]
-;   ID =:= 7 -> Position = [22, 64]
-;   ID =:= 8 -> Position = [24, 64]
-;   ID =:= 9 -> Position = [26, 64]
-;   ID =:= 10 -> Position = [22, 88]
-;   ID =:= 11 -> Position = [24, 88]
-;   ID =:= 12 -> Position = [26, 88]
-).
+getCompanyPricePosition(1, [22, 16]).
+getCompanyPricePosition(2, [24, 16]).
+getCompanyPricePosition(3, [26, 16]).
+getCompanyPricePosition(4, [22, 40]).
+getCompanyPricePosition(5, [24, 40]).
+getCompanyPricePosition(6, [26, 40]).
+getCompanyPricePosition(7, [22, 64]).
+getCompanyPricePosition(8, [24, 64]).
+getCompanyPricePosition(9, [26, 64]).
+getCompanyPricePosition(10, [22, 88]).
+getCompanyPricePosition(11, [24, 88]).
+getCompanyPricePosition(12, [26, 88]).
 
 
-getOwnedStocksPosition(ID, Position) :-
-(   ID =:= 1 -> Position = [22, 23]
-;   ID =:= 2 -> Position = [24, 23]
-;   ID =:= 3 -> Position = [26, 23]
-;   ID =:= 4 -> Position = [22, 47]
-;   ID =:= 5 -> Position = [24, 47]
-;   ID =:= 6 -> Position = [26, 47]
-;   ID =:= 7 -> Position = [22, 71]
-;   ID =:= 8 -> Position = [24, 71]
-;   ID =:= 9 -> Position = [26, 71]
-;   ID =:= 10 -> Position = [22, 95]
-;   ID =:= 11 -> Position = [24, 95]
-;   ID =:= 12 -> Position = [26, 95]
-).
+getOwnedStocksPosition(1, [22, 23]).
+getOwnedStocksPosition(2, [24, 23]).
+getOwnedStocksPosition(3, [26, 23]).
+getOwnedStocksPosition(4, [22, 47]).
+getOwnedStocksPosition(5, [24, 47]).
+getOwnedStocksPosition(6, [26, 47]).
+getOwnedStocksPosition(7, [22, 71]).
+getOwnedStocksPosition(8, [24, 71]).
+getOwnedStocksPosition(9, [26, 71]).
+getOwnedStocksPosition(10, [22, 95]).
+getOwnedStocksPosition(11, [24, 95]).
+getOwnedStocksPosition(12, [26, 95]).
