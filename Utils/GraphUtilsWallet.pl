@@ -20,9 +20,7 @@ attClientLineRow(IdUser, OldPatrimony, NewPatrimony) :-
 checkClientColumn(IdUser) :-
     getUserCol(IdUser, ColValue),
     (   ColValue > 95 ->
-        number_string(IdUser, IDString),
-        string_concat("../Models/Client/Wallets/wallet", IDString, TempPath),
-        string_concat(TempPath, ".txt", FilePath),
+        walletFilePath(IdUser, FilePath),
         cleanWLGraph(FilePath, 11),
         setUserCol(IDComp, 51)
     ;   addUserCol(IdUser, 0)
@@ -33,9 +31,7 @@ checkClientColumn(IdUser) :-
 checkClientRowOverflow(IdUser) :-
     getUserRow(IdUser, RowValue),
     (   RowValue < 11 ->
-        number_string(IdUser, IDString),
-        string_concat("../Models/Client/Wallets/wallet", IDString, TempPath),
-        string_concat(TempPath, ".txt", FilePath),
+        walletFilePath(IdUser, FilePath),
         cleanWLGraph(FilePath, 11),
         setUserRow(IdUser, 20)
     ;   addUserRow(IdUser, 0)
@@ -46,9 +42,7 @@ checkClientRowOverflow(IdUser) :-
 checkClientRowUnderflow(IdUser) :-
     getUserRow(IdUser, RowValue),
     (   RowValue > 20 ->
-        number_string(IdUser, IDString),
-        string_concat("../Models/Client/Wallets/wallet", IDString, TempPath),
-        string_concat(TempPath, ".txt", FilePath),
+        walletFilePath(IdUser, FilePath),
         cleanWLGraph(FilePath, 11),
         setUserRow(IdUser, 11)
     ;   addUserRow(IdUser, 0)

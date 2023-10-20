@@ -20,9 +20,7 @@ attCompanyLineRow(IdComp, OldPrice, NewPrice) :-
 checkCompanyColumn(IdComp) :-
     getCompCol(IdComp, ColValue),
     (   ColValue > 74 ->
-        number_string(IdComp, IDString),
-        string_concat("../Models/Company/HomeBrokers/homebroker", IDString, TempPath),
-        string_concat(TempPath, ".txt", FilePath),
+        homeBrokerFilePath(IdComp, FilePath),
         cleanHBGraph(FilePath, 6),
         setCompCol(IdComp, 3)
     ;   addCompCol(IdComp, 0)
@@ -33,9 +31,7 @@ checkCompanyColumn(IdComp) :-
 checkCompanyRowOverflow(IdComp) :-
     getCompRow(IdComp, RowValue),
     (   RowValue < 6 ->
-        number_string(IdComp, IDString),
-        string_concat("../Models/Company/HomeBrokers/homebroker", IDString, TempPath),
-        string_concat(TempPath, ".txt", FilePath),
+        homeBrokerFilePath(IdComp, FilePath),
         cleanHBGraph(FilePath, 6),
         setCompRow(IdComp, 26)
     ;   addCompRow(IdComp, 0)
@@ -46,9 +42,7 @@ checkCompanyRowOverflow(IdComp) :-
 checkCompanyRowUnderflow(IdComp) :-
     getCompRow(IdComp, RowValue),
     (   RowValue > 26 ->
-        number_string(IdComp, IDString),
-        string_concat("../Models/Company/HomeBrokers/homebroker", IDString, TempPath),
-        string_concat(TempPath, ".txt", FilePath),
+        homeBrokerFilePath(IdComp, FilePath),
         cleanHBGraph(FilePath, 6),
         setCompRow(IdComp, 6)
     ;   addCompRow(IdComp, 0)
@@ -57,10 +51,10 @@ checkCompanyRowUnderflow(IdComp) :-
 
 % Atualiza a próxima coluna em todos os gráficos
 attAllCompanyColumn(_, []) :- !.
-attAllCompanyColumn([X|Xs]) :-
-    getCompIdent(X, IdComp),
+attAllCompanyColumn([H|T]) :-
+    getCompIdent(H, IdComp),
     addCompCol(IdComp, 3),
-    attAllCompanyColumn(Xs).
+    attAllCompanyColumn(T).
 
 
 % Reinicia o gráfico do Home Broker sobrescrevendo todos os espaços com caracteres vazios
