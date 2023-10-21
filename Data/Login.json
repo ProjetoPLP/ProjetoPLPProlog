@@ -1,1 +1,1 @@
-{"ident": 2, "name": "junior", "age": 18, "cpf": "999.999.999-99", "email": "emails", "password": "99999", "cash": 100.0, "patrimony": 0.0, "canDeposit": false, "row": 19, "col": 51, "allAssets": []}
+{"ident": 1, "name": "lucas", "age": 21, "cpf": "123.456.789-01", "email": "l", "password": "12345", "cash": 215.0, "patrimony": 0, "canDeposit": false, "row": 19, "col": 51, "allAssets": [[1,5]]}
