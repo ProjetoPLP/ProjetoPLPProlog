@@ -170,7 +170,7 @@ menuAfterLoop(IdUser, IdComp, true) :-
     companyDownMenu(IdUser, IdComp).
 
 menuAfterLoop(IdUser, IdComp, false) :-
-    getClock("../Data/Clock.json", Clock),
+    getClock(Clock),
     (   Clock >= 720 ->
         trendingCloseMenu(IdUser)
     ;   homeBrokerMenu(IdUser, IdComp)
