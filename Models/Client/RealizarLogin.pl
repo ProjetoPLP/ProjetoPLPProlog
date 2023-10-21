@@ -26,10 +26,12 @@ verificarSenha(PasswordClient, Client, Result) :-
     string_lower(PasswordClient, LowerPasswordClient),
     string_lower(Password, LowerPassword),
     (LowerPasswordClient = LowerPassword -> 
-        writeln("Logado!"); 
-        writeln("Senhas incorreta.")
-    ),
-    format(string(Saida), '{"ident": ~w, "name": "~w", "age": ~w, "cpf": "~w", "email": "~w", "password": "~w", "cash": ~w, "patrimony": ~w, "canDeposit": ~w, "row": ~w, "col": ~w, "allAssets": ~w}', [Ident, Name, Age, Cpf, Email, Password, Cash, Patrimony, CanDeposit, Row, Col, AllAssets]),
-    logoutClient,
-    saveLogin(Saida),
-    Result = true.
+        writeln("Logado!"),
+        format(string(Saida), '{"ident": ~w, "name": "~w", "age": ~w, "cpf": "~w", "email": "~w", "password": "~w", "cash": ~w, "patrimony": ~w, "canDeposit": ~w, "row": ~w, "col": ~w, "allAssets": ~w}', [Ident, Name, Age, Cpf, Email, Password, Cash, Patrimony, CanDeposit, Row, Col, AllAssets]),
+        logoutClient,
+        saveLogin(Saida),
+        Result = true
+        ; 
+        writeln("Senhas incorreta."),
+        Result = false
+    ).
