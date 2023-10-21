@@ -13,4 +13,4 @@
 %
 % dentro do diretório e chamar a função 'main.'
 main :-
-    halt.
+    fazerLogin(R), halt.
