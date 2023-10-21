@@ -3,7 +3,7 @@
 
 getLoggedUserID(ID) :- 
     getLoggedClient(Client),
-    Client = client(ID, _, _, _, _, _, _, _, _, _, _, _).
+    Client = client(ID).
 
 getUserName(ID, Name) :- 
     getClient(ID, Client),
