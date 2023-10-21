@@ -1,1 +1,1 @@
-[{"ident": 1, "name": "samsung", "age": "_26583874", "cnpj": "12.345.678/9012-34", "actuation": "venda", "declaration": "x", "code": "12345", "price": 17.0, "trendIndicator": " ", "minPrice": 17.0, "maxPrice": 17.0, "startPrice": 17.0, "row": 20, "col": 3}]
+[{"ident": 1, "name": "motorola", "age": "_10444", "cnpj": "12.345.678/9012-34", "actuation": "venda", "declaration": "s", "code": "12345", "price": 22.6, "trendIndicator": "▲", "minPrice": 9.7, "maxPrice": 22.6, "startPrice": 10.0, "row": 26, "col": 12}]

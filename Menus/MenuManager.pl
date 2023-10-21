@@ -156,20 +156,21 @@ optionsHomeBrokerMenu(IdUser, IdComp, UserChoice) :-
         companyProfileMenu(IdUser, IdComp)
     ;   (   memberchk('V', UserChoice); memberchk('v', UserChoice) ) ->
         mainMenu(IdUser)
-    ;   number_string(ChoiceInt, UserChoice),
-        attGraphs(IdUser, IdComp, ChoiceInt)
+    ;   conv(ChoiceInt,X), number_string(X, UserChoice),
+        attGraphs(IdUser, IdComp, X)
     ;   writeln("Opção inválida"),
         homeBrokerMenu(IdUser, IdComp).
+conv([H|_],H).
 
-attGraphs(IdUser, IdComp, UserChoice) :-
-    callLoop(IdComp, UserChoice, IsCurrentCompanyDown),
+attGraphs(IdUser, IdComp, X) :-
+    callLoop(IdComp, X),
     menuAfterLoop(IdUser, IdComp, IsCurrentCompanyDown).
 
 menuAfterLoop(IdUser, IdComp, true) :-
     companyDownMenu(IdUser, IdComp).
 
 menuAfterLoop(IdUser, IdComp, false) :-
-    getClock("./Data/Clock.json", Clock),
+    getClock("../Data/Clock.json", Clock),
     (   Clock >= 720 ->
         trendingCloseMenu(IdUser)
     ;   homeBrokerMenu(IdUser, IdComp)
@@ -276,7 +277,7 @@ depositoMenu(IdUser) :-
     read_line(UserChoice),
     optionsDepositoMenu(IdUser, UserChoice).
 
-optionsDepositoMenu(IdUser, UserChoice) :-
+optionsDepositoMenu(IdUser, UserChoice):-
     (   memberchk('S', UserChoice); memberchk('s', UserChoice) ) ->
         depositar(IdUser, CanDeposit),
         depositoMenu(IdUser)
@@ -290,7 +291,7 @@ optionsDepositoMenu(IdUser, UserChoice) :-
 trendingCloseMenu(IdUser) :-
     updateTrendingClose(IdUser),
     setClock(420),
-    printMatrix("./Menus/HomeBroker/TrendingClose/trendingClose.txt"),
+    printMatrix("../Menus/HomeBroker/TrendingClose/trendingClose.txt"),
     write("Digite uma opção: "),
     flush_output,
     read_line(_),
@@ -298,7 +299,7 @@ trendingCloseMenu(IdUser) :-
 
 companyDownMenu(IdUser, IdComp) :-
     updateCompanyDown(IdUser, IdComp),
-    printMatrix("./Menus/HomeBroker/CompanyDown/companyDown.txt"),
+    printMatrix("../Menus/HomeBroker/CompanyDown/companyDown.txt"),
     write("Digite uma opção: "),
     flush_output,
     read_line(_),
