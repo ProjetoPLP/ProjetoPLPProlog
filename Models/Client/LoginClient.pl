@@ -2,17 +2,17 @@
 :- use_module(library(http/json)).
 
 saveLogin(Client) :- 
-    open("../Data/Login.json", write, Stream),
+    open("./Data/Login.json", write, Stream),
     write(Stream, Client),
     close(Stream).
 
 logoutClient :- 
-    open("../Data/Login.json", write, Stream),
+    open("./Data/Login.json", write, Stream),
     write(Stream, '{}'),
     close(Stream).
 
 getLoggedClient(Client) :- 
-    lerJSON("../Data/Login.json", File),
+    lerJSON("./Data/Login.json", File),
     toClient(File, Client).
     
 

@@ -6,7 +6,7 @@ listClientsJSON([H|T], [client(H.ident, H.name, H.age, H.cpf, H.email, H.passwor
     listClientsJSON(T, Rest).
 
 getClientJSON(Out) :-
-	lerJSON("../Data/Clients.json", Clientes),
+	lerJSON("./Data/Clients.json", Clientes),
 	listClientsJSON(Clientes , Out).
 
 editarClienteJSON([], _, _, _, _, _, _, _, _, _, _, []).
@@ -15,10 +15,10 @@ editarClienteJSON([H|T], Ident, Name, Age, Cpf, Email, Password, Cash, Patrimony
 
 editClientJSON(Client) :-
     Client = client(Ident, Name, Age, Cpf, Email, Password, Cash, Patrimony, CanDeposit, Row, Col, AllAssets),
-	lerJSON("../Data/Clients.json", File),
+	lerJSON("./Data/Clients.json", File),
 	editarClienteJSON(File, Ident, Name, Age, Cpf, Email, Password, Cash, Patrimony, CanDeposit, Row, Col, AllAssets, SaidaParcial),
 	clientesToJSON(SaidaParcial, Saida),
-	open("../Data/Clients.json", write, Stream), write(Stream, Saida), close(Stream).
+	open("./Data/Clients.json", write, Stream), write(Stream, Saida), close(Stream).
 
 clienteToJSON(Ident,  Name, Age, Cpf, Email, Password, Cash, Patrimony, CanDeposit, Row, Col, AllAssets, Out) :-
 	swritef(Out, '{"ident": %w, "name":"%w", "age": "%w", "cpf": "%w", "email": "%w", "password": "%w", "cash": %w,"patrimony": %w,"canDeposit": %w, "row": %w,"col": %w,"allAssets": %w}', [Ident,  Name, Age, Cpf, Email, Password, Cash, Patrimony, CanDeposit, Row, Col, AllAssets]).
@@ -37,14 +37,14 @@ writeFileText(FilePath, TextContents) :-
 
 saveClientJSON(Client) :- 
     Client = client(_, Name, Age, Cpf, Email, Password, Cash, Patrimony, CanDeposit, Row, Col, AllAssets),
-    lerJSON("../Data/Clients.json", File),
+    lerJSON("./Data/Clients.json", File),
     clientesToJSON(File, ListaCompaniesJSON),
     getClientJSON(Out), length(Out, Length), NewIdent is Length + 1,
     clienteToJSON(NewIdent, Name, Age, Cpf, Email, Password, Cash, Patrimony, CanDeposit, Row, Col, AllAssets, ClienteJSON),
     append(ListaCompaniesJSON, [ClienteJSON], Saida),
-    open("../Data/Clients.json", write, Stream), write(Stream, Saida), close(Stream),
-    readFileTxt('../Sprites/Wallet/wallet_base.txt', TextContents),
-    atom_concat('../Models/Client/Wallets/wallet', NewIdent, Temp),
+    open("./Data/Clients.json", write, Stream), write(Stream, Saida), close(Stream),
+    readFileTxt('./Sprites/Wallet/wallet_base.txt', TextContents),
+    atom_concat('./Models/Client/Wallets/wallet', NewIdent, Temp),
     atom_concat(Temp, '.txt', WalletFileName),
     writeFileText(WalletFileName, TextContents).
 
@@ -53,10 +53,10 @@ removerClientJSON([H|T], H.ident, T).
 removerClientJSON([H|T], Ident, [H|Out]) :- removerClientJSON(T, Ident, Out).
 
 removeClientJSON(Id) :-
-    lerJSON("../Data/Clients.json", File),
+    lerJSON("./Data/Clients.json", File),
     removerClientJSON(File, Id, SaidaParcial),
     clientesToJSON(SaidaParcial, Saida),
-    open("../Data/Clients.json", write, Stream), write(Stream, Saida), close(Stream).
+    open("./Data/Clients.json", write, Stream), write(Stream, Saida), close(Stream).
 
 getClient(Int, Clients) :- 
     getClientJSON(Out),

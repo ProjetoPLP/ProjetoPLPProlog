@@ -70,7 +70,7 @@ cleanHBGraph(FilePath, Row) :-
 
 % Retorna o caminho para o Home Broker da empresa a partir do seu ID
 homeBrokerFilePath(IdComp, FilePath) :-
-    string_concat("../Models/Company/HomeBrokers/homebroker", IdComp, Temp),
+    string_concat("./Models/Company/HomeBrokers/homebroker", IdComp, Temp),
     string_concat(Temp, ".txt", FilePath).
 
 

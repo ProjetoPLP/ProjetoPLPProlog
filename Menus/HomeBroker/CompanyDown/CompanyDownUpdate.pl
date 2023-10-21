@@ -8,8 +8,8 @@
 
 
 updateCompanyDown(IdUser, IdComp) :-
-    FilePath = "./HomeBroker/CompanyDown/companyDown.txt",
-    resetMenu(FilePath, "../Sprites/HomeBroker/companyDown_base.txt"),
+    FilePath = "./Menus/HomeBroker/CompanyDown/companyDown.txt",
+    resetMenu(FilePath, "./Sprites/HomeBroker/companyDown_base.txt"),
     getCash(IdUser, Cash),
     getCompName(IdComp, Name),
     getCode(IdComp, Code),

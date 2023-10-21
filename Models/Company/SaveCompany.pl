@@ -8,7 +8,7 @@ exibirCompaniesAux([H|T], [company(H.ident, H.name, H.age, H.cnpj, H.actuation, 
 
 % ok
 getCompanyJSON(Out) :-
-	lerJSON("../Data/Companies.json", Companies),
+	lerJSON("./Data/Companies.json", Companies),
 	exibirCompaniesAux(Companies , Result),
     Out = Result.
 
@@ -18,10 +18,10 @@ editarCompanyJSON([H|T], Ident, Name, Age, Cnpj, Actuation, Declaration, Code, P
 
 editCompanyJSON(Company) :-
     Company = company(Ident, Name, Age, Cnpj, Actuation, Declaration, Code, Price, TrendIndicator, MinPrice, MaxPrice, StartPrice, Row, Col),
-	lerJSON("../Data/Companies.json", File),
+	lerJSON("./Data/Companies.json", File),
 	editarCompanyJSON(File, Ident, Name, Age, Cnpj, Actuation, Declaration, Code, Price, TrendIndicator, MinPrice, MaxPrice, StartPrice, Row, Col, SaidaParcial),
 	companiesToJSON(SaidaParcial, Saida),
-	open("../Data/Companies.json", write, Stream), write(Stream, Saida), close(Stream).
+	open("./Data/Companies.json", write, Stream), write(Stream, Saida), close(Stream).
 
 companyToJSON(Ident, Name, Age, Cnpj, Actuation, Declaration, Code, Price, TrendIndicator, MinPrice, MaxPrice, StartPrice, Row, Col, Out) :-
 	swritef(Out, '{"ident": %w, "name": "%w", "age": "%w", "cnpj": "%w", "actuation": "%w", "declaration": "%w", "code": "%w", "price": %w, "trendIndicator": "%w", "minPrice": %w, "maxPrice": %w, "startPrice": %w, "row": %w, "col": %w}', [Ident, Name, Age, Cnpj, Actuation, Declaration, Code, Price, TrendIndicator, MinPrice, MaxPrice, StartPrice, Row, Col]).
@@ -38,14 +38,14 @@ writeFileTxt(FilePath, TextContents) :-
 
 saveCompanyJSON(Company) :- 
     Company = company(_, Name, Age, Cnpj, Actuation, Declaration, Code, Price, TrendIndicator, MinPrice, MaxPrice, StartPrice, Row, Col),
-    lerJSON("../Data/Companies.json", File),
+    lerJSON("./Data/Companies.json", File),
     companiesToJSON(File, ListaCompaniesJSON),
     identifyIDSequenceBreak([1, 2, 3, 4, 5, 6, 7, 8, 9, 10, 11, 12], NewIdent),
     companyToJSON(NewIdent,  Name, Age, Cnpj, Actuation, Declaration, Code, Price, TrendIndicator, MinPrice, MaxPrice, StartPrice, Row, Col, CompanyJSON),
     append(ListaCompaniesJSON, [CompanyJSON], Saida),
-    open("../Data/Companies.json", write, Stream), write(Stream, Saida), close(Stream),
-    readFileTxt('../Sprites/HomeBroker/homebroker_base.txt', TextContents),
-    atom_concat('../Models/Company/HomeBrokers/homebroker', NewIdent, Temp),
+    open("./Data/Companies.json", write, Stream), write(Stream, Saida), close(Stream),
+    readFileTxt('./Sprites/HomeBroker/homebroker_base.txt', TextContents),
+    atom_concat('./Models/Company/HomeBrokers/homebroker', NewIdent, Temp),
     atom_concat(Temp, '.txt', WalletFileName),
     writeFileTxt(WalletFileName, TextContents).
 
@@ -66,16 +66,16 @@ removeCompany([H|T], H.ident, T).
 removeCompany([H|T], Ident, [H|Out]) :- removeCompany(T, Ident, Out).
 
 deleteFile(Id) :-
-    atom_concat('../Models/Company/HomeBrokers/homebroker', Id, Temp),
+    atom_concat('./Models/Company/HomeBrokers/homebroker', Id, Temp),
     atom_concat(Temp, '.txt', DeleteFilePath),
     delete_file(DeleteFilePath).
 
 removeCompany(Id) :-
-    lerJSON("../Data/Companies.json", File),
+    lerJSON("./Data/Companies.json", File),
     removeCompany(File, Id, SaidaParcial),
     deleteFile(Id),
     companiesToJSON(SaidaParcial, Saida),
-    open("../Data/Companies.json", write, Stream), write(Stream, Saida), close(Stream).
+    open("./Data/Companies.json", write, Stream), write(Stream, Saida), close(Stream).
 
 % ok
 getCompany(Int, Company) :- 

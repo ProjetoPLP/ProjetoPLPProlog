@@ -7,8 +7,8 @@
 
 % Atualiza todas as informações no Main Menu
 updateMainMenu(IdUser) :-
-    FilePath = "./MainMenu/mainMenu.txt",
-    resetMenu(FilePath, "../Sprites/MainMenu/mainMenu_base.txt"),
+    FilePath = "./Menus/MainMenu/mainMenu.txt",
+    resetMenu(FilePath, "./Sprites/MainMenu/mainMenu_base.txt"),
     getCash(IdUser, Cash),
     getCompanyJSON(Comps),
 

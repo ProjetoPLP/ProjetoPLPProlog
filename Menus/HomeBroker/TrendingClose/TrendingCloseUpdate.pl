@@ -8,8 +8,8 @@
 
 % Atualiza todas as informações no menu de fechamento do pregão
 updateTrendingClose(IdUser) :-
-    FilePath = "./HomeBroker/TrendingClose/trendingClose.txt",
-    resetMenu(FilePath, "../Sprites/HomeBroker/trendingClose_base.txt"),
+    FilePath = "./Menus/HomeBroker/TrendingClose/trendingClose.txt",
+    resetMenu(FilePath, "./Sprites/HomeBroker/trendingClose_base.txt"),
     getCash(IdUser, Cash),
     getPatrimony(IdUser, Patrimony),
     getCompanyJSON(Comps),

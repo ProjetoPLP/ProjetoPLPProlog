@@ -30,8 +30,8 @@ updateClientWallet(IdUser) :-
 
 % Aualiza todas as informações do menu de depósito
 updateWalletDeposito(IdUser):-
-    FilePath = "./Wallet/DepositoSaque/walletDeposito.txt",
-    resetMenu(FilePath, "../Sprites/Wallet/walletDeposito_base.txt"),
+    FilePath = "./Menus/Wallet/DepositoSaque/walletDeposito.txt",
+    resetMenu(FilePath, "./Sprites/Wallet/walletDeposito_base.txt"),
     getCash(IdUser, Cash),
     getPatrimony(IdUser, Patri),
     getUserName(IdUser, Name),
@@ -46,8 +46,8 @@ updateWalletDeposito(IdUser):-
 
 % Aualiza todas as informações do menu de saque
 updateWalletSaque(IdUser):-
-    FilePath = "./Wallet/DepositoSaque/walletSaque.txt",
-    resetMenu(FilePath, "../Sprites/Wallet/walletSaque_base.txt"),
+    FilePath = "./Menus/Wallet/DepositoSaque/walletSaque.txt",
+    resetMenu(FilePath, "./Sprites/Wallet/walletSaque_base.txt"),
     getCash(IdUser, Cash),
     getPatrimony(IdUser, Patri),
     getUserName(IdUser, Name),

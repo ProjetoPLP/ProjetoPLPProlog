@@ -2,14 +2,14 @@
 
 
 getClock(Minutes) :- 
-    open("../Data/Clock.json", read, Stream),
+    open("./Data/Clock.json", read, Stream),
     json_read_dict(Stream, Clock),
     close(Stream),
     Minutes is Clock.minutes.
 
 saveClock(Minutes) :- 
     clockToJSON(Minutes, Saida),
-    open("../Data/Clock.json", write, Stream),
+    open("./Data/Clock.json", write, Stream),
     write(Stream, Saida),
     close(Stream).
 

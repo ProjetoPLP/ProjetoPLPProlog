@@ -38,10 +38,9 @@ attAllClientsPatrimonyGraph([H|T]) :-
 
 
 attClientPatrimonyGraph(IdUser, OldPatri, NewPatri) :-
-    string_concat("../Models/Client/Wallets/wallet", IdUser, Filepath1),
-    string_concat(Filepath1, ".txt", Filepath),
+    walletFilePath(IdUser, FilePath),
     getUserCol(IdUser, Col),
     getUserRow(IdUser, Row),
 
     attClientLineRow(IdUser, OldPatri, NewPatri),
-    updateWLGraphCandle(Filepath, Row, Col).
+    updateWLGraphCandle(FilePath, Row, Col).

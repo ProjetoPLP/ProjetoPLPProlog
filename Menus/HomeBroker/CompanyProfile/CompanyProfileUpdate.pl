@@ -7,8 +7,8 @@
 
 % Atualiza todas as informações de uma empresa em Company Description
 updateCompanyProfile(IdUser, IdComp) :-
-    FilePath = "./HomeBroker/CompanyProfile/companyProfile.txt",
-    resetMenu(FilePath, "../Sprites/HomeBroker/companyProfile_base.txt"),
+    FilePath = "./Menus/HomeBroker/CompanyProfile/companyProfile.txt",
+    resetMenu(FilePath, "./Sprites/HomeBroker/companyProfile_base.txt"),
     getCash(IdUser, Cash),
     getCode(IdComp, Code),
     getCompName(IdComp, Name),

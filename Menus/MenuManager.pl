@@ -18,14 +18,9 @@
 :- consult('../Models/Clock/GetSetClock.pl').
 
 
-test :-
-    % printMatrix("../Menus/StartMenu/startMenu.txt").
-    callLoop(1, 1). 
-
-
 startMenu :-
     logoutClient,
-    printMatrix("../Menus/StartMenu/startMenu.txt"),
+    printMatrix("./Menus/StartMenu/startMenu.txt"),
     write("Digite uma opção: "),
     flush_output,                                                       %%%% FOR WHAT?
     read_line_to_string(user_input, UserChoice),
@@ -41,7 +36,7 @@ optionsStartMenu(UserChoice) :-
 
 
 fazerLoginMenu :-
-    printMatrix("../Menus/StartMenu/loginMenu.txt"),
+    printMatrix("./Menus/StartMenu/loginMenu.txt"),
     write("Deseja fazer login? (S/N): "),
     flush_output,
     read_line_to_string(user_input, UserChoice),
@@ -59,7 +54,7 @@ fazerLoginMenu :-
 
 
 cadastraUsuarioMenu :-
-    printMatrix("../Menus/StartMenu/cadastroUsuario.txt"),
+    printMatrix("./Menus/StartMenu/cadastroUsuario.txt"),
     write("Deseja cadastrar um novo usuário? (S/N): "),
     flush_output,
     read_line_to_string(user_input, UserChoice),
@@ -72,7 +67,7 @@ cadastraUsuarioMenu :-
 
 
 cadastraEmpresaMenu :-
-    printMatrix("../Menus/StartMenu/cadastroEmpresa.txt"),
+    printMatrix("./Menus/StartMenu/cadastroEmpresa.txt"),
     write("Deseja cadastrar uma nova empresa? (S/N): "),
     flush_output,
     read_line_to_string(user_input, UserChoice),
@@ -91,7 +86,7 @@ querContinuarAOperacao(UserChoice) :-
 
 
 menuCadastroRealizado(true) :-
-    printMatrix("../Menus/StartMenu/cadastroRealizado.txt"),
+    printMatrix("./Menus/StartMenu/cadastroRealizado.txt"),
     sleep(2),
     startMenu.
 
@@ -102,7 +97,7 @@ menuCadastroRealizado(false) :-
 
 mainMenu(IdUser) :-
     updateMainMenu(IdUser),
-    printMatrix("../Menus/MainMenu/mainMenu.txt"),
+    printMatrix("./Menus/MainMenu/mainMenu.txt"),
     write("Digite uma opção: "),
     flush_output,
     read_line_to_string(user_input, UserChoice),
@@ -169,7 +164,7 @@ menuAfterLoop(IdUser, IdComp, IsCurrentCompanyDown) :-
 
 companyProfileMenu(IdUser, IdComp) :-
     updateCompanyProfile(IdUser, IdComp),
-    printMatrix("../Menus/HomeBroker/CompanyProfile/companyProfile.txt"),
+    printMatrix("./Menus/HomeBroker/CompanyProfile/companyProfile.txt"),
     write("Digite uma opção: "),
     flush_output,
     read_line_to_string(user_input, UserChoice),
@@ -184,7 +179,7 @@ optionsCompanyProfileMenu(IdUser, IdComp, UserChoice) :-
 
 buyMenu(IdUser, IdComp) :-
     updateHomeBrokerBuy(IdUser, IdComp),
-    printMatrix("../Menus/HomeBroker/BuySell/homebrokerBuy.txt"),
+    printMatrix("./Menus/HomeBroker/BuySell/homebrokerBuy.txt"),
     write("Digite quantas ações deseja comprar: "),
     flush_output,
     read_line_to_string(user_input, UserChoice),
@@ -206,7 +201,7 @@ optionsBuyMenu(IdUser, IdComp, UserChoice) :-
 
 sellMenu(IdUser, IdComp) :-
     updateHomeBrokerSell(IdUser, IdComp),
-    printMatrix("../Menus/HomeBroker/BuySell/homebrokerSell.txt"),
+    printMatrix("./Menus/HomeBroker/BuySell/homebrokerSell.txt"),
     write("Digite quantas ações deseja vender: "),
     flush_output,
     read_line_to_string(user_input, UserChoice),
@@ -245,7 +240,7 @@ optionsWalletMenu(IdUser, UserChoice) :-
 
 saqueMenu(IdUser) :-
     updateWalletSaque(IdUser),
-    printMatrix("../Menus/Wallet/DepositoSaque/walletSaque.txt"),
+    printMatrix("./Menus/Wallet/DepositoSaque/walletSaque.txt"),
     write("Digite uma opção: "),
     flush_output,
     read_line_to_string(user_input, UserChoice),
@@ -262,7 +257,7 @@ optionsSaqueMenu(IdUser, UserChoice) :-
 
 depositoMenu(IdUser) :-
     updateWalletDeposito(IdUser),
-    printMatrix("../Menus/Wallet/DepositoSaque/walletDeposito.txt"),
+    printMatrix("./Menus/Wallet/DepositoSaque/walletDeposito.txt"),
     write("Digite uma opção: "),
     flush_output,
     read_line_to_string(user_input, UserChoice),
@@ -284,7 +279,7 @@ optionsDepositoMenu(IdUser, UserChoice) :-
 trendingCloseMenu(IdUser) :-
     updateTrendingClose(IdUser),
     setClock(420),
-    printMatrix("../Menus/HomeBroker/TrendingClose/trendingClose.txt"),
+    printMatrix("./Menus/HomeBroker/TrendingClose/trendingClose.txt"),
     write("Digite uma opção: "),
     flush_output,
     read_line_to_string(user_input, _),
@@ -293,7 +288,7 @@ trendingCloseMenu(IdUser) :-
 
 companyDownMenu(IdUser, IdComp) :-
     updateCompanyDown(IdUser, IdComp),
-    printMatrix("../Menus/HomeBroker/CompanyDown/companyDown.txt"),
+    printMatrix("./Menus/HomeBroker/CompanyDown/companyDown.txt"),
     write("Digite uma opção: "),
     flush_output,
     read_line_to_string(user_input, _),

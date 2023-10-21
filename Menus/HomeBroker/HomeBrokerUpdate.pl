@@ -31,8 +31,8 @@ updateHomeBroker(IdUser, IdComp) :-
 
 % Atualiza todas as informações do menu de compras em um Home Broker de uma determinada empresa
 updateHomeBrokerBuy(IdUser, IdComp) :-
-    FilePath = "./HomeBroker/BuySell/homebrokerBuy.txt",
-    resetMenu(FilePath, "../Sprites/HomeBroker/homebrokerBuy_base.txt"),
+    FilePath = "./Menus/HomeBroker/BuySell/homebrokerBuy.txt",
+    resetMenu(FilePath, "./Sprites/HomeBroker/homebrokerBuy_base.txt"),
     getCash(IdUser, Cash),
     getCompName(IdComp, Name),
     getCode(IdComp, Code),
@@ -49,8 +49,8 @@ updateHomeBrokerBuy(IdUser, IdComp) :-
 
 % Atualiza todas as informações do menu de vendas em um Home Broker de uma determinada empresa
 updateHomeBrokerSell(IdUser, IdComp) :-
-    FilePath = "./HomeBroker/BuySell/homebrokerSell.txt",
-    resetMenu(FilePath, "../Sprites/HomeBroker/homebrokerSell_base.txt"),
+    FilePath = "./Menus/HomeBroker/BuySell/homebrokerSell.txt",
+    resetMenu(FilePath, "./Sprites/HomeBroker/homebrokerSell_base.txt"),
     getCash(IdUser, Cash),
     getCompName(IdComp, Name),
     getCode(IdComp, Code),
