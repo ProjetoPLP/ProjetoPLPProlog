@@ -56,7 +56,6 @@ fazerLoginMenu :-
     read_line(UserChoice),
     (querContinuarAOperacao(UserChoice) ->
         fazerLogin(ResultadoLogin),
-        write(RealizarLogin),
         (
             ResultadoLogin ->
             getLoggedUserID(IdUser),
@@ -66,7 +65,6 @@ fazerLoginMenu :-
         )
     ;   startMenu
     ).
-
 
 cadastraUsuarioMenu :-
     printMatrix("../Menus/StartMenu/cadastroUsuario.txt"),
