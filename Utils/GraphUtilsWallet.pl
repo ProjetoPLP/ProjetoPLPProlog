@@ -50,7 +50,7 @@ checkClientRowUnderflow(IdUser) :-
 
 
 % Atualiza a próxima coluna em todos os gráficos
-attAllClientColumn(_, []) :- !.
+attAllClientColumn([]) :- !.
 attAllClientColumn([H|T]) :-
     getUserIdent(H, IdUser),
     addUserCol(IdUser, 2),

@@ -18,82 +18,77 @@
 :- consult('../Models/Clock/GetSetClock.pl').
 
 
+test :-
+    % printMatrix("../Menus/StartMenu/startMenu.txt").
+    callLoop(1, 1). 
+
+
 startMenu :-
     logoutClient,
     printMatrix("../Menus/StartMenu/startMenu.txt"),
     write("Digite uma opção: "),
-    flush_output,
-    read_line(UserChoice),
+    flush_output,                                                       %%%% FOR WHAT?
+    read_line_to_string(user_input, UserChoice),
     optionsStartMenu(UserChoice).
 
-read_line(Line) :-
-    read_line([], Line).
-
-read_line(Chars, Line) :-
-    get_char(Char),
-    (Char = '\n' ->
-        reverse(Chars, Line)
-    ;   read_line([Char|Chars], Line)
-    ).
 
 optionsStartMenu(UserChoice) :-
-    (   memberchk('L', UserChoice); memberchk('l', UserChoice) ) ->
-        fazerLoginMenu
-    ;   (memberchk('U', UserChoice); memberchk('u', UserChoice)) ->
-        cadastraUsuarioMenu
-    ;   (memberchk('E', UserChoice); memberchk('e', UserChoice)) ->
-        cadastraEmpresaMenu
-    ;   (memberchk('S', UserChoice); memberchk('s', UserChoice)) ->
-        halt
-    ;   writeln("Opção Inválida!"),
-        startMenu.
+    (UserChoice == "L" ; UserChoice ==  "l") -> fazerLoginMenu ;   
+    (UserChoice == "U" ; UserChoice ==  "u") -> cadastraUsuarioMenu ;
+    (UserChoice == "E" ; UserChoice ==  "e") -> cadastraEmpresaMenu ;
+    (UserChoice == "S" ; UserChoice ==  "s") -> halt ;
+    writeln("Opção Inválida!"), startMenu.
 
 
 fazerLoginMenu :-
     printMatrix("../Menus/StartMenu/loginMenu.txt"),
     write("Deseja fazer login? (S/N): "),
     flush_output,
-    read_line(UserChoice),
+    read_line_to_string(user_input, UserChoice),
     (querContinuarAOperacao(UserChoice) ->
         fazerLogin(ResultadoLogin),
-        (
-            ResultadoLogin ->
+        (ResultadoLogin ->
             getLoggedUserID(IdUser),
             mainMenu(IdUser)
         ;   
             startMenu
         )
-    ;   startMenu
+    ;
+        startMenu
     ).
+
 
 cadastraUsuarioMenu :-
     printMatrix("../Menus/StartMenu/cadastroUsuario.txt"),
     write("Deseja cadastrar um novo usuário? (S/N): "),
     flush_output,
-    read_line(UserChoice),
-    (   querContinuarAOperacao(UserChoice) ->
+    read_line_to_string(user_input, UserChoice),
+    (querContinuarAOperacao(UserChoice) ->
         cadastrarCliente,
         menuCadastroRealizado(true)
-    ;   startMenu
+    ;   
+        startMenu
     ).
+
 
 cadastraEmpresaMenu :-
     printMatrix("../Menus/StartMenu/cadastroEmpresa.txt"),
     write("Deseja cadastrar uma nova empresa? (S/N): "),
     flush_output,
-    read_line(UserChoice),
-    (   querContinuarAOperacao(UserChoice) ->
+    read_line_to_string(user_input, UserChoice),
+    (querContinuarAOperacao(UserChoice) ->
         getCompanyJSON(CompaniesJson),
         length(CompaniesJson, NumCompanies),
         cadastrarCompany(NumCompanies, Cadastrou),
         menuCadastroRealizado(Cadastrou)
-    ;   startMenu
+    ;   
+        startMenu
     ).
 
+
 querContinuarAOperacao(UserChoice) :-
-    ( memberchk('S', UserChoice); memberchk('s', UserChoice) ) ->
-        true
-    ;  false.
+    (UserChoice == "S" ; UserChoice == "s") -> true ; !, false.
+
 
 menuCadastroRealizado(true) :-
     printMatrix("../Menus/StartMenu/cadastroRealizado.txt"),
@@ -104,209 +99,207 @@ menuCadastroRealizado(false) :-
     writeln("Aviso: limite máximo de empresas cadastradas atingido."),
     startMenu.
 
+
 mainMenu(IdUser) :-
     updateMainMenu(IdUser),
     printMatrix("../Menus/MainMenu/mainMenu.txt"),
     write("Digite uma opção: "),
     flush_output,
-    read_line(UserChoice),
+    read_line_to_string(user_input, UserChoice),
     optionsMainMenu(IdUser, UserChoice).
 
-optionsMainMenu(IdUser, UserChoice) :-
-   (   memberchk('W', UserChoice); memberchk('w', UserChoice) ) ->
-        walletMenu(IdUser)
-    ;   str(UserChoice, X), validate_input(X, ChoiceInt) ->
-        homeBrokerMenu(IdUser, ChoiceInt)
-    ;   (   memberchk('A', UserChoice); memberchk('a', UserChoice) ) ->
-        homeBrokerMenu(IdUser, 10)
-    ;  (   memberchk('B', UserChoice); memberchk('b', UserChoice) ) ->
-        homeBrokerMenu(IdUser, 11)
-    ;   (   memberchk('C', UserChoice); memberchk('c', UserChoice) ) ->
-        homeBrokerMenu(IdUser, 12)
-    ;  (   memberchk('S', UserChoice); memberchk('s', UserChoice) ) ->
-        startMenu
-    ;   writeln("Opção inválida"),
-        mainMenu(IdUser).
-str([H|_], H).
 
-validate_input(UserChoice, ChoiceInt) :-
-    atom_number(UserChoice, ChoiceInt),
-    ChoiceInt >= 1,
-    ChoiceInt =< 12.
+optionsMainMenu(IdUser, UserChoice) :-
+    (UserChoice == "W" ; UserChoice ==  "w") -> walletMenu(IdUser) ;
+    (UserChoice == "1") -> homeBrokerMenu(IdUser, 1) ;
+    (UserChoice == "2") -> homeBrokerMenu(IdUser, 2) ;
+    (UserChoice == "3") -> homeBrokerMenu(IdUser, 3) ;
+    (UserChoice == "4") -> homeBrokerMenu(IdUser, 4) ;
+    (UserChoice == "5") -> homeBrokerMenu(IdUser, 5) ;
+    (UserChoice == "6") -> homeBrokerMenu(IdUser, 6) ;
+    (UserChoice == "7") -> homeBrokerMenu(IdUser, 7) ;
+    (UserChoice == "8") -> homeBrokerMenu(IdUser, 8) ;
+    (UserChoice == "9") -> homeBrokerMenu(IdUser, 9) ;
+    (UserChoice == "A" ; UserChoice ==  "a") -> homeBrokerMenu(IdUser, 10) ;
+    (UserChoice == "B" ; UserChoice ==  "b") -> homeBrokerMenu(IdUser, 11) ;
+    (UserChoice == "C" ; UserChoice ==  "c") -> homeBrokerMenu(IdUser, 12) ;
+    (UserChoice == "S" ; UserChoice ==  "s") -> startMenu ;
+    writeln("Opção inválida"), mainMenu(IdUser).
+
 
 homeBrokerMenu(IdUser, IdComp) :-
-(   existCompany(IdComp) ->
-    updateHomeBroker(IdUser, IdComp),
-    atom_concat('../Models/Company/HomeBrokers/homebroker', IdComp, File),
-    atom_concat(File, '.txt', FilePath),
-    printMatrix(FilePath),
-    write("Digite por quantos segundos a ação deve variar: "),
-    flush_output,
-    read_line(UserChoice),
-    optionsHomeBrokerMenu(IdUser, IdComp, UserChoice)
-;   mainMenu(IdUser)
-).
+    (existCompany(IdComp)) -> 
+        updateHomeBroker(IdUser, IdComp),
+        homeBrokerFilePath(IdComp, FilePath),
+        printMatrix(FilePath),
+        write("Digite por quantos segundos a ação deve variar: "),
+        flush_output,
+        read_line_to_string(user_input, UserChoice),
+        optionsHomeBrokerMenu(IdUser, IdComp, UserChoice)
+    ;   
+        mainMenu(IdUser).
+    
 
 optionsHomeBrokerMenu(IdUser, IdComp, UserChoice) :-
-    (   memberchk('B', UserChoice); memberchk('b', UserChoice) ) ->
-        buyMenu(IdUser, IdComp)
-    ;   (   memberchk('S', UserChoice); memberchk('s', UserChoice) ) ->
-        sellMenu(IdUser, IdComp)
-    ;   (   memberchk('P', UserChoice); memberchk('p', UserChoice) ) ->
-        companyProfileMenu(IdUser, IdComp)
-    ;   (   memberchk('V', UserChoice); memberchk('v', UserChoice) ) ->
-        mainMenu(IdUser)
-    ;   number_string(ChoiceInt, UserChoice),
-        attGraphs(IdUser, IdComp, ChoiceInt)
-    ;   writeln("Opção inválida"),
-        homeBrokerMenu(IdUser, IdComp).
+    (UserChoice == "B" ; UserChoice ==  "b") -> buyMenu(IdUser, IdComp) ;
+    (UserChoice == "S" ; UserChoice ==  "s") -> sellMenu(IdUser, IdComp) ;
+    (UserChoice == "P" ; UserChoice ==  "p") -> companyProfileMenu(IdUser, IdComp) ;
+    (UserChoice == "V" ; UserChoice ==  "v") -> mainMenu(IdUser) ;
+    (isNumber(UserChoice)) -> attGraphs(IdUser, IdComp, UserChoice) ;
+    writeln("Opção inválida"), homeBrokerMenu(IdUser, IdComp).
+
 
 attGraphs(IdUser, IdComp, UserChoice) :-
-    callLoop(IdComp, UserChoice, IsCurrentCompanyDown),
-    menuAfterLoop(IdUser, IdComp, IsCurrentCompanyDown).
+    formatInputToSeconds(UserChoice, Seconds),
+    (callLoop(IdComp, Seconds)) -> 
+    menuAfterLoop(IdUser, IdComp, true) ;
+    menuAfterLoop(IdUser, IdComp, false).
 
-menuAfterLoop(IdUser, IdComp, true) :-
-    companyDownMenu(IdUser, IdComp).
 
-menuAfterLoop(IdUser, IdComp, false) :-
-    getClock("./Data/Clock.json", Clock),
-    (   Clock >= 720 ->
+menuAfterLoop(IdUser, IdComp, IsCurrentCompanyDown) :-
+    (IsCurrentCompanyDown) -> 
+        companyDownMenu(IdUser, IdComp)
+    ;
+    getClock(Minutes),
+    (Minutes >= 720) -> 
         trendingCloseMenu(IdUser)
-    ;   homeBrokerMenu(IdUser, IdComp)
-    ).
+    ;
+        homeBrokerMenu(IdUser, IdComp).
     
+
 companyProfileMenu(IdUser, IdComp) :-
     updateCompanyProfile(IdUser, IdComp),
     printMatrix("../Menus/HomeBroker/CompanyProfile/companyProfile.txt"),
     write("Digite uma opção: "),
     flush_output,
-    read_line(UserChoice),
+    read_line_to_string(user_input, UserChoice),
     optionsCompanyProfileMenu(IdUser, IdComp, UserChoice).
 
+
 optionsCompanyProfileMenu(IdUser, IdComp, UserChoice) :-
-    (   memberchk('V', UserChoice); memberchk('v', UserChoice) ) ->
-        homeBrokerMenu(IdUser, IdComp)
-    ;   writeln("Opção Inválida!"),
-        companyProfileMenu(IdUser, IdComp).
+    (UserChoice == "V" ; UserChoice ==  "v") -> homeBrokerMenu(IdUser, IdComp) ;
+    writeln("Opção Inválida!"),
+    companyProfileMenu(IdUser, IdComp).
+
 
 buyMenu(IdUser, IdComp) :-
     updateHomeBrokerBuy(IdUser, IdComp),
     printMatrix("../Menus/HomeBroker/BuySell/homebrokerBuy.txt"),
     write("Digite quantas ações deseja comprar: "),
     flush_output,
-    read_line(UserChoice),
+    read_line_to_string(user_input, UserChoice),
     optionsBuyMenu(IdUser, IdComp, UserChoice).
 
+
 optionsBuyMenu(IdUser, IdComp, UserChoice) :-
-    number_string(Quantity, UserChoice) ->
-        buy(IdUser, IdComp, Quantity),
+    (isNumber(UserChoice)) -> 
+        atom_number(UserChoice, Qtd),
+        buy(IdUser, IdComp, Qtd),
         buyMenu(IdUser, IdComp)
-    ;   (   memberchk('V', UserChoice); memberchk('v', UserChoice);
-            memberchk('C', UserChoice);memberchk('c', UserChoice)) ->
+    ;
+    (member(UserChoice, ["V", "v", "C", "c"])) -> 
         homeBrokerMenu(IdUser, IdComp)
-    ;   writeln("Opção inválida"),
+    ;
+        writeln("Opção Inválida!"),
         buyMenu(IdUser, IdComp).
+
 
 sellMenu(IdUser, IdComp) :-
     updateHomeBrokerSell(IdUser, IdComp),
     printMatrix("../Menus/HomeBroker/BuySell/homebrokerSell.txt"),
     write("Digite quantas ações deseja vender: "),
     flush_output,
-    read_line(UserChoice),
+    read_line_to_string(user_input, UserChoice),
     optionsSellMenu(IdUser, IdComp, UserChoice).
 
+
 optionsSellMenu(IdUser, IdComp, UserChoice) :-
-    number_string(Quantity, UserChoice) ->
-        sell(IdUser, IdComp, Quantity),
+    (isNumber(UserChoice)) -> 
+        atom_number(UserChoice, Qtd),
+        sell(IdUser, IdComp, Qtd),
         sellMenu(IdUser, IdComp)
-    ;  (   memberchk('V', UserChoice); memberchk('v', UserChoice);
-           memberchk('C', UserChoice);memberchk('c', UserChoice)) ->
+    ;
+    (member(UserChoice, ["V", "v", "C", "c"])) -> 
         homeBrokerMenu(IdUser, IdComp)
-    ;   writeln("Opção inválida"),
+    ;
+        writeln("Opção Inválida!"),
         sellMenu(IdUser, IdComp).
+
 
 walletMenu(IdUser) :-
     updateClientWallet(IdUser),
-    atom_concat('../Models/Client/Wallets/wallet', IdUser, FilePath),
-    atom_concat(FilePath, '.txt', File),
-    printMatrix(File),
+    walletFilePath(IdUser, FilePath),
+    printMatrix(FilePath),
     write("Digite uma opção: "),
     flush_output,
-    read_line(UserChoice),
+    read_line_to_string(user_input, UserChoice),
     optionsWalletMenu(IdUser, UserChoice).
 
+
 optionsWalletMenu(IdUser, UserChoice) :-
-    (   memberchk('S', UserChoice); memberchk('s', UserChoice) ) ->
-        saqueMenu(IdUser)
-    ;   (   memberchk('D', UserChoice); memberchk('d', UserChoice) ) ->
-        depositoMenu(IdUser)
-    ; (   memberchk('V', UserChoice); memberchk('v', UserChoice) ) ->
-        mainMenu(IdUser)
-    ;   writeln("Opção inválida"),
-        walletMenu(IdUser).
+    (UserChoice == "S" ; UserChoice ==  "s") -> saqueMenu(IdUser) ;
+    (UserChoice == "D" ; UserChoice ==  "d") -> depositoMenu(IdUser) ;
+    (UserChoice == "V" ; UserChoice ==  "v") -> mainMenu(IdUser) ;
+    writeln("Opção inválida"), walletMenu(IdUser).
+
 
 saqueMenu(IdUser) :-
     updateWalletSaque(IdUser),
     printMatrix("../Menus/Wallet/DepositoSaque/walletSaque.txt"),
     write("Digite uma opção: "),
     flush_output,
-    read_line(UserChoice),
+    read_line_to_string(user_input, UserChoice),
     optionsSaqueMenu(IdUser, UserChoice).
 
+
 optionsSaqueMenu(IdUser, UserChoice) :-
-    (   memberchk('2', UserChoice) ) ->
-        sacar200(IdUser),
-        saqueMenu(IdUser)
-    ;   (   memberchk('5', UserChoice) ) ->
-        sacar500(IdUser),
-        saqueMenu(IdUser)
-    ;  (   memberchk('T', UserChoice); memberchk('t', UserChoice) ) ->
-        sacarTudo(IdUser),
-        saqueMenu(IdUser)
-    ;   (   memberchk('V', UserChoice); memberchk('v', UserChoice) ) ->
-        walletMenu(IdUser)
-    ;   writeln("Opção inválida"),
-        saqueMenu(IdUser).
+    (UserChoice == "2") -> sacar200(IdUser), saqueMenu(IdUser) ;
+    (UserChoice == "5") -> sacar500(IdUser), saqueMenu(IdUser) ;
+    (UserChoice == "T" ; UserChoice ==  "t") -> sacarTudo(IdUser), saqueMenu(IdUser) ;
+    (UserChoice == "V" ; UserChoice ==  "v") -> walletMenu(IdUser) ;
+    writeln("Opção inválida"), saqueMenu(IdUser).
+
 
 depositoMenu(IdUser) :-
     updateWalletDeposito(IdUser),
     printMatrix("../Menus/Wallet/DepositoSaque/walletDeposito.txt"),
     write("Digite uma opção: "),
     flush_output,
-    read_line(UserChoice),
+    read_line_to_string(user_input, UserChoice),
     optionsDepositoMenu(IdUser, UserChoice).
 
+
 optionsDepositoMenu(IdUser, UserChoice) :-
-    (   memberchk('S', UserChoice); memberchk('s', UserChoice) ) ->
+    (UserChoice == "S" ; UserChoice ==  "s") ->
+        getCanDeposit(IdUser, CanDeposit),
         depositar(IdUser, CanDeposit),
         depositoMenu(IdUser)
-    ;   (   memberchk('V', UserChoice); memberchk('v', UserChoice);
-            memberchk('N', UserChoice);memberchk('n', UserChoice)) ->
+    ;
+    (member(UserChoice, ["V", "v", "N", "n"])) ->
         walletMenu(IdUser)
-    ;   writeln("Opção inválida"),
-        depositoMenu(IdUser).
+    ;
+        writeln("Opção inválida"), depositoMenu(IdUser).
 
 
 trendingCloseMenu(IdUser) :-
     updateTrendingClose(IdUser),
     setClock(420),
-    printMatrix("./Menus/HomeBroker/TrendingClose/trendingClose.txt"),
+    printMatrix("../Menus/HomeBroker/TrendingClose/trendingClose.txt"),
     write("Digite uma opção: "),
     flush_output,
-    read_line(_),
+    read_line_to_string(user_input, _),
     mainMenu(IdUser).
+
 
 companyDownMenu(IdUser, IdComp) :-
     updateCompanyDown(IdUser, IdComp),
-    printMatrix("./Menus/HomeBroker/CompanyDown/companyDown.txt"),
+    printMatrix("../Menus/HomeBroker/CompanyDown/companyDown.txt"),
     write("Digite uma opção: "),
     flush_output,
-    read_line(_),
+    read_line_to_string(user_input, _),
     mainMenu(IdUser).
 
-formatInputToSeconds(Segundos, FormattedSegundos) :-
-    (   number_string(SecondsInt, Segundos),
-        SecondsInt > 30 ->
-        FormattedSegundos = 30
-    ;   number_string(FormattedSegundos, Segundos)
-    ).
+
+formatInputToSeconds(UserChoice, Seconds) :-
+    atom_number(UserChoice, FormatedSeconds),
+    (FormatedSeconds > 30 -> Seconds is 30 ; Seconds is FormatedSeconds).

@@ -50,7 +50,7 @@ checkCompanyRowUnderflow(IdComp) :-
 
 
 % Atualiza a próxima coluna em todos os gráficos
-attAllCompanyColumn(_, []) :- !.
+attAllCompanyColumn([]) :- !.
 attAllCompanyColumn([H|T]) :-
     getCompIdent(H, IdComp),
     addCompCol(IdComp, 3),

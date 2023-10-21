@@ -13,6 +13,7 @@ existCompanyAux(IdComp, [H|T]) :-
 
 
 % Verifica se uma String é um número
-isNumber("0", false) :- !.
-isNumber(String, R) :-
-    (atom_number(String, _) -> R = true ; R = false).
+isNumber("0") :- !, false.
+isNumber(String) :- 
+    atom_number(String, Num),
+    (Num > 0) -> true ; !, false.
