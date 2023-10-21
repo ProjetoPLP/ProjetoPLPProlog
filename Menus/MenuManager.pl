@@ -24,7 +24,12 @@ startMenu :-
     write("Digite uma opção: "),
     flush_output,
     read_line(UserChoice),
-    optionsStartMenu(UserChoice).
+    length(UserChoice, Tamanho),
+    (Tamanho = 1 ->
+        optionsStartMenu(UserChoice)
+    ; writeln("Opção Inválida!"),
+        startMenu
+    ).
 
 read_line(Line) :-
     read_line([], Line).
@@ -47,6 +52,7 @@ optionsStartMenu(UserChoice) :-
         halt
     ;   writeln("Opção Inválida!"),
         startMenu.
+    
 
 
 fazerLoginMenu :-
@@ -54,40 +60,52 @@ fazerLoginMenu :-
     write("Deseja fazer login? (S/N): "),
     flush_output,
     read_line(UserChoice),
-    (querContinuarAOperacao(UserChoice) ->
-        fazerLogin(ResultadoLogin),
-        (
-            ResultadoLogin ->
-            getLoggedUserID(IdUser),
-            mainMenu(IdUser)
-        ;   
-            startMenu
-        )
-    ;   startMenu
-    ).
+    length(UserChoice, Tamanho),
+    (Tamanho = 1 ->
+        (querContinuarAOperacao(UserChoice) ->
+            fazerLogin(ResultadoLogin),
+            (
+                ResultadoLogin ->
+                getLoggedUserID(IdUser),
+                mainMenu(IdUser)
+            ;   
+                startMenu
+            )
+        ;   startMenu)
+    ; writeln("Opção Inválida!"),
+    fazerLoginMenu).
 
 cadastraUsuarioMenu :-
     printMatrix("../Menus/StartMenu/cadastroUsuario.txt"),
     write("Deseja cadastrar um novo usuário? (S/N): "),
     flush_output,
     read_line(UserChoice),
-    (   querContinuarAOperacao(UserChoice) ->
+    length(UserChoice, Tamanho),
+    (Tamanho = 1 ->
+        (   querContinuarAOperacao(UserChoice) ->
         cadastrarCliente,
         menuCadastroRealizado(true)
-    ;   startMenu
+    ;   startMenu)
+    ; writeln("Opção Inválida!"),
+        cadastraUsuarioMenu
     ).
+
 
 cadastraEmpresaMenu :-
     printMatrix("../Menus/StartMenu/cadastroEmpresa.txt"),
     write("Deseja cadastrar uma nova empresa? (S/N): "),
     flush_output,
     read_line(UserChoice),
+    length(UserChoice, Tamanho),
+    (Tamanho = 1 ->
     (   querContinuarAOperacao(UserChoice) ->
         getCompanyJSON(CompaniesJson),
         length(CompaniesJson, NumCompanies),
         cadastrarCompany(NumCompanies, Cadastrou),
         menuCadastroRealizado(Cadastrou)
-    ;   startMenu
+    ;   startMenu)
+    ; writeln("Opção Inválida!"),
+        cadastraEmpresaMenu
     ).
 
 querContinuarAOperacao(UserChoice) :-
@@ -110,7 +128,11 @@ mainMenu(IdUser) :-
     write("Digite uma opção: "),
     flush_output,
     read_line(UserChoice),
-    optionsMainMenu(IdUser, UserChoice).
+    length(UserChoice, Tamanho),
+    (Tamanho = 1 ->
+        optionsMainMenu(IdUser, UserChoice)
+    ; writeln("Opção Inválida!"),
+        mainMenu(IdUser)).
 
 optionsMainMenu(IdUser, UserChoice) :-
    (   memberchk('W', UserChoice); memberchk('w', UserChoice) ) ->
@@ -135,18 +157,42 @@ validate_input(UserChoice, ChoiceInt) :-
     ChoiceInt =< 12.
 
 homeBrokerMenu(IdUser, IdComp) :-
-(   existCompany(IdComp) ->
-    updateHomeBroker(IdUser, IdComp),
-    atom_concat('../Models/Company/HomeBrokers/homebroker', IdComp, File),
-    atom_concat(File, '.txt', FilePath),
-    printMatrix(FilePath),
-    write("Digite por quantos segundos a ação deve variar: "),
-    flush_output,
-    read_line(UserChoice),
-    optionsHomeBrokerMenu(IdUser, IdComp, UserChoice)
-;   mainMenu(IdUser)
-).
+    (existCompany(IdComp) ->
+        updateHomeBroker(IdUser, IdComp),
+        atom_concat('../Models/Company/HomeBrokers/homebroker', IdComp, File),
+        atom_concat(File, '.txt', FilePath),
+        printMatrix(FilePath),
+        write("Digite por quantos segundos a ação deve variar: "),
+        flush_output,
+        read_line(UserChoice),
+        length(UserChoice, Tamanho),
+        ( is_list_of_numbers(UserChoice) -> 
+            optionsHomeBrokerMenu(IdUser, IdComp, UserChoice)
+        ; Tamanho = 1 ->
+            optionsHomeBrokerMenu(IdUser, IdComp, UserChoice)
+        ; writeln("Opção Inválida!") ->
+            homeBrokerMenu(IdUser, IdComp)
+        )
+        ;   mainMenu(IdUser)
+    ).
 
+is_list_of_numbers(List) :-
+    list_to_string(List, String),
+    string_contains_only_digits(String).
+
+string_contains_only_digits(String) :-
+    string_chars(String, Chars),
+    maplist(char_type_number, Chars).
+
+char_type_number(Char) :-
+    char_type(Char, digit).
+
+list_to_string([], '').
+list_to_string([H|T], String) :-
+    atom_string(H, Atom),
+    list_to_string(T, Rest),
+    string_concat(Atom, Rest, String).
+          
 optionsHomeBrokerMenu(IdUser, IdComp, UserChoice) :-
     (   memberchk('B', UserChoice); memberchk('b', UserChoice) ) ->
         buyMenu(IdUser, IdComp)
@@ -156,7 +202,7 @@ optionsHomeBrokerMenu(IdUser, IdComp, UserChoice) :-
         companyProfileMenu(IdUser, IdComp)
     ;   (   memberchk('V', UserChoice); memberchk('v', UserChoice) ) ->
         mainMenu(IdUser)
-    ;   conv(ChoiceInt,X), number_string(X, UserChoice),
+    ;   (conv(ChoiceInt,X), number_string(X, UserChoice)),
         attGraphs(IdUser, IdComp, X)
     ;   writeln("Opção inválida"),
         homeBrokerMenu(IdUser, IdComp).
@@ -182,7 +228,12 @@ companyProfileMenu(IdUser, IdComp) :-
     write("Digite uma opção: "),
     flush_output,
     read_line(UserChoice),
-    optionsCompanyProfileMenu(IdUser, IdComp, UserChoice).
+    length(UserChoice, Tamanho),
+    (Tamanho = 1 ->
+        optionsCompanyProfileMenu(IdUser, IdComp, UserChoice)
+    ; writeln("Opção Inválida!"),
+        companyProfileMenu(IdUser, IdComp)
+    ).
 
 optionsCompanyProfileMenu(IdUser, IdComp, UserChoice) :-
     (   memberchk('V', UserChoice); memberchk('v', UserChoice) ) ->
@@ -196,7 +247,14 @@ buyMenu(IdUser, IdComp) :-
     write("Digite quantas ações deseja comprar: "),
     flush_output,
     read_line(UserChoice),
-    optionsBuyMenu(IdUser, IdComp, UserChoice).
+    length(UserChoice, Tamanho),
+    ( is_list_of_numbers(UserChoice) ->
+        optionsBuyMenu(IdUser, IdComp, UserChoice)
+    ; Tamanho = 1 ->
+        optionsBuyMenu(IdUser, IdComp, UserChoice)
+    ; writeln("Opção Inválida!"),
+        buyMenu(IdUser, IdComp)
+    ).
 
 optionsBuyMenu(IdUser, IdComp, UserChoice) :-
     number_string(Quantity, UserChoice) ->
@@ -214,7 +272,14 @@ sellMenu(IdUser, IdComp) :-
     write("Digite quantas ações deseja vender: "),
     flush_output,
     read_line(UserChoice),
-    optionsSellMenu(IdUser, IdComp, UserChoice).
+    length(UserChoice, Tamanho),
+    ( is_list_of_numbers(UserChoice) ->
+        optionsSellMenu(IdUser, IdComp, UserChoice)
+    ; Tamanho = 1 ->
+        optionsSellMenu(IdUser, IdComp, UserChoice)
+    ; writeln("Opção Inválida!"),
+        buyMenu(IdUser, IdComp)
+    ).
 
 optionsSellMenu(IdUser, IdComp, UserChoice) :-
     number_string(Quantity, UserChoice) ->
@@ -275,7 +340,12 @@ depositoMenu(IdUser) :-
     write("Digite uma opção: "),
     flush_output,
     read_line(UserChoice),
-    optionsDepositoMenu(IdUser, UserChoice).
+    length(UserChoice, Tamanho),
+    (Tamanho = 1 ->
+        optionsDepositoMenu(IdUser, UserChoice)
+    ; writeln("Opção Inválida!"),
+        depositoMenu(IdUser)
+    ).
 
 optionsDepositoMenu(IdUser, UserChoice):-
     (   memberchk('S', UserChoice); memberchk('s', UserChoice) ) ->
