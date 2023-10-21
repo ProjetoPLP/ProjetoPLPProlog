@@ -24,7 +24,8 @@ getAgeFounded(AgeFounded) :-
     (not(number_string(AgeFounded, AgeStr)) ->
         writeln('\nAviso: o ano de fundação deve possuir apenas números.'),
         getAgeFounded(AgeFounded);
-    true).
+    true),
+    AgeFounded = AgeStr.
 
 getCNPJ(CNPJ) :-
     write('Digite o CNPJ da empresa (apenas números, 14 dígitos): '),
