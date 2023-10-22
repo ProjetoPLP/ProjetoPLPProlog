@@ -1,5 +1,6 @@
-:- consult('LoginClient.pl').
-:- consult('SaveClient.pl').
+:- consult('../../Utils/UpdateUtils.pl').
+:- consult('./LoginClient.pl').
+:- consult('./SaveClient.pl').
 
 getLoggedUserID(ID) :- 
     getLoggedClient(Client),
@@ -46,15 +47,17 @@ getQtdAssetsInCompany(ID, IDCompany, Acoes) :-
     searchAcoes(AllAssets, IDCompany,  Acoes).
     
 setCash(ID, NewCash) :- 
+    format(NewCash, FormattedCash),
     getClient(ID, Client),
     Client = client(Ident, Name, Age, Cpf, Email, Password, _, Patrimony, CanDeposit, Row, Col, AllAssets),
-    NewClient = client(Ident, Name, Age, Cpf, Email, Password, NewCash, Patrimony, CanDeposit, Row, Col, AllAssets),
+    NewClient = client(Ident, Name, Age, Cpf, Email, Password, FormattedCash, Patrimony, CanDeposit, Row, Col, AllAssets),
     editClientJSON(NewClient).
 
 setPatrimony(ID, NewPatrimony) :- 
+    format(NewPatrimony, FormattedPatrimony),
     getClient(ID, Client),
     Client = client(Ident, Name, Age, Cpf, Email, Password, Cash, _, CanDeposit, Row, Col, AllAssets),
-    NewClient = client(Ident, Name, Age, Cpf, Email, Password, Cash, NewPatrimony, CanDeposit, Row, Col, AllAssets),
+    NewClient = client(Ident, Name, Age, Cpf, Email, Password, Cash, FormattedPatrimony, CanDeposit, Row, Col, AllAssets),
     editClientJSON(NewClient).
 
 setCanDeposit(ID, NewCanDeposit) :- 
@@ -85,7 +88,8 @@ addCash(ID, AddCash) :-
     getClient(ID, Client),
     Client = client(Ident, Name, Age, Cpf, Email, Password, Cash, Patrimony, CanDeposit, Row, Col, AllAssets),
     NewCash is (Cash + AddCash),
-    NewClient = client(Ident, Name, Age, Cpf, Email, Password, NewCash, Patrimony, CanDeposit, Row, Col, AllAssets),
+    format(NewCash, FormattedCash),
+    NewClient = client(Ident, Name, Age, Cpf, Email, Password, FormattedCash, Patrimony, CanDeposit, Row, Col, AllAssets),
     editClientJSON(NewClient).
 
 addUserRow(ID, AddRow) :- 

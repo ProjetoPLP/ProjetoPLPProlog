@@ -11,6 +11,7 @@
 updateClientWallet(IdUser) :-
     walletFilePath(IdUser, FilePath),
     getCash(IdUser, Cash),
+    attClientPatrimony(IdUser),
     getPatrimony(IdUser, Patri),
     getUserName(IdUser, Name),
     getCPF(IdUser,CPF),
@@ -19,7 +20,6 @@ updateClientWallet(IdUser) :-
     resetStocks([1,2,3,4,5,6,7,8,9,10,11,12], FilePath),
     updateMatrixClock(FilePath),
     updateWLCash(FilePath, Cash),
-    attClientPatrimony(IdUser),
     updateWLPatrimony(FilePath, Patri),
     updateWLUserName(FilePath, Name),
     updateWLUserCPF(FilePath, CPF),
