@@ -67,13 +67,10 @@ getClientsByID(Ident, [client(Ident, Name, Age, Cpf, Email, Password, Cash, Patr
 getClientsByID(Ident, [_|Resto], ClienteEncontrado) :-
     getClientsByID(Ident, Resto, ClienteEncontrado).
 
-existClientByEmail(Email, Result) :- 
+existClientByEmail(Email) :- 
     getClientJSON(Out),
-    searchClientByEmail(Email, Out, Result).
+    searchClientByEmail(Email, Out).
 
-searchClientByEmail(_, [], false).
-searchClientByEmail(Email, [client(_, _, _, _, ClientEmail, _, _, _, _, _, _, _)|Rest], Result) :-
-    string_lower(Email, LowerEmail), string_lower(ClientEmail, LowerClientEmail),
-    LowerEmail = LowerClientEmail,
-    Result = true;
-    searchClientByEmail(Email, Rest, Result).
+searchClientByEmail(_, []) :- !, false.
+searchClientByEmail(Email, [client(_, _, _, _, ClientEmail, _, _, _, _, _, _, _)|Rest]) :-
+    (Email = ClientEmail -> true ; searchClientByEmail(Email, Rest)).

@@ -2,6 +2,7 @@
 :- consult('./LoginClient.pl').
 :- consult('./SaveClient.pl').
 
+
 getLoggedUserID(ID) :- 
     getLoggedClient(Client),
     Client = client(ID).

@@ -1,6 +1,6 @@
-:- consult('SaveCompany.pl').
-:- consult('ModelCompany.pl').
-:- consult('GetInfoForCreateCompany.pl').
+:- consult('./SaveCompany.pl').
+:- consult('./ModelCompany.pl').
+:- consult('./GetInfoForCreateCompany.pl').
 
 
 cadastrarCompany(LimitCompanies, Success) :-

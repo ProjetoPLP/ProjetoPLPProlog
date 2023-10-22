@@ -1,6 +1,6 @@
-:- consult('GetSetAttrsClient.pl').
-:- consult('SaveClient.pl').
-:- consult('ModelClient.pl').
+:- consult('./GetSetAttrsClient.pl').
+:- consult('./SaveClient.pl').
+:- consult('./ModelClient.pl').
 
 addAsset(ClientID, CompanyID, Qtd) :- 
     getClient(ClientID, Client),

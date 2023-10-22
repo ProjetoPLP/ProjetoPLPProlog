@@ -2,6 +2,7 @@
 :- consult('./SaveCompany.pl').
 :- consult('./ModelCompany.pl').
 
+
 getCompName(ID, Name) :- 
     getCompany(ID, Company),
     Company = company(_, Name, _, _, _, _, _, _, _, _, _, _, _, _).

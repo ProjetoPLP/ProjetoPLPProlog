@@ -2,8 +2,7 @@
 :- use_module(library(http/json)).
 
 
-saveLogin(Client) :- 
-    Client = client(Ident, _, _, _, _, _, _, _, _, _, _, _),
+saveLogin(Ident) :- 
     format(string(FormatedJson), '{"ident": ~w}', [Ident]),
     open("./Data/Login.json", write, Stream),
     write(Stream, FormatedJson),

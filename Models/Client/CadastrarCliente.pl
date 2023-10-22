@@ -1,10 +1,12 @@
-:- consult('GetInfoForCreateClient.pl').
-:- consult('SaveClient.pl').
-:- consult('ModelClient.pl').
+:- consult('./GetInfoForCreateClient.pl').
+:- consult('./SaveClient.pl').
+:- consult('./ModelClient.pl').
+
 
 cadastrarCliente :-
     getNewClient(Client),
     saveClientJSON(Client).
+
 
 getNewClient(Client) :-
     getClientName(Name),

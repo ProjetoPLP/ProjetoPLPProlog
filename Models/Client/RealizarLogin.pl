@@ -7,11 +7,10 @@
 fazerLogin(Result) :-
     getLoginEmail(LoginEmail),
     getLoginPassword(LoginPassWord),
-    searchAndGetClientByEmail(LoginEmail, Client),
-    Client = client(Ident, _, _, _, _, Password, _, _, _, _, _, _),
+    searchAndGetClientByEmail(LoginEmail, client(Ident, _, _, _, _, Password, _, _, _, _, _, _)),
     (Ident =\= -1 ->
         (Password == LoginPassWord ->
-            saveLogin(Client),
+            saveLogin(Ident),
             Result = true
         ;
             writeln("Aviso: Senha incorreta."),
@@ -28,8 +27,7 @@ searchAndGetClientByEmail(LoginEmail, Client) :-
     verifingIfExistEmailClient(LoginEmail, Clients, Client).
 
 
-verifingIfExistEmailClient(_, [], Client) :-
-    Client = client(-1, '', '', '', '', '', 0.0, 0.0, false, 0, 0, []).
+verifingIfExistEmailClient(_, [], client(-1, '', '', '', '', '', 0.0, 0.0, false, 0, 0, [])).
 verifingIfExistEmailClient(LoginEmail, [H|T], Client) :-
     H = client(_, _, _, _, Email, _, _, _, _, _, _, _),
     (LoginEmail == Email -> Client = H ; verifingIfExistEmailClient(LoginEmail, T, Client)).
