@@ -9,7 +9,7 @@ Um jogo em terminal que simula uma interface de uma corretora de valores de mane
 Assista a este [vídeo](https://www.youtube.com) para entender o funcionamento do programa.
 
 ## Instalação
-Você precisa da versão mais atualizada do [SWI-Prolog](https://www.swi-prolog.org/Download.html) instalada.
+Você precisa da versão mais atualizada do [SWI-Prolog](https://www.swi-prolog.org/download/stable) instalada.
 
 Após a instalação, execute o arquivo Main.pl no diretório raiz
 
