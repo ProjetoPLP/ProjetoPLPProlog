@@ -21,4 +21,4 @@ Em seguida, no SWI-Prolog consulte pelo predicado `main`
 
 ## Parte Funcional
 
-O projeto é divido em duas etapas, clique [aqui](https://github.com/ProjetoPLP/ProjetoPLPProlog) para acessar o repositório da parte funcional.
+O projeto é divido em duas etapas, clique [aqui](https://github.com/ProjetoPLP/ProjetoPLPHaskell) para acessar o repositório da parte funcional.
