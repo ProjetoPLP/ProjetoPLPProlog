@@ -6,7 +6,7 @@ exibirCompaniesAux([], []).
 exibirCompaniesAux([H|T], [company(H.ident, H.name, H.age, H.cnpj, H.actuation, H.declaration, H.code, H.price, H.trendIndicator, H.minPrice, H.maxPrice, H.startPrice, H.row, H.col)|Rest]) :- 
     exibirCompaniesAux(T, Rest).
 
-% ok
+
 getCompanyJSON(Out) :-
 	lerJSON("./Data/Companies.json", Companies),
 	exibirCompaniesAux(Companies , Result),
@@ -77,7 +77,7 @@ removeCompany(Id) :-
     companiesToJSON(SaidaParcial, Saida),
     open("./Data/Companies.json", write, Stream), write(Stream, Saida), close(Stream).
 
-% ok
+
 getCompany(Int, Company) :- 
     getCompanyJSON(Out), 
     buscarCompanyPorId(Int, Out, Company).
@@ -86,3 +86,23 @@ buscarCompanyPorId(_, [], _) :- fail.
 buscarCompanyPorId(Ident, [company(Ident, Name, Age, Cnpj, Actuation, Declaration, Code, Price, TrendIndicator, MinPrice, MaxPrice, StartPrice, Row, Col)|_], company(Ident,  Name, Age, Cnpj, Actuation, Declaration, Code, Price, TrendIndicator, MinPrice, MaxPrice, StartPrice, Row, Col)).
 buscarCompanyPorId(Ident, [_|Resto], CompanyeEncontrado) :-
     buscarCompanyPorId(Ident, Resto, CompanyeEncontrado).
+
+
+existCompanyByName(Name) :- 
+    getCompanyJSON(Companies),
+    verifyExistNameCompany(Name, Companies).
+
+verifyExistNameCompany(_, []) :- !, false.
+verifyExistNameCompany(NameComp, [company(_, Name, _, _, _, _, _, _, _, _, _, _, _, _) | Rest]) :-
+    (NameComp == Name -> true ; verifyExistNameCompany(NameComp, Rest)).
+
+
+existCompanyByCode(Code) :-
+    getCompanyJSON(Companies),
+    upcase_atom(Code, UpperCode),
+    verifyExistCompanyCode(UpperCode, Companies).
+
+verifyExistCompanyCode(_, []) :- !, false.
+verifyExistCompanyCode(CodeComp, [company(_, _, _, _, _, _, Code, _, _, _, _, _, _, _) | Rest]) :-
+    upcase_atom(Code, UpperCode),
+    (CodeComp == UpperCode -> true ; verifyExistCompanyCode(CodeComp, Rest)).
