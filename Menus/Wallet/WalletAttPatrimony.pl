@@ -39,8 +39,8 @@ attAllClientsPatrimonyGraph([H|T]) :-
 
 attClientPatrimonyGraph(IdUser, OldPatri, NewPatri) :-
     walletFilePath(IdUser, FilePath),
+    attClientLineRow(IdUser, OldPatri, NewPatri),
+    
     getUserCol(IdUser, Col),
     getUserRow(IdUser, Row),
-
-    attClientLineRow(IdUser, OldPatri, NewPatri),
     updateWLGraphCandle(FilePath, Row, Col).
