@@ -15,11 +15,11 @@ fazerLogin(Result) :-
             saveLogin(Ident),
             Result = true
         ;
-            writeln("Aviso: Senha incorreta."),
+            writeln("\nAviso: Senha incorreta."), sleep(1.2),
             Result = false
         )
     ;
-        writeln("Aviso: E-mail não cadastrado."),
+        writeln("\nAviso: E-mail não cadastrado."), sleep(1.2),
         Result = false
 ).
 

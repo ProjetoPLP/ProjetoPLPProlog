@@ -7,7 +7,7 @@ depositar(IdUser, CanDeposit) :-
     (CanDeposit = true ->
         addCash(IdUser, 100),
         setCanDeposit(IdUser, false)
-    ; writeln("Depósito negado. O cliente não realizou um saque anteriormente.")
+    ; writeln("\nDepósito negado. O cliente não realizou um saque anteriormente."), sleep(1.5)
     ).
 
 
@@ -16,7 +16,7 @@ sacarTudo(IdUser) :-
     (Cash >= 200 ->
         setCash(IdUser, 0),
         setCanDeposit(IdUser, true)
-    ; writeln("Saque negado. O cliente não possui um saldo de 200 reais ou mais.")
+    ; writeln("\nSaque negado. O cliente não possui um saldo de 200 reais ou mais."), sleep(1.5)
     ).
 
 
@@ -25,7 +25,7 @@ sacar200(IdUser) :-
     (Cash >= 200 ->
         addCash(IdUser, -200),
         setCanDeposit(IdUser, true)
-    ; writeln("Saque negado. O cliente não possui um saldo de 200 reais ou mais.")
+    ; writeln("\nSaque negado. O cliente não possui um saldo de 200 reais ou mais."), sleep(1.5)
     ).
 
 
@@ -34,5 +34,5 @@ sacar500(IdUser) :-
     (Cash >= 500 ->
         addCash(IdUser, -500),
         setCanDeposit(IdUser, true)
-    ; writeln("Saque negado. O cliente não possui um saldo de 500 reais ou mais.")
+    ; writeln("\nSaque negado. O cliente não possui um saldo de 500 reais ou mais."), sleep(1.5)
     ).

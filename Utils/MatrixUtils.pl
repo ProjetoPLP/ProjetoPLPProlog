@@ -3,6 +3,7 @@
 
 % Printa no terminal o conteúdo do arquivo .txt
 printMatrix(NomeArquivo) :-
+    write('\e[H\e[2J'),
     open(NomeArquivo, read, Stream),
     repeat,
     (   read_line_to_string(Stream, Linha),

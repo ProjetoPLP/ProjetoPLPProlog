@@ -37,7 +37,9 @@ optionsStartMenu(UserChoice) :-
     (UserChoice == "U" ; UserChoice ==  "u") -> cadastraUsuarioMenu ;
     (UserChoice == "E" ; UserChoice ==  "e") -> cadastraEmpresaMenu ;
     (UserChoice == "S" ; UserChoice ==  "s") -> halt ;
-    writeln("Opção Inválida!"), startMenu.
+    writeln("\nOpção Inválida!"),
+    sleep(0.7),
+    startMenu.
 
 
 fazerLoginMenu :-
@@ -92,12 +94,11 @@ querContinuarAOperacao(UserChoice) :-
 
 menuCadastroRealizado(true) :-
     printMatrix("./Menus/StartMenu/cadastroRealizado.txt"),
-    sleep(2),
-    startMenu.
+    sleep(2), startMenu.
 
 menuCadastroRealizado(false) :-
     writeln("Aviso: limite máximo de empresas cadastradas atingido."),
-    startMenu.
+    sleep(0.7), startMenu.
 
 
 mainMenu(IdUser) :-
@@ -124,7 +125,7 @@ optionsMainMenu(IdUser, UserChoice) :-
     (UserChoice == "B" ; UserChoice ==  "b") -> homeBrokerMenu(IdUser, 11) ;
     (UserChoice == "C" ; UserChoice ==  "c") -> homeBrokerMenu(IdUser, 12) ;
     (UserChoice == "S" ; UserChoice ==  "s") -> startMenu ;
-    writeln("Opção inválida"), mainMenu(IdUser).
+    writeln("\nOpção inválida"), sleep(0.7), mainMenu(IdUser).
 
 
 homeBrokerMenu(IdUser, IdComp) :-
@@ -146,7 +147,7 @@ optionsHomeBrokerMenu(IdUser, IdComp, UserChoice) :-
     (UserChoice == "P" ; UserChoice ==  "p") -> companyProfileMenu(IdUser, IdComp) ;
     (UserChoice == "V" ; UserChoice ==  "v") -> mainMenu(IdUser) ;
     (isNumber(UserChoice)) -> attGraphs(IdUser, IdComp, UserChoice) ;
-    writeln("Opção inválida"), homeBrokerMenu(IdUser, IdComp).
+    writeln("\nOpção inválida"), sleep(0.7), homeBrokerMenu(IdUser, IdComp).
 
 
 attGraphs(IdUser, IdComp, UserChoice) :-
@@ -178,7 +179,7 @@ companyProfileMenu(IdUser, IdComp) :-
 
 optionsCompanyProfileMenu(IdUser, IdComp, UserChoice) :-
     (UserChoice == "V" ; UserChoice ==  "v") -> homeBrokerMenu(IdUser, IdComp) ;
-    writeln("Opção Inválida!"),
+    writeln("\nOpção Inválida!"), sleep(0.7),
     companyProfileMenu(IdUser, IdComp).
 
 
@@ -200,7 +201,7 @@ optionsBuyMenu(IdUser, IdComp, UserChoice) :-
     (member(UserChoice, ["V", "v", "C", "c"])) -> 
         homeBrokerMenu(IdUser, IdComp)
     ;
-        writeln("Opção Inválida!"),
+        writeln("\nOpção Inválida!"), sleep(0.7),
         buyMenu(IdUser, IdComp).
 
 
@@ -222,7 +223,7 @@ optionsSellMenu(IdUser, IdComp, UserChoice) :-
     (member(UserChoice, ["V", "v", "C", "c"])) -> 
         homeBrokerMenu(IdUser, IdComp)
     ;
-        writeln("Opção Inválida!"),
+        writeln("\nOpção Inválida!"), sleep(0.7),
         sellMenu(IdUser, IdComp).
 
 
@@ -240,7 +241,7 @@ optionsWalletMenu(IdUser, UserChoice) :-
     (UserChoice == "S" ; UserChoice ==  "s") -> saqueMenu(IdUser) ;
     (UserChoice == "D" ; UserChoice ==  "d") -> depositoMenu(IdUser) ;
     (UserChoice == "V" ; UserChoice ==  "v") -> mainMenu(IdUser) ;
-    writeln("Opção inválida"), walletMenu(IdUser).
+    writeln("\nOpção inválida"), sleep(0.7), walletMenu(IdUser).
 
 
 saqueMenu(IdUser) :-
@@ -257,7 +258,7 @@ optionsSaqueMenu(IdUser, UserChoice) :-
     (UserChoice == "5") -> sacar500(IdUser), saqueMenu(IdUser) ;
     (UserChoice == "T" ; UserChoice ==  "t") -> sacarTudo(IdUser), saqueMenu(IdUser) ;
     (UserChoice == "V" ; UserChoice ==  "v") -> walletMenu(IdUser) ;
-    writeln("Opção inválida"), saqueMenu(IdUser).
+    writeln("\nOpção inválida"), sleep(0.7), saqueMenu(IdUser).
 
 
 depositoMenu(IdUser) :-
@@ -278,7 +279,7 @@ optionsDepositoMenu(IdUser, UserChoice) :-
     (member(UserChoice, ["V", "v", "N", "n"])) ->
         walletMenu(IdUser)
     ;
-        writeln("Opção inválida"), depositoMenu(IdUser).
+        writeln("\nOpção inválida"), sleep(0.7), depositoMenu(IdUser).
 
 
 trendingCloseMenu(IdUser) :-
