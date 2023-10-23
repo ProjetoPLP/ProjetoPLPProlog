@@ -1,5 +1,2 @@
-:- consult('./Menus/MenuManager.pl').
-
-
-main :-
-    startMenu.
+:- use_module('./Menus/MenuManager.pl').
+:- initialization(startMenu).
