@@ -1,29 +1,34 @@
-:- consult('../Utils/MatrixUtils.pl').
-:- consult('../Utils/VerificationUtils.pl').
-:- consult('../Models/Client/RealizarLogin.pl').
-:- consult('../Models/Client/CadastrarCliente.pl').
-:- consult('../Models/Client/GetSetAttrsClient.pl').
-:- consult('../Models/Client/LoginClient.pl').
-:- consult('../Models/Company/CadastrarCompany.pl').
-:- consult('../Models/Company/SaveCompany.pl').
-:- consult('./Wallet/DepositoSaque/WalletDepSaqLogic.pl').
-:- consult('./Wallet/WalletUpdate.pl').
-:- consult('./HomeBroker/HomeBrokerUpdate.pl').
-:- consult('./HomeBroker/BuySell/HomeBrokerBuySellLogic.pl').
-:- consult('./HomeBroker/HomeBrokerLoopLogic.pl').
-:- consult('./HomeBroker/CompanyProfile/CompanyProfileUpdate.pl').
-:- consult('./HomeBroker/TrendingClose/TrendingCloseUpdate.pl').
-:- consult('./HomeBroker/CompanyDown/CompanyDownUpdate.pl').
-:- consult('./MainMenu/MainMenuUpdate.pl').
-:- consult('../Models/Clock/GetSetClock.pl').
+:- module(menuManager, [startMenu/0]).
+
+:- use_module('./Utils/VerificationUtils.pl').
+:- use_module('./Utils/MatrixUtils.pl').
+:- use_module('./Utils/GraphUtilsHomeBroker.pl').
+:- use_module('./Utils/GraphUtilsWallet.pl').
+:- use_module('./Models/Client/RealizarLogin.pl').
+:- use_module('./Models/Client/CadastrarCliente.pl').
+:- use_module('./Models/Company/CadastrarCompany.pl').
+:- use_module('./Models/Company/SaveCompany.pl').
+:- use_module('./Models/Client/LoginClient.pl').
+:- use_module('./Models/Client/GetSetAttrsClient.pl').
+:- use_module('./Models/Clock/GetSetClock.pl').
+:- use_module('./Menus/Wallet/DepositoSaque/WalletDepSaqLogic.pl').
+:- use_module('./Menus/Wallet/WalletUpdate.pl').
+:- use_module('./Menus/HomeBroker/HomeBrokerUpdate.pl').
+:- use_module('./Menus/HomeBroker/BuySell/HomeBrokerBuySellLogic.pl').
+:- use_module('./Menus/HomeBroker/HomeBrokerLoopLogic.pl').
+:- use_module('./Menus/HomeBroker/CompanyProfile/CompanyProfileUpdate.pl').
+:- use_module('./Menus/HomeBroker/TrendingClose/TrendingCloseUpdate.pl').
+:- use_module('./Menus/HomeBroker/CompanyDown/CompanyDownUpdate.pl').
+:- use_module('./Menus/MainMenu/MainMenuUpdate.pl').
 
 
 startMenu :-
     logoutClient,
     printMatrix("./Menus/StartMenu/startMenu.txt"),
     write("Digite uma opção: "),
-    flush_output,                                                       %%%% FOR WHAT?
+    flush_output,
     read_line_to_string(user_input, UserChoice),
+    char_code(_, 1),
     optionsStartMenu(UserChoice).
 
 

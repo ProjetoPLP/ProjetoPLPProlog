@@ -1,9 +1,12 @@
-:- consult('../../Utils/MatrixUtils.pl').
-:- consult('../../Utils/UpdateUtils.pl').
-:- consult('../../Utils/GraphUtilsHomeBroker.pl').
-:- consult('../../Models/Client/GetSetAttrsClient.pl').
-:- consult('../../Models/Company/GetSetAttrsCompany.pl').
-:- consult('../../Models/Clock/ClockUpdate.pl').
+:- module(homeBrokerUpdate, [updateHomeBroker/2, updateHomeBrokerBuy/2, updateHomeBrokerSell/2, updateHBCash/2, updateHBCompanyName/2,
+            updateHBCompanyCode/2, updateHBStockPrice/3, updateHBStockMaxPrice/2, updateHBStockMinPrice/2, updateHBStockStartPrice/2]).
+
+:- use_module('./Utils/MatrixUtils.pl').
+:- use_module('./Utils/UpdateUtils.pl').
+:- use_module('./Utils/GraphUtilsHomeBroker.pl').
+:- use_module('./Models/Client/GetSetAttrsClient.pl').
+:- use_module('./Models/Company/GetSetAttrsCompany.pl').
+:- use_module('./Models/Clock/ClockUpdate.pl').
 
 
 % Atualiza todas as informações do Home Broker de uma determinada empresa

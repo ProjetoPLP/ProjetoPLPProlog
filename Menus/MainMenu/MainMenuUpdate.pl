@@ -1,8 +1,11 @@
-:- consult('../../Utils/MatrixUtils.pl').
-:- consult('../../Utils/UpdateUtils.pl').
-:- consult('../../Models/Client/GetSetAttrsClient.pl').
-:- consult('../../Models/Company/GetSetAttrsCompany.pl').
-:- consult('../../Models/Clock/ClockUpdate.pl').
+:- module(mainMenuUpdate, [updateMainMenu/1]).
+
+:- use_module('./Utils/MatrixUtils.pl').
+:- use_module('./Utils/UpdateUtils.pl').
+:- use_module('./Models/Client/GetSetAttrsClient.pl').
+:- use_module('./Models/Company/GetSetAttrsCompany.pl').
+:- use_module('./Models/Company/SaveCompany.pl').
+:- use_module('./Models/Clock/ClockUpdate.pl').
 
 
 % Atualiza todas as informações no Main Menu

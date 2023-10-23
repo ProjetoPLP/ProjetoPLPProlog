@@ -1,6 +1,8 @@
-:- consult('../../../Models/Client/GetSetAttrsClient.pl').
-:- consult('../../../Models/Client/PostClient.pl').
-:- consult('../../../Models/Company/GetSetAttrsCompany.pl').
+:- module(homeBrokerBuySellLogic, [buy/3, sell/3]).
+
+:- use_module('./Models/Client/GetSetAttrsClient.pl').
+:- use_module('./Models/Client/PostClient.pl').
+:- use_module('./Models/Company/GetSetAttrsCompany.pl').
 
 
 buy(_, _, Num) :- Num =< 0, !.

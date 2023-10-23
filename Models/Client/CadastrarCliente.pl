@@ -1,6 +1,8 @@
-:- consult('./GetInfoForCreateClient.pl').
-:- consult('./SaveClient.pl').
-:- consult('./ModelClient.pl').
+:- module(cadastrarCliente, [cadastrarCliente/0]).
+
+:- use_module('./Models/Client/GetInfoForCreateClient.pl').
+:- use_module('./Models/Client/SaveClient.pl').
+:- use_module('./Models/Client/ModelClient.pl').
 
 
 cadastrarCliente :-

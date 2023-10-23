@@ -1,6 +1,9 @@
-:- consult('UpdateUtils.pl').
-:- consult('MatrixUtils.pl').
-:- consult('../Models/Client/GetSetAttrsClient.pl').
+:- module(graphUtilsWallet, [attClientLineRow/3, checkClientColumn/1, checkClientRowOverflow/1, checkClientRowUnderflow/1,
+            attAllClientColumn/1, cleanWLGraph/2, walletFilePath/2, updateWLGraphCandle/3]).
+
+:- use_module('./Utils/UpdateUtils.pl').
+:- use_module('./Utils/MatrixUtils.pl').
+:- use_module('./Models/Client/GetSetAttrsClient.pl').
 
 
 % Atualiza em uma carteira, a partir do seu ID, a nova linha e coluna baseado no novo patrimônio

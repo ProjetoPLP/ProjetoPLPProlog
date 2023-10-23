@@ -1,4 +1,7 @@
+:- module(jsonUtils, [lerJSON/2, readFileTxt/2]).
+
 :- use_module(library(http/json)).
+
 
 lerJSON(JSONPath, File) :-
 	open(JSONPath, read, Stream),

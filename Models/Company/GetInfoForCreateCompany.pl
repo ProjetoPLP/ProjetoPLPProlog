@@ -1,5 +1,7 @@
-:- consult('../../Utils/VerificationUtils.pl').
-:- consult('./SaveCompany.pl').
+:- module(getInfoForCreateCompany, [getCompanyName/1, getAgeFounded/1, getCNPJ/1, getActuation/1, getDeclaration/1, getCode/1]).
+
+:- use_module('./Utils/VerificationUtils.pl').
+:- use_module('./Models/Company/SaveCompany.pl').
 
 
 getCompanyName(Name) :-

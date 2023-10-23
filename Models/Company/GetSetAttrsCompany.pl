@@ -1,6 +1,7 @@
-:- consult('../../Utils/UpdateUtils.pl').
-:- consult('./SaveCompany.pl').
-:- consult('./ModelCompany.pl').
+:- module(getSetAttrsCompany, [getCompName/2, getAge/2, getCNPJ/2, getActuation/2, getDeclaration/2, getCode/2, getPrice/2, getTrendIndicator/2, getMinPrice/2, getMaxPrice/2, getStartPrice/2, getCompRow/2, getCompCol/2, getCompIdent/2, setPrice/2, setTrendIndicator/2, setMinPrice/2, setMaxPrice/2, setStartPrice/2, setCompRow/2, setCompCol/2, addCompRow/2, addCompCol/2]).
+
+:- use_module('./Utils/UpdateUtils.pl').
+:- use_module('./Models/Company/SaveCompany.pl').
 
 
 getCompName(ID, Name) :- 

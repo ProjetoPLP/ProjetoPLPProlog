@@ -1,3 +1,6 @@
+:- module(matrixUtils, [printMatrix/1, writeMatrixValue/4]).
+
+
 % Printa no terminal o conteúdo do arquivo .txt
 printMatrix(NomeArquivo) :-
     open(NomeArquivo, read, Stream),

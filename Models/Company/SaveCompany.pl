@@ -1,4 +1,6 @@
-:- consult('../../Utils/JsonUtils.pl').
+:- module(saveCompany, [getCompanyJSON/1, editCompanyJSON/1, saveCompanyJSON/1, removeCompany/1, getCompany/2, existCompanyByName/1, existCompanyByCode/1]).
+
+:- use_module('./Utils/JsonUtils.pl').
 :- use_module(library(http/json)).
 
 
@@ -61,9 +63,9 @@ getCompaniesIds([company(Ident, _, _, _, _, _, _, _, _, _, _, _, _, _)|T], [Iden
     getCompaniesIds(T, RestoIds).
 
 
-removeCompany([], _, []).
-removeCompany([H|T], H.ident, T).
-removeCompany([H|T], Ident, [H|Out]) :- removeCompany(T, Ident, Out).
+removeCompanyAux([], _, []).
+removeCompanyAux([H|T], H.ident, T).
+removeCompanyAux([H|T], Ident, [H|Out]) :- removeCompanyAux(T, Ident, Out).
 
 deleteFile(Id) :-
     atom_concat('./Models/Company/HomeBrokers/homebroker', Id, Temp),
@@ -72,7 +74,7 @@ deleteFile(Id) :-
 
 removeCompany(Id) :-
     lerJSON("./Data/Companies.json", File),
-    removeCompany(File, Id, SaidaParcial),
+    removeCompanyAux(File, Id, SaidaParcial),
     deleteFile(Id),
     companiesToJSON(SaidaParcial, Saida),
     open("./Data/Companies.json", write, Stream), write(Stream, Saida), close(Stream).

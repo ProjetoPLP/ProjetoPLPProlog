@@ -1,5 +1,7 @@
-:- consult('../../Utils/VerificationUtils.pl').
-:- consult('./SaveClient.pl').
+:- module(getInfoForCreateClient, [getClientName/1, getAge/1, getCPF/1, getEmail/1, getPassword/1]).
+
+:- use_module('./Utils/VerificationUtils.pl').
+:- use_module('./Models/Client/SaveClient.pl').
 
 
 getClientName(Name) :-

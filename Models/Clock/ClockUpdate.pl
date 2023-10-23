@@ -1,5 +1,7 @@
-:- consult('./GetSetClock').
-:- consult('../../Utils/MatrixUtils.pl').
+:- module(clockUpdate, [updateMatrixClock/1, formatHour/2]).
+
+:- use_module('./Models/Clock/GetSetClock').
+:- use_module('./Utils/MatrixUtils.pl').
 
 
 % Atualiza no arquivo .txt o relógio

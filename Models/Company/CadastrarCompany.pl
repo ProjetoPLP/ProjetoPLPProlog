@@ -1,6 +1,8 @@
-:- consult('./SaveCompany.pl').
-:- consult('./ModelCompany.pl').
-:- consult('./GetInfoForCreateCompany.pl').
+:- module(cadastrarCompany, [cadastrarCompany/2]).
+
+:- use_module('./Models/Company/SaveCompany.pl').
+:- use_module('./Models/Company/ModelCompany.pl').
+:- use_module('./Models/Company/GetInfoForCreateCompany.pl').
 
 
 cadastrarCompany(LimitCompanies, Success) :-

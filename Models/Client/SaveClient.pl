@@ -1,5 +1,8 @@
-:- consult('../../Utils/JsonUtils.pl').
+:- module(saveClient, [getClientJSON/1, editClientJSON/1, saveClientJSON/1, getClient/2, existClientByEmail/1]).
+
+:- use_module('./Utils/JsonUtils.pl').
 :- use_module(library(http/json)).
+
 
 listClientsJSON([], []).
 listClientsJSON([H|T], [client(H.ident, H.name, H.age, H.cpf, H.email, H.password, H.cash, H.patrimony, H.canDeposit, H.row, H.col, H.allAssets)|Rest]) :- 
@@ -48,24 +51,14 @@ saveClientJSON(Client) :-
     atom_concat(Temp, '.txt', WalletFileName),
     writeFileText(WalletFileName, TextContents).
 
-removerClientJSON([], _, []).
-removerClientJSON([H|T], H.ident, T).
-removerClientJSON([H|T], Ident, [H|Out]) :- removerClientJSON(T, Ident, Out).
-
-removeClientJSON(Id) :-
-    lerJSON("./Data/Clients.json", File),
-    removerClientJSON(File, Id, SaidaParcial),
-    clientesToJSON(SaidaParcial, Saida),
-    open("./Data/Clients.json", write, Stream), write(Stream, Saida), close(Stream).
-
-getClient(Int, Clients) :- 
+getClient(Int, Client) :- 
     getClientJSON(Out),
-    getClientsByID(Int, Out, Clients).
+    getClientByID(Int, Out, Client).
 
-getClientsByID(_, [], _) :- fail.
-getClientsByID(Ident, [client(Ident, Name, Age, Cpf, Email, Password, Cash, Patrimony, CanDeposit, Row, Col, AllAssets)|_], client(Ident, Name, Age, Cpf, Email, Password, Cash, Patrimony, CanDeposit, Row, Col, AllAssets)).
-getClientsByID(Ident, [_|Resto], ClienteEncontrado) :-
-    getClientsByID(Ident, Resto, ClienteEncontrado).
+getClientByID(_, [], _) :- fail.
+getClientByID(Ident, [client(Ident, Name, Age, Cpf, Email, Password, Cash, Patrimony, CanDeposit, Row, Col, AllAssets)|_], client(Ident, Name, Age, Cpf, Email, Password, Cash, Patrimony, CanDeposit, Row, Col, AllAssets)).
+getClientByID(Ident, [_|Resto], ClienteEncontrado) :-
+    getClientByID(Ident, Resto, ClienteEncontrado).
 
 existClientByEmail(Email) :- 
     getClientJSON(Out),

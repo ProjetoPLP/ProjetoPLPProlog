@@ -1,6 +1,10 @@
-:- consult('../../Utils/UpdateUtils.pl').
-:- consult('./LoginClient.pl').
-:- consult('./SaveClient.pl').
+:- module(getSetAttrsClient, [getLoggedUserID/1, getUserName/2, getCPF/2, getCash/2, getPatrimony/2, getCanDeposit/2, getUserRow/2, getUserCol/2,
+            getUserIdent/2, getAllAssets/2, getQtdAssetsInCompany/3, setCash/2, setPatrimony/2, setCanDeposit/2, setAllAssets/2, setUserRow/2,
+                setUserCol/2, addCash/2, addUserRow/2, addUserCol/2]).
+
+:- use_module('./Utils/UpdateUtils.pl').
+:- use_module('./Models/Client/LoginClient.pl').
+:- use_module('./Models/Client/SaveClient.pl').
 
 
 getLoggedUserID(ID) :- 

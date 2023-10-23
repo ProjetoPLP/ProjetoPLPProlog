@@ -1,3 +1,6 @@
+:- module(updateUtils, [fillLeft/3, replicate/3, fillRight/3, resetMenu/2, getCompanyNameCol/3, format/2]).
+
+
 % Adiciona a uma string uma quantidade de caracteres vazios à esquerda, baseado no limite fornecido e o tamanho da string.
 fillLeft(Val, Limit, R) :-
     string_length(Val, Len),

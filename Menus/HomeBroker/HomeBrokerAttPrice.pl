@@ -1,9 +1,11 @@
-:- consult('../../Utils/UpdateUtils.pl').
-:- consult('../../Models/Company/GetSetAttrsCompany.pl').
-:- consult('../../Utils/GraphUtilsHomeBroker.pl').
-:- consult('../../Utils/MatrixUtils.pl').
-:- consult('./HomeBrokerUpdate.pl').
-:- consult('./CompanyDown/CompanyDownUpdate.pl').
+:- module(homeBrokerAttPrice, [getNewPrice/2, attCompanyTrendIndicator/3, getNewMaxPrice/3, getNewMinPrice/3, attAllCompanyPriceGraph/2]).
+
+:- use_module('./Utils/UpdateUtils.pl').
+:- use_module('./Models/Company/GetSetAttrsCompany.pl').
+:- use_module('./Utils/GraphUtilsHomeBroker.pl').
+:- use_module('./Utils/MatrixUtils.pl').
+:- use_module('./Menus/HomeBroker/HomeBrokerUpdate.pl').
+:- use_module('./Menus/HomeBroker/CompanyDown/CompanyDownUpdate.pl').
 :- use_module(library(random)).
 
 

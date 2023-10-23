@@ -1,4 +1,6 @@
-:- consult('../../../Models/Client/GetSetAttrsClient.pl').
+:- module(walletDepSaqLogic, [depositar/2, sacarTudo/1, sacar200/1, sacar500/1]).
+
+:- use_module('./Models/Client/GetSetAttrsClient.pl').
 
 
 depositar(IdUser, CanDeposit) :-

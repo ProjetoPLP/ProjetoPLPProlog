@@ -1,6 +1,9 @@
-:- consult('UpdateUtils.pl').
-:- consult('MatrixUtils.pl').
-:- consult('../Models/Company/GetSetAttrsCompany.pl').
+:- module(graphUtilsHomeBroker, [attCompanyLineRow/3, checkCompanyColumn/1, checkCompanyRowOverflow/1, checkCompanyRowUnderflow/1,
+            attAllCompanyColumn/1, cleanHBGraph/2, homeBrokerFilePath/2, updateHBGraphCandle/3]).
+
+:- use_module('./Utils/UpdateUtils.pl').
+:- use_module('./Utils/MatrixUtils.pl').
+:- use_module('./Models/Company/GetSetAttrsCompany.pl').
 
 
 % Atualiza em uma empresa, a partir do seu ID, a nova linha e coluna baseado no novo preço

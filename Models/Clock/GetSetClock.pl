@@ -1,3 +1,5 @@
+:- module(getSetClock, [getClock/1, addClock/1, setClock/1]).
+
 :- use_module(library(http/json)).
 
 

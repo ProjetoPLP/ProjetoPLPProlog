@@ -1,6 +1,8 @@
-:- consult('./GetInfoForMakeLogin.pl').
-:- consult('./SaveClient.pl').
-:- consult('./LoginClient.pl').
+:- module(realizarLogin, [fazerLogin/1]).
+
+:- use_module('./Models/Client/GetInfoForMakeLogin.pl').
+:- use_module('./Models/Client/SaveClient.pl').
+:- use_module('./Models/Client/LoginClient.pl').
 :- use_module(library(http/json)).
 
 

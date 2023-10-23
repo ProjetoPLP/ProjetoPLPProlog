@@ -1,6 +1,8 @@
-:- consult('./GetSetAttrsClient.pl').
-:- consult('./SaveClient.pl').
-:- consult('./ModelClient.pl').
+:- module(postClient, [addAsset/3, removeAllClientsAsset/1]).
+
+:- use_module('./Models/Client/GetSetAttrsClient.pl').
+:- use_module('./Models/Client/SaveClient.pl').
+
 
 addAsset(ClientID, CompanyID, Qtd) :- 
     getClient(ClientID, Client),

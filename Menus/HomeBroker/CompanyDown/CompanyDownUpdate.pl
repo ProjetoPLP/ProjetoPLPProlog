@@ -1,10 +1,12 @@
-:- consult('../../../Models/Company/GetSetAttrsCompany.pl').
-:- consult('../../../Models/Client/GetSetAttrsClient.pl').
-:- consult('../../../Models/Client/PostClient.pl').
-:- consult('../../../Models/Company/SaveCompany.pl').
-:- consult('../../../Models/Clock/ClockUpdate.pl').
-:- consult('../../../Utils/UpdateUtils.pl').
-:- consult('../HomeBrokerUpdate.pl').
+:- module(companyDownUpdate, [updateCompanyDown/2, removeCompanyFromExchange/1, isDown/1]).
+
+:- use_module('./Models/Company/GetSetAttrsCompany.pl').
+:- use_module('./Models/Client/GetSetAttrsClient.pl').
+:- use_module('./Models/Client/PostClient.pl').
+:- use_module('./Models/Company/SaveCompany.pl').
+:- use_module('./Models/Clock/ClockUpdate.pl').
+:- use_module('./Utils/UpdateUtils.pl').
+:- use_module('./Menus/HomeBroker/HomeBrokerUpdate.pl').
 
 
 updateCompanyDown(IdUser, IdComp) :-

@@ -1,4 +1,7 @@
-:- consult('../Models/Company/GetSetAttrsCompany.pl').
+:- module(verificationUtils, [existCompany/1, isNumber/1]).
+
+:- use_module('./Models/Company/GetSetAttrsCompany.pl').
+:- use_module('./Models/Company/SaveCompany.pl').
 
 
 % Verifica se existe uma empresa cadastrada a bolsa a partir do seu ID

@@ -1,3 +1,6 @@
+:- module(getInfoForMakeLogin, [getLoginEmail/1, getLoginPassword/1]).
+
+
 getLoginEmail(Email) :-
     write("Digite o seu email: "),
     read_line_to_string(user_input, Email).

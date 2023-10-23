@@ -1,4 +1,6 @@
-:- consult('../../Utils/JsonUtils.pl').
+:- module(loginClient, [saveLogin/1, logoutClient/0, getLoggedClient/1]).
+
+:- use_module('./Utils/JsonUtils.pl').
 :- use_module(library(http/json)).
 
 

@@ -1,10 +1,12 @@
-:- consult('../../Utils/MatrixUtils.pl').
-:- consult('../../Utils/UpdateUtils.pl').
-:- consult('../../Utils/GraphUtilsWallet.pl').
-:- consult('../../Models/Client/GetSetAttrsClient.pl').
-:- consult('../../Models/Company/GetSetAttrsCompany.pl').
-:- consult('../../Models/Clock/ClockUpdate.pl').
-:- consult('./WalletAttPatrimony.pl').
+:- module(walletUpdate, [updateClientWallet/1, updateWalletDeposito/1, updateWalletSaque/1]).
+
+:- use_module('./Utils/MatrixUtils.pl').
+:- use_module('./Utils/UpdateUtils.pl').
+:- use_module('./Utils/GraphUtilsWallet.pl').
+:- use_module('./Models/Client/GetSetAttrsClient.pl').
+:- use_module('./Models/Company/GetSetAttrsCompany.pl').
+:- use_module('./Models/Clock/ClockUpdate.pl').
+:- use_module('./Menus/Wallet/WalletAttPatrimony.pl').
 
 
 % Aualiza todas as informações da carteira do cliente
