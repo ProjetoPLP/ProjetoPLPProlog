@@ -4,11 +4,14 @@ Programa desenvolvido com a linguagem lógica Prolog para o projeto da cadeira P
 
 Um jogo em terminal que simula uma interface de uma corretora de valores de maneira simples e intuitiva, com Home Broker, carteira, empresas fictícias e opção de compra e venda de ações.
 
+![Demo](https://i.imgur.com/cyf1pYT.png)
+
 
 ## Demonstração
 
 Assista a este [vídeo](https://www.youtube.com/watch?v=OrDkoXWfknw) para entender o funcionamento do programa.
 
+![Demo](https://i.imgur.com/a9xrdXT.png)
 
 ## Instalação
 
